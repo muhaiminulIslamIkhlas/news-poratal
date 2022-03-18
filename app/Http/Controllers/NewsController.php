@@ -23,7 +23,12 @@ class NewsController extends Controller
      */
     public function index()
     {
-//        echo $this->_helepr->imageUpload('hello');
-        return view('admin.layout.master');
+        echo $this->_helepr->imageUpload('hello');
+//        return view('admin.layout.master');
+    }
+
+    public function create()
+    {
+        return view('admin.news.create');
     }
 }
