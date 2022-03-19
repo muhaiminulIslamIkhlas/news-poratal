@@ -37,6 +37,7 @@ Route::group(['prefix' => 'admin'], function () {
             Route::get('edit/{id}', [\App\Http\Controllers\Subcategory::class, 'edit']);
             Route::post('update', [\App\Http\Controllers\Subcategory::class, 'update']);
             Route::get('delete/{id}', [\App\Http\Controllers\Subcategory::class, 'delete']);
+            Route::get('get-sub-category/{categoryId}',[\App\Http\Controllers\Subcategory::class, 'getSubCategory']);
         });
 
         Route::group(['prefix' => 'keyword'], function () {
