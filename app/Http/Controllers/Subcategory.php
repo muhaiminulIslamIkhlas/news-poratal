@@ -8,16 +8,16 @@ use App\Models\Category as CategoryModel;
 
 class Subcategory extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $categorylist = CategoryModel::get();
         return view('admin.news.subcategory.index', compact('categorylist'));
     }
 
-    public function create(Request $request){
+    public function create(Request $request)
+    {
         $request->validate([
-            'name' => 'required|max:255'
-        ]);
-        $request->validate([
+            'name' => 'required|max:255',
             'category_id' => 'required|max:255'
         ]);
         $subcategory = new SubcategoryModel();
@@ -27,28 +27,31 @@ class Subcategory extends Controller
 
         return redirect('/admin/news/subcategory/list');
     }
-    public function list(){
+
+    public function list()
+    {
         $subcategorylist = SubcategoryModel::join('categories', 'subcategories.category_id', 'categories.id')->select('subcategories.*', 'categories.name as category_name')->get();
         return view('admin.news.subcategory.list', compact('subcategorylist'));
     }
 
-    public function view($id){
+    public function view($id)
+    {
         $subcategory = SubcategoryModel::where('id', $id)->first();
 
         return view('admin.news.subcategory.view', compact('subcategory'));
     }
 
-    public function edit($id){
+    public function edit($id)
+    {
         $categorylist = CategoryModel::get();
         $subcategory = SubcategoryModel::where('id', $id)->first();
         return view('admin.news.subcategory.edit', compact('subcategory', 'categorylist'));
     }
 
-    public function update(Request $request){
+    public function update(Request $request)
+    {
         $request->validate([
-            'name' => 'required|max:255'
-        ]);
-        $request->validate([
+            'name' => 'required|max:255',
             'category_id' => 'required|max:255'
         ]);
         $subcategory = SubcategoryModel::where('id', $request->id)->first();
@@ -59,10 +62,17 @@ class Subcategory extends Controller
         return redirect('/admin/news/subcategory/list');
     }
 
-    public function delete($id){
+    public function delete($id): \Illuminate\Http\RedirectResponse
+    {
         $subcategory = SubcategoryModel::where('id', $id)->first();
         $subcategory->delete();
 
         return back();
+    }
+
+    public function getSubCategory($categoryId): \Illuminate\Http\JsonResponse
+    {
+        $subCategory = SubcategoryModel::where('id', $categoryId)->get();
+        return response()->json($subCategory);
     }
 }

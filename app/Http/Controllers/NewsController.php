@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Repositories\HelperRepositoryInterface;
 use Illuminate\Http\Request;
+use App\Models\Category;
+use App\Models\Keyword;
 
 class NewsController extends Controller
 {
@@ -29,6 +31,8 @@ class NewsController extends Controller
 
     public function create()
     {
-        return view('admin.news.create');
+        $categories = Category::get();
+        $keyWords = Keyword::get();
+        return view('admin.news.create',compact('categories','keyWords'));
     }
 }
