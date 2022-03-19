@@ -29,12 +29,6 @@ class NewsController extends Controller
 
     public function create()
     {
-        $request->validate([
-            'title' => 'required|unique:posts',
-            'body' => 'required',
-            'publish_at' => 'nullable|date',
-        ]);
-
-        return view('admin.news.create',com);
+        return view('admin.news.create');
     }
 }
