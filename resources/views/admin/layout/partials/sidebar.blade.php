@@ -281,6 +281,75 @@
                         </li>
                     </ul>
                 </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-table"></i>
+                        <p>
+                            Category
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{Url('/admin/news/category/index')}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Add New Category</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{Url('/admin/news/category/list')}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>View All Catgories</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-table"></i>
+                        <p>
+                            SubCategory
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{Url('/admin/news/subcategory/index')}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Add New SubCategory</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{Url('/admin/news/subcategory/list')}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>View All SubCatgories</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-table"></i>
+                        <p>
+                            Keyword
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{Url('/admin/news/keyword/index')}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Add New Keyword</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{Url('/admin/news/keyword/list')}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>View All Keyword</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="nav-header">EXAMPLES</li>
                 <li class="nav-item">
                     <a href="../calendar.html" class="nav-link">
