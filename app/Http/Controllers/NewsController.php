@@ -23,12 +23,18 @@ class NewsController extends Controller
      */
     public function index()
     {
-        echo $this->_helepr->imageUpload('hello');
-//        return view('admin.layout.master');
+//        echo $this->_helepr->imageUpload('hello');
+        return view('admin.news.index');
     }
 
     public function create()
     {
-        return view('admin.news.create');
+        $request->validate([
+            'title' => 'required|unique:posts',
+            'body' => 'required',
+            'publish_at' => 'nullable|date',
+        ]);
+
+        return view('admin.news.create',com);
     }
 }
