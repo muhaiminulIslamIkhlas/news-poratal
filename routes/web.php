@@ -13,12 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 //
-//Route::group(['prefix' => 'admin'], function () {
-//    Route::group(['prefix' => 'news'], function () {
-//        Route::get('index', [\App\Http\Controllers\NewsController::class, 'index']);
-//        Route::get('create', [\App\Http\Controllers\NewsController::class, 'create']);
-//    });
-//});
-
+Route::group(['prefix' => 'admin'], function () {
+    Route::group(['prefix' => 'news'], function () {
+        Route::get('index', [\App\Http\Controllers\NewsController::class, 'index']);
+        Route::get('create', [\App\Http\Controllers\NewsController::class, 'create']);
+    });
+});
 
 Route::get('/',[\App\Http\Controllers\NewsController::class,'index']);
