@@ -40,7 +40,7 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Category Name</label>
-                        <input type="text" name="name" class="form-control" id="exampleInputEmail1" placeholder="Keyword Name">
+                        <input type="text" name="name" class="form-control" id="exampleInputEmail1" placeholder="Category Name">
                     </div>
                 </div>
                 <!-- /.card-body -->

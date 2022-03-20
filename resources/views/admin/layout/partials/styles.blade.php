@@ -5,3 +5,5 @@
 <link rel="stylesheet" href="{{asset('assets/plugins/fontawesome-free/css/all.min.css')}}">
 <!-- Theme style -->
 <link rel="stylesheet" href="{{asset('assets/dist/css/adminlte.min.css')}}">
+<!-- custom css -->
+<link rel="stylesheet" href="{{asset('assets/custom/css/custom.css')}}">
