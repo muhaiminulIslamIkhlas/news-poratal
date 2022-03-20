@@ -11,6 +11,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">All Sub Categories lists</h3>
+                        <a class="btn btn-primary float-right listbutton" href="{{Url('/admin/news/subcategory/index')}}">Add Sub Category</a>
                     </div>
                     <div class="p-3">
                         <table id="subcategorylist" class="table table-bordered table-striped">

@@ -5,12 +5,13 @@
 <link rel="stylesheet" href="{{asset('assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
 @endsection()
 @section('body')
-<div class="container-fluid">
+<div class="container-fluid listpage">
     <div class="row">
         <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-            <h3 class="card-title">All Categories lists</h3>
+                <h3 class="card-title">All Categories lists</h3>
+                <a class="btn btn-primary float-right listbutton" href="{{Url('/admin/news/category/index')}}">Add New Category</a>
             </div>
             <div class="p-3">
                 <table id="categorylist" class="table table-bordered table-striped">
