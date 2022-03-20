@@ -50,6 +50,28 @@ Route::group(['prefix' => 'admin'], function () {
             Route::post('update', [\App\Http\Controllers\Keyword::class, 'update']);
             Route::get('delete/{id}', [\App\Http\Controllers\Keyword::class, 'delete']);
         });
+
+        Route::group(['prefix' => 'video'], function () {
+            Route::get('index', [\App\Http\Controllers\VideoController::class, 'index']);
+            Route::post('create', [\App\Http\Controllers\VideoController::class, 'create']);
+            Route::get('list', [\App\Http\Controllers\VideoController::class, 'list']);
+            Route::get('view/{id}', [\App\Http\Controllers\VideoController::class, 'view']);
+            Route::get('edit/{id}', [\App\Http\Controllers\VideoController::class, 'edit']);
+            Route::post('update', [\App\Http\Controllers\VideoController::class, 'update']);
+            Route::get('delete/{id}', [\App\Http\Controllers\VideoController::class, 'delete']);
+        });
+
+
+        Route::group(['prefix' => 'image'], function () {
+            Route::get('index', [\App\Http\Controllers\ImageController::class, 'index']);
+            Route::post('create', [\App\Http\Controllers\ImageController::class, 'create']);
+            Route::get('list', [\App\Http\Controllers\ImageController::class, 'list']);
+            Route::get('view/{id}', [\App\Http\Controllers\ImageController::class, 'view']);
+            Route::get('edit/{id}', [\App\Http\Controllers\ImageController::class, 'edit']);
+            Route::post('update', [\App\Http\Controllers\ImageController::class, 'update']);
+            Route::get('delete/{id}', [\App\Http\Controllers\ImageController::class, 'delete']);
+        });
+
     });
 });
 
