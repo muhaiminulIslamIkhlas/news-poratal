@@ -14,9 +14,10 @@ use Illuminate\Support\Facades\Route;
 */
 //
 Route::group(['prefix' => 'admin'], function () {
-   Route::group(['prefix' => 'news'], function () {
-       Route::get('index', [\App\Http\Controllers\NewsController::class, 'index']);
-       Route::get('create', [\App\Http\Controllers\NewsController::class, 'create']);
+    Route::group(['prefix' => 'news'], function () {
+        Route::get('index', [\App\Http\Controllers\NewsController::class, 'index']);
+        Route::get('create', [\App\Http\Controllers\NewsController::class, 'create']);
+        Route::post('store', [\App\Http\Controllers\NewsController::class, 'store']);
 
 
         Route::group(['prefix' => 'category'], function () {
@@ -37,7 +38,7 @@ Route::group(['prefix' => 'admin'], function () {
             Route::get('edit/{id}', [\App\Http\Controllers\Subcategory::class, 'edit']);
             Route::post('update', [\App\Http\Controllers\Subcategory::class, 'update']);
             Route::get('delete/{id}', [\App\Http\Controllers\Subcategory::class, 'delete']);
-            Route::get('get-sub-category/{categoryId}',[\App\Http\Controllers\Subcategory::class, 'getSubCategory']);
+            Route::get('get-sub-category/{categoryId}', [\App\Http\Controllers\Subcategory::class, 'getSubCategory']);
         });
 
         Route::group(['prefix' => 'keyword'], function () {
@@ -49,8 +50,8 @@ Route::group(['prefix' => 'admin'], function () {
             Route::post('update', [\App\Http\Controllers\Keyword::class, 'update']);
             Route::get('delete/{id}', [\App\Http\Controllers\Keyword::class, 'delete']);
         });
-   });
+    });
 });
 
 
-Route::get('/',[\App\Http\Controllers\NewsController::class,'index']);
+Route::get('/', [\App\Http\Controllers\NewsController::class, 'index']);

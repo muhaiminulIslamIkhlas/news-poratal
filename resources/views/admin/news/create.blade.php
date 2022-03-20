@@ -14,7 +14,14 @@
                     <div class="card-header">
                         <h3 class="card-title">Create News</h3>
                     </div>
-                    <form id="quickForm">
+                    @if ($errors->any())
+                        <ul class="mt-3">
+                            @foreach ($errors->all() as $error)
+                                <li class="text-danger">{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    @endif
+                    <form id="quickForm" method="post" action="{{URL('admin/news/store')}}"  enctype="multipart/form-data">
                         @csrf
                         <div class="card-body">
                             <div class="form-group">
@@ -47,13 +54,17 @@
                             </div>
                             <div class="form-group">
                                 <label for="image">Image</label>
-                                <div class="input-group">
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" name="image" id="image">
-                                        <label class="custom-file-label" for="image">Choose image</label>
-                                    </div>
-                                </div>
+                                <input type="file" class="d-block" name="image"  id="image" />
                             </div>
+{{--                            <div class="form-group">--}}
+{{--                                <label for="image">Image</label>--}}
+{{--                                <div class="input-group">--}}
+{{--                                    <div class="custom-file">--}}
+{{--                                        <input type="file"  name="image" id="image">--}}
+{{--                                        <label class="custom-file-label" for="image">Choose image</label>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                             <div class="form-group">
                                 <label for="type">Type</label>
                                 <select name="type" id="type" class="form-control">
@@ -106,8 +117,8 @@
     <script src="{{asset('assets/plugins/jquery-validation/jquery.validate.min.js')}}"></script>
     <script src="{{asset('assets/plugins/jquery-validation/additional-methods.min.js')}}"></script>
     <script src="{{asset('assets/plugins/summernote/summernote-bs4.min.js')}}"></script>
-
     <script src="{{asset('assets/plugins/select2/js/select2.full.min.js')}}"></script>
+    <script src="{{asset('assets/plugins/bs-custom-file-input/bs-custom-file-input.min.js')}}"></script>
 
     <script>
         $('#category_id').on('change', function () {
