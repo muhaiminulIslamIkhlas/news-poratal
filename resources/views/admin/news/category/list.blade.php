@@ -17,6 +17,7 @@
                 <table id="categorylist" class="table table-bordered table-striped">
                     <thead>
                         <tr>
+                            <th>Id</th>
                             <th>Category Name</th>
                             <th>Action</th>
                         </tr>
@@ -24,6 +25,7 @@
                     <tbody>
                         <?php foreach($categorylist as $category){ ?>
                             <tr>
+                                <td><?= $category->id ?></td>
                                 <td><?= $category->name; ?></td>
                                 <td>
                                     <a class="btn btn-primary mt-3" href="{{Url('/admin/news/category/view', $category->id)}}"><i class="fas fa-eye fa-fw"></i></a>
@@ -69,7 +71,7 @@
         "pageLength": 10,
       "paging": true,
       "lengthChange": false,
-      "searching": false,
+      "searching": true,
       "ordering": true,
       "info": true,
       "autoWidth": false,

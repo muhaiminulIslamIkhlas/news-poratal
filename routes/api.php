@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/category', [App\Http\Controllers\API\NewsController::class, 'getCategory']);
+Route::get('/news/{categoryId}/{type}/{limit}', [App\Http\Controllers\API\NewsController::class, 'getNews']);
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
