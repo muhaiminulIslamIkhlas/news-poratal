@@ -158,6 +158,52 @@
                         </li>
                     </ul>
                 </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-table"></i>
+                        <p>
+                            Video
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{Url('/admin/news/video/index')}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Add New Video</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{Url('/admin/news/video/list')}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>View All Videos</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-table"></i>
+                        <p>
+                            Image
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{Url('/admin/news/image/index')}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Add New Image</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{Url('/admin/news/image/list')}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>View All Images</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
