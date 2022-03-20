@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class News extends Model
 {
-//    use HasFactory;
+    use HasFactory;
 
     public function details()
     {
@@ -16,6 +16,20 @@ class News extends Model
 
     public function category()
     {
-        return $this->belongsTo('App\Models\Category','category_id');
+        return $this->belongsTo('App\Models\Category', 'category_id');
+    }
+
+    public function format()
+    {
+        return [
+            'id' => $this->id,
+            'title' => $this->title,
+            'sort_description' => $this->sort_description,
+            'order' => $this->order,
+            'category' => $this->category->name,
+            'time' => $this->created_at,
+            'image' => $this->image,
+            'type' => $this->type
+        ];
     }
 }

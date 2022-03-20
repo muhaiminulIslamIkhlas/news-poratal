@@ -56,22 +56,14 @@
                                 <label for="image">Image</label>
                                 <input type="file" class="d-block" name="image"  id="image" />
                             </div>
-{{--                            <div class="form-group">--}}
-{{--                                <label for="image">Image</label>--}}
-{{--                                <div class="input-group">--}}
-{{--                                    <div class="custom-file">--}}
-{{--                                        <input type="file"  name="image" id="image">--}}
-{{--                                        <label class="custom-file-label" for="image">Choose image</label>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
                             <div class="form-group">
                                 <label for="type">Type</label>
                                 <select name="type" id="type" class="form-control">
-                                    <option value="Lead news">Lead news</option>
-                                    <option value="Left first lead news">Left first lead news</option>
-                                    <option value="Sub lead news">Sub lead news</option>
-                                    <option value="General news" selected>General news</option>
+                                    <option value="general" selected>General news</option>
+                                    <option value="lead_news">Lead news</option>
+                                    <option value="sub_lead_news">Sub lead news</option>
+                                    <option value="second_lead">Second lead</option>
+                                    <option value="latest">Latest</option>
                                 </select>
                             </div>
                             <div class="form-group">
