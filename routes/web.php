@@ -73,6 +73,16 @@ Route::group(['prefix' => 'admin'], function () {
         });
 
     });
+
+    Route::group(['prefix' => 'opinion'], function () {
+        Route::get('index', [\App\Http\Controllers\OpinionController::class, 'index']);
+        Route::post('create', [\App\Http\Controllers\OpinionController::class, 'create']);
+        Route::get('list', [\App\Http\Controllers\OpinionController::class, 'list']);
+        Route::get('view/{id}', [\App\Http\Controllers\OpinionController::class, 'view']);
+        Route::get('edit/{id}', [\App\Http\Controllers\OpinionController::class, 'edit']);
+        Route::post('update', [\App\Http\Controllers\OpinionController::class, 'update']);
+        Route::get('delete/{id}', [\App\Http\Controllers\OpinionController::class, 'delete']);
+    });
 });
 
 
