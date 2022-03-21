@@ -204,6 +204,29 @@
                         </li>
                     </ul>
                 </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-table"></i>
+                        <p>
+                            Opinion
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{Url('/admin/opinion/index')}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Add New Opinion</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{Url('/admin/opinion/list')}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>View All Opinion</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
