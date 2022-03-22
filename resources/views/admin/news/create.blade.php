@@ -21,7 +21,8 @@
                             @endforeach
                         </ul>
                     @endif
-                    <form id="quickForm" method="post" action="{{URL('admin/news/store')}}"  enctype="multipart/form-data">
+                    <form id="quickForm" method="post" action="{{URL('admin/news/store')}}"
+                          enctype="multipart/form-data">
                         @csrf
                         <div class="card-body">
                             <div class="form-group">
@@ -54,7 +55,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="image">Image</label>
-                                <input type="file" class="d-block" name="image"  id="image" />
+                                <input type="file" class="d-block" name="image" id="image"/>
                             </div>
                             <div class="form-group">
                                 <label for="type">Type</label>
@@ -117,7 +118,7 @@
             let categoryID = $(this).val();
             if (categoryID) {
                 $.ajax({
-                    url: '/admin/news/subcategory/get-sub-category/' + categoryID,
+                    url: '{{URL('admin/news/subcategory/get-sub-category/')}}' + '/' + categoryID,
                     type: "GET",
                     data: {"_token": "{{ csrf_token() }}"},
                     dataType: "json",

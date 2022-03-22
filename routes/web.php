@@ -73,7 +73,15 @@ Route::group(['prefix' => 'admin'], function () {
         });
 
     });
-
+    Route::group(['prefix' => 'vote'], function () {
+        Route::get('index', [\App\Http\Controllers\VoteController::class, 'index']);
+        Route::get('create', [\App\Http\Controllers\VoteController::class, 'create']);
+        Route::post('store', [\App\Http\Controllers\VoteController::class, 'store']);
+        Route::get('list', [\App\Http\Controllers\VoteController::class, 'list']);
+        Route::get('edit/{id}', [\App\Http\Controllers\VoteController::class, 'edit']);
+        Route::post('update', [\App\Http\Controllers\VoteController::class, 'update']);
+        Route::get('delete/{id}', [\App\Http\Controllers\VoteController::class, 'delete']);
+    });
     Route::group(['prefix' => 'opinion'], function () {
         Route::get('index', [\App\Http\Controllers\OpinionController::class, 'index']);
         Route::post('create', [\App\Http\Controllers\OpinionController::class, 'create']);
@@ -83,7 +91,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('update', [\App\Http\Controllers\OpinionController::class, 'update']);
         Route::get('delete/{id}', [\App\Http\Controllers\OpinionController::class, 'delete']);
     });
+
+
+    Route::get('/', [\App\Http\Controllers\NewsController::class, 'index']);
 });
-
-
-Route::get('/', [\App\Http\Controllers\NewsController::class, 'index']);

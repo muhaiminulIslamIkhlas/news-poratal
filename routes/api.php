@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/category', [App\Http\Controllers\API\NewsController::class, 'getCategory']);
+Route::get('/vote-result', [App\Http\Controllers\API\VoteController::class, 'getVote']);
+Route::get('/give-vote/{id}/{vote}', [App\Http\Controllers\API\VoteController::class, 'giveVote']);
 Route::get('/news/{categoryId}/{type}/{limit}', [App\Http\Controllers\API\NewsController::class, 'getNews']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
