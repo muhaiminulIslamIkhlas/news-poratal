@@ -37,9 +37,8 @@ class VoteController extends Controller
         ];
     }
 
-    public function giveVote($id, $vote): \Illuminate\Http\JsonResponse
+    public function increseVote($voteObj, $vote)
     {
-        $voteObj = Vote::find($id);
         if ($voteObj) {
             switch ($vote) {
                 case 1:
@@ -55,8 +54,47 @@ class VoteController extends Controller
 
             $voteObj->save();
         }
+    }
 
+    public function decreaseVote($voteObj, $vote)
+    {
+        if ($voteObj) {
+            switch ($vote) {
+                case 1:
+                    $voteObj->yes = $voteObj->yes - 1;
+                    break;
+                case 2:
+                    $voteObj->no = $voteObj->no - 1;
+                    break;
+                case 3:
+                    $voteObj->no_comments = $voteObj->no_comments - 1;
+                    break;
+            }
+
+            $voteObj->save();
+        }
+    }
+
+    public function giveVote($id, $vote): \Illuminate\Http\JsonResponse
+    {
+        $voteObj = Vote::find($id);
+        $this->increseVote($voteObj, $vote);
         $result = $this->getResult($voteObj->id);
         return response()->json($result);
+    }
+
+    public function changeVote($id, $previous, $new)
+    {
+        if($previous == $new){
+            $result = $this->getResult($id);
+            return response()->json($result);
+        }
+
+        $voteObj = Vote::find($id);
+        $this->decreaseVote($voteObj, $previous);
+        $this->increseVote($voteObj, $new);
+        $result = $this->getResult($voteObj->id);
+        return response()->json($result);
+
     }
 }
