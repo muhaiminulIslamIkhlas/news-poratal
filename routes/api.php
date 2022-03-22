@@ -30,6 +30,21 @@ Route::get('/change-vote/{id}/{prev}/{new}', [App\Http\Controllers\API\VoteContr
 Route::get('/news/{categoryId}/{type}/{limit}', [App\Http\Controllers\API\NewsController::class, 'getNews']);
 Route::get('/get-news/{id}', [App\Http\Controllers\API\NewsController::class, 'getNewsById']);
 /**
+ * opinion
+ */
+Route::get('/get-all-opinion/{limit}',[App\Http\Controllers\API\OpinionController::class, 'getAllOpinion']);
+Route::get('/get-opinion/{id}',[App\Http\Controllers\API\OpinionController::class, 'getOpinion']);
+/**
+ * video
+ */
+Route::get('/get-all-video/{limit}',[App\Http\Controllers\API\VideoController::class, 'getAllVideo']);
+Route::get('/get-video/{id}',[App\Http\Controllers\API\VideoController::class, 'getVideo']);
+/**
+ * image
+ */
+Route::get('/get-all-image/{limit}',[App\Http\Controllers\API\ImageController::class, 'getAllImage']);
+Route::get('/get-image/{id}',[App\Http\Controllers\API\ImageController::class, 'getImage']);
+/**
  * default
  */
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
