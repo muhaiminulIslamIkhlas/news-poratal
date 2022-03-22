@@ -7,3 +7,9 @@
     float: right;
     margin-left: auto;
 }
+.note-editable.card-block {
+    min-height: 300px;
+}
+#short_description {
+    min-height: 150px;
+}
