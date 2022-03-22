@@ -20,6 +20,6 @@ class Helper implements HelperRepositoryInterface
         $imageName = time().$file->getClientOriginalName();
         $originalPath = public_path('/images/').time().$file->getClientOriginalName();
         $ogImage =  $ogImage->save($originalPath);
-        return URL::to('/').'/public/images/'.$imageName;
+        return URL::to('/').'/images/'.$imageName;
     }
 }
