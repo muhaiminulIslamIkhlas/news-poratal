@@ -17,7 +17,7 @@ class CreateNewsDetailsTable extends Migration
             $table->id();
             $table->foreignId('news_id')->constrained()->onDelete('cascade');
             $table->text('details');
-            $table->string('ticker');
+            $table->text('ticker');
             $table->string('representative');
             $table->string('keyword');
             $table->timestamps();

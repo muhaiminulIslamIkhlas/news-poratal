@@ -70,6 +70,6 @@ class NewsController extends Controller
         $newsDetails->keyword = json_encode($request->keyword);
         $newsDetails->save();
 
-        return response()->json(json_decode($newsDetails->keyword));
+        return redirect('admin/news/index');
     }
 }

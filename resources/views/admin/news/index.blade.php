@@ -28,7 +28,7 @@
                             @foreach($news as $item)
                             <tr>
                                 <td>{{$item->title}}</td>
-                                <td>{{$item->sort_description}}</td>
+                                <td>{!! $item->sort_description !!}</td>
                                 <td>{{$item->order}}</td>
                                 <td>{{$item->title}}</td>
                                 <td>{{$item->category->name}} </td>

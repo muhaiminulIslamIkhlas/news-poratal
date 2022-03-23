@@ -15,9 +15,8 @@ class NewsController extends Controller
         return response()->json([$categories]);
     }
 
-    public function getNews($categoryId,$type,$limit): \Illuminate\Http\JsonResponse
+    public function getAllNews($categoryId,$type,$limit): \Illuminate\Http\JsonResponse
     {
-        $limit = $limit > 10 ? 10 : $limit;
         $news = News::where('category_id',$categoryId)
                     ->where('type',$type)
                     ->orderBy('order','ASC')
@@ -27,7 +26,7 @@ class NewsController extends Controller
         return response()->json($news);
     }
 
-    public function getNewsById($id): \Illuminate\Http\JsonResponse
+    public function getNews($id): \Illuminate\Http\JsonResponse
     {
         $news = News::find($id)->formatDetails();
         return response()->json($news);

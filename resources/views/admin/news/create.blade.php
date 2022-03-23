@@ -32,7 +32,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="sort_description">Sort Description</label>
-                                <textarea class="form-control" id="sort_description" name="sort_description"></textarea>
+                                <textarea id="sort_description" name="sort_description">Place <em>sort</em> <u>description</u> <strong>here</strong></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="category_id">Category</label>
@@ -64,17 +64,17 @@
                                     <option value="lead_news">Lead news</option>
                                     <option value="sub_lead_news">Sub lead news</option>
                                     <option value="second_lead">Second lead</option>
+                                    <option value="side_bar_news">Side bar news</option>
                                     <option value="latest">Latest</option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="summernote">Details</label>
-                                <textarea id="summernote" name="details">Place <em>some</em> <u>text</u> <strong>here</strong></textarea>
+                                <textarea id="details" name="details">Place <em>some</em> <u>text</u> <strong>here</strong></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="ticker">Ticker</label>
-                                <input type="text" name="ticker" class="form-control" id="ticker"
-                                       placeholder="Enter ticker">
+                                <textarea id="ticker" name="ticker">Place <em>ticker</em> <strong>here</strong></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="representative">Representative</label>
@@ -139,7 +139,9 @@
             }
         })
 
-        $('#summernote').summernote()
+        $('#sort_description').summernote()
+        $('#details').summernote()
+        $('#ticker').summernote()
         $('.select2').select2()
         // $(function () {
         //     $.validator.setDefaults({
