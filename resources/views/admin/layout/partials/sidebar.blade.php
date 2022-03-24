@@ -250,6 +250,52 @@
                         </li>
                     </ul>
                 </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-table"></i>
+                        <p>
+                            Information
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{Url('/admin/information/create')}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Add New Information</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{Url('/admin/information/index')}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>View All Information</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-table"></i>
+                        <p>
+                            Contact
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{Url('/admin/contact/create')}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Add New Contact</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{Url('/admin/contact/index')}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>View All Contact</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
