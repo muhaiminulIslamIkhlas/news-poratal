@@ -92,6 +92,13 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('delete/{id}', [\App\Http\Controllers\OpinionController::class, 'delete']);
     });
 
+    Route::group(['prefix' => 'information'], function () {
+        Route::get('index', [\App\Http\Controllers\InformationController::class, 'index']);
+        Route::get('create', [\App\Http\Controllers\InformationController::class, 'create']);
+        Route::post('store', [\App\Http\Controllers\InformationController::class, 'store']);
+        Route::get('delete/{id}', [\App\Http\Controllers\InformationController::class, 'delete']);
+    });
+
 
     Route::get('/', [\App\Http\Controllers\NewsController::class, 'index']);
 });
