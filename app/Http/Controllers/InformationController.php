@@ -7,37 +7,36 @@ use App\Models\Information;
 
 class InformationController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $informationList = Information::all();
         return view('admin.information.index', compact('informationList'));
     }
 
-    public function create(){
+    public function edit()
+    {
         $informationList = Information::all();
-        return view('admin.information.create', compact('informationList'));
+        return view('admin.information.edit', compact('informationList'));
     }
 
-    public function store(Request $request){
+    public function update(Request $request)
+    {
+        $infArray = ['total_affected_bd', 'total_recover_bd', 'total_death_bd', 'total_affected_int', 'total_recover_int', 'total_death_int'];
         $request->validate([
-            'info_key' => 'required',
-            'info_value' => 'required',
-            'date_time' => 'required'
+            'total_affected_bd' => 'required',
+            'total_recover_bd' => 'required',
+            'total_death_bd' => 'required',
+            'total_affected_int' => 'required',
+            'total_recover_int' => 'required',
+            'total_death_int' => 'required',
         ]);
 
-        $information = new Information();
-        $information->info_key = $request->info_key;
-        $information->info_value = $request->info_value;
-        $information->date_time = $request->date_time;
-        $information->save();
+        foreach ($infArray as $item) {
+            $info = Information::where('info_key', $item)->first();
+            $info->info_value = $request[$item];
+            $info->save();
+        }
 
         return redirect('/admin/information/index');
-    }
-
-    public function delete($id){
-        $information = Information::where('id', $id)->first();
-
-        $information->delete();
-
-        return redirect('admin/information/index');
     }
 }

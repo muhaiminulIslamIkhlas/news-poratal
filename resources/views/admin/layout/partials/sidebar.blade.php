@@ -260,12 +260,6 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{Url('/admin/information/create')}}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Add New Information</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
                             <a href="{{Url('/admin/information/index')}}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>View All Information</p>

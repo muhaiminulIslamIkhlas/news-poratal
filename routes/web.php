@@ -94,9 +94,8 @@ Route::group(['prefix' => 'admin'], function () {
 
     Route::group(['prefix' => 'information'], function () {
         Route::get('index', [\App\Http\Controllers\InformationController::class, 'index']);
-        Route::get('create', [\App\Http\Controllers\InformationController::class, 'create']);
-        Route::post('store', [\App\Http\Controllers\InformationController::class, 'store']);
-        Route::get('delete/{id}', [\App\Http\Controllers\InformationController::class, 'delete']);
+        Route::get('edit', [\App\Http\Controllers\InformationController::class, 'edit']);
+        Route::post('store', [\App\Http\Controllers\InformationController::class, 'update']);
     });
 
 

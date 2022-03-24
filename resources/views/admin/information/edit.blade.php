@@ -38,26 +38,12 @@
             <form id="quickForm" method="POST" action="{{Url('/admin/information/store')}}">
                 @csrf
                 <div class="card-body">
-                    <div class="form-group">
-                        <label for="info_key">Information Key</label>
-                        <select name="info_key" class="form-control">
-                            <option value="">Please Select</option>
-                            <option value="total_affected_bd">total_affected_bd</option>
-                            <option value="total_recover_bd">total_recover_bd</option>
-                            <option value="total_death_bd">total_death_bd</option>
-                            <option value="total_affected_int">total_affected_int</option>
-                            <option value="total_recover_int">total_recover_int</option>
-                            <option value="total_death_int">total_death_int</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="info_value">Information Value</label>
-                        <input type="text" name="info_value" class="form-control" id="info_value" placeholder="Information Value">
-                    </div>
-                    <div class="form-group">
-                        <label for="info_key">Date Time</label>
-                        <input type="datetime-local" name="date_time" class="form-control" id="info_key" placeholder="Date">
-                    </div>
+                    @foreach($informationList as $information)
+                        <div class="form-group">
+                            <label for="{{$information->info_key}}">{{ucwords(str_replace('_',' ',$information->info_key))}}</label>
+                            <input type="text" name="{{$information->info_key}}" class="form-control" id="info_value" value="{{$information->info_value}}" />
+                        </div>
+                    @endforeach
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">

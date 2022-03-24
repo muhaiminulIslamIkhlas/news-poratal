@@ -13,6 +13,12 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+/**
+ * default
+ */
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+});
 
 /**
  * category
@@ -45,8 +51,6 @@ Route::get('/get-video/{id}',[App\Http\Controllers\API\VideoController::class, '
 Route::get('/get-all-image/{limit}',[App\Http\Controllers\API\ImageController::class, 'getAllImage']);
 Route::get('/get-image/{id}',[App\Http\Controllers\API\ImageController::class, 'getImage']);
 /**
- * default
+ * Info
  */
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::get('/get-all-info',[App\Http\Controllers\API\InformationController::class, 'getAllInfo']);
