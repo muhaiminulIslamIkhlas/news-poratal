@@ -61,6 +61,7 @@ class NewsController extends Controller
         $news->order = $request->order;
         $news->type = $request->type;
         $news->image = $imagePath;
+        $news->created_at = $request->date;
         $news->save();
         $newsDetails = new NewsDetails();
         $newsDetails->news_id = $news->id;

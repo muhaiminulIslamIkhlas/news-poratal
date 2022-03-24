@@ -35,6 +35,10 @@
                                 <textarea id="sort_description" name="sort_description">Place <em>sort</em> <u>description</u> <strong>here</strong></textarea>
                             </div>
                             <div class="form-group">
+                                <label for="date">Date Time</label>
+                                <input type="datetime-local" name="date" class="form-control" id="date" placeholder="Date Time">
+                            </div>
+                            <div class="form-group">
                                 <label for="category_id">Category</label>
                                 <select name="category_id" id="category_id" class="form-control">
                                     <option value="">--Select One--</option>

@@ -9,6 +9,8 @@ class News extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['created_at'];
+
     public function details()
     {
         return $this->hasOne(NewsDetails::class);
