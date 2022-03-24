@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 //
+Route::get('/', [\App\Http\Controllers\NewsController::class, 'test']);
 Route::group(['prefix' => 'admin'], function () {
     Route::group(['prefix' => 'news'], function () {
         Route::get('index', [\App\Http\Controllers\NewsController::class, 'index']);
@@ -98,7 +99,4 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('store', [\App\Http\Controllers\InformationController::class, 'store']);
         Route::get('delete/{id}', [\App\Http\Controllers\InformationController::class, 'delete']);
     });
-
-
-    Route::get('/', [\App\Http\Controllers\NewsController::class, 'index']);
 });

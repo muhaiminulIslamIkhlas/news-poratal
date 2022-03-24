@@ -73,4 +73,8 @@ class NewsController extends Controller
 
         return redirect('admin/news/index');
     }
+
+    public function test(){
+        echo Date('Y-m-d');
+    }
 }

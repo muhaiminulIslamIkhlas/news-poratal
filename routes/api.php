@@ -45,6 +45,10 @@ Route::get('/get-video/{id}',[App\Http\Controllers\API\VideoController::class, '
 Route::get('/get-all-image/{limit}',[App\Http\Controllers\API\ImageController::class, 'getAllImage']);
 Route::get('/get-image/{id}',[App\Http\Controllers\API\ImageController::class, 'getImage']);
 /**
+ * latest
+ */
+Route::get('/get-all-latest/{limit}/{date?}',[App\Http\Controllers\API\LatestController::class, 'getAllLatest']);
+/**
  * default
  */
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
