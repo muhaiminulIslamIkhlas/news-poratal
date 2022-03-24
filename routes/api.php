@@ -54,3 +54,7 @@ Route::get('/get-image/{id}',[App\Http\Controllers\API\ImageController::class, '
  * Info
  */
 Route::get('/get-all-info',[App\Http\Controllers\API\InformationController::class, 'getAllInfo']);
+/**
+ * latest
+ */
+Route::get('/get-all-latest/{limit}/{date?}',[App\Http\Controllers\API\LatestController::class, 'getAllLatest']);
