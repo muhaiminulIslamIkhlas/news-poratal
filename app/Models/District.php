@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class District extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     protected $guarded = [];
 
@@ -20,5 +20,15 @@ class District extends Model
     public function thanas()
     {
         return $this->hasMany(Thana::class);
+    }
+
+    public function format()
+    {
+        return [
+            'id' => $this->id,
+            'division_id' => $this->division_id,
+            'bn_name' => $this->bn_name,
+            'en_name' => $this->name,
+        ];
     }
 }

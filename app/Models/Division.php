@@ -16,4 +16,13 @@ class Division extends Model
     {
         return $this->hasMany(District::class);
     }
+
+    public function format()
+    {
+        return [
+            'id' => $this->id,
+            'bn_name' => $this->bn_name,
+            'en_name' => $this->name,
+        ];
+    }
 }

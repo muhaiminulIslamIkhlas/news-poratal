@@ -41,5 +41,6 @@ class Helper implements HelperRepositoryInterface
     public function getUpozillaByDistrict($upoId)
     {
         $upozillas = Thana::where('district_id',$upoId)->get();
+        return $upozillas;
     }
 }
