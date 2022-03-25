@@ -19,7 +19,8 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('index', [\App\Http\Controllers\NewsController::class, 'index']);
         Route::get('create', [\App\Http\Controllers\NewsController::class, 'create']);
         Route::post('store', [\App\Http\Controllers\NewsController::class, 'store']);
-
+        Route::get('get-district/{divisionID}', [\App\Http\Controllers\NewsController::class, 'getDistrictByDivId']);
+        Route::get('get-upozilla/{districtID}', [\App\Http\Controllers\NewsController::class, 'getUpozillaByDisId']);
 
         Route::group(['prefix' => 'category'], function () {
             Route::get('index', [\App\Http\Controllers\Category::class, 'index']);
@@ -40,6 +41,7 @@ Route::group(['prefix' => 'admin'], function () {
             Route::post('update', [\App\Http\Controllers\Subcategory::class, 'update']);
             Route::get('delete/{id}', [\App\Http\Controllers\Subcategory::class, 'delete']);
             Route::get('get-sub-category/{categoryId}', [\App\Http\Controllers\Subcategory::class, 'getSubCategory']);
+
         });
 
         Route::group(['prefix' => 'keyword'], function () {

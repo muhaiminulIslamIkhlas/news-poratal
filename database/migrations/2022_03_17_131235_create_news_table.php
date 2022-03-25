@@ -22,6 +22,7 @@ class CreateNewsTable extends Migration
             $table->integer('order')->nullable();
             $table->string('image')->nullable();
             $table->string('type');
+            $table->dateTime('date');
             $table->timestamps();
         });
     }

@@ -9,8 +9,6 @@ class News extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['created_at'];
-
     public function details()
     {
         return $this->hasOne(NewsDetails::class);
@@ -36,7 +34,8 @@ class News extends Model
             'category' => $this->category->name,
             'time' => $this->created_at,
             'image' => $this->image,
-            'type' => $this->type
+            'type' => $this->type,
+            'date'=>$this->date
         ];
     }
 
