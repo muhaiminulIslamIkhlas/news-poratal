@@ -98,4 +98,10 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('edit', [\App\Http\Controllers\InformationController::class, 'edit']);
         Route::post('store', [\App\Http\Controllers\InformationController::class, 'update']);
     });
+    Route::group(['prefix' => 'contact'], function () {
+        Route::get('index', [\App\Http\Controllers\ContactController::class, 'index']);
+        Route::get('create', [\App\Http\Controllers\ContactController::class, 'create']);
+        Route::post('store', [\App\Http\Controllers\ContactController::class, 'store']);
+        Route::get('delete/{id}', [\App\Http\Controllers\ContactController::class, 'delete']);
+    });
 });

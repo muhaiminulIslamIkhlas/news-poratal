@@ -58,3 +58,10 @@ Route::get('/get-all-info',[App\Http\Controllers\API\InformationController::clas
  * latest
  */
 Route::get('/get-all-latest/{limit}/{date?}',[App\Http\Controllers\API\LatestController::class, 'getAllLatest']);
+
+/**
+ * contact
+ */
+Route::get('/get-all-contact/{limit}',[App\Http\Controllers\API\ContactController::class, 'getAllContact']);
+Route::get('/get-contact/{id}',[App\Http\Controllers\API\ContactController::class, 'getContact']);
+
