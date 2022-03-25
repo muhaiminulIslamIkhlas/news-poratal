@@ -36,7 +36,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="date">Date Time</label>
-                                <input type="datetime-local" name="date" class="form-control" id="date" placeholder="Date Time">
+                                <input type="datetime-local" name="date" class="form-control" id="date"
+                                       placeholder="Date Time">
                             </div>
                             <div class="form-group">
                                 <label for="category_id">Category</label>
@@ -78,27 +79,53 @@
                             </div>
                             <div class="form-group">
                                 <label for="ticker">Ticker</label>
-                                <textarea id="ticker" name="ticker">Place <em>ticker</em> <strong>here</strong></textarea>
+                                <textarea id="ticker"
+                                          name="ticker">Place <em>ticker</em> <strong>here</strong></textarea>
                             </div>
-                            <div class="form-group">
-                                <label for="representative">Representative</label>
-                                <input type="text" name="representative" class="form-control" id="representative"
-                                       placeholder="Enter representative">
+                            <div class="row">
+                                <div class="form-group col-6">
+                                    <label for="representative">Representative</label>
+                                    <input type="text" name="representative" class="form-control" id="representative"
+                                           placeholder="Enter representative">
+                                </div>
+                                <div class="form-group col-6">
+                                    <label>Keyword</label>
+                                    <div class="select2-purple">
+                                        <select class="select2" name="keyword[]" multiple="multiple"
+                                                data-placeholder="Select keyword"
+                                                data-dropdown-css-class="select2-purple"
+                                                style="width: 100%;">
+                                            @foreach($keyWords as $keyWord)
+                                                <option value="{{$keyWord->name}}">{{$keyWord->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label>Keyword</label>
-                                <div class="select2-purple">
-                                    <select class="select2" name="keyword[]" multiple="multiple"
-                                            data-placeholder="Select keyword" data-dropdown-css-class="select2-purple"
-                                            style="width: 100%;">
-                                        @foreach($keyWords as $keyWord)
-                                            <option value="{{$keyWord->name}}">{{$keyWord->name}}</option>
+                            <div class="row">
+                                <div class="form-groupv col-4">
+                                    <label for="division">Division</label>
+                                    <select id="division" name="division" class="form-control">
+                                        <option value="">Select division</option>
+                                        @foreach($divisions as $division)
+                                            <option value="{{$division->id}}">{{$division->bn_name}}</option>
                                         @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group col-4">
+                                    <label for="district">District</label>
+                                    <select id="district" name="district" class="form-control">
+                                        <option value="">Select district</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-4">
+                                    <label for="upozilla">Upozilla</label>
+                                    <select id="upozilla" name="upozilla" class="form-control">
+                                        <option value="">Select upozilla</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
-
                         <div class="card-footer">
                             <input type="submit" class="btn btn-primary" value="Submit"/>
                         </div>
@@ -129,7 +156,7 @@
                     success: function (data) {
                         if (data) {
                             $('#sub_category_id').empty();
-                            $('#sub_category_id').append('<option hidden>Choose Sub-Category</option>');
+                            $('#sub_category_id').append('<option value="">Choose Sub-Category</option>');
                             $.each(data, function (key, item) {
                                 $('select[name="sub_category_id"]').append('<option value="' + key + '">' + item.name + '</option>');
                             });
@@ -143,53 +170,61 @@
             }
         })
 
+        $('#division').on('change', function () {
+            let divisionID = $(this).val();
+            if (divisionID) {
+                $.ajax({
+                    url: '{{URL('admin/news/get-district')}}' + '/' + divisionID,
+                    type: "GET",
+                    data: {"_token": "{{ csrf_token() }}"},
+                    dataType: "json",
+                    success: function (data) {
+                        if (data) {
+                            $('#district').empty();
+                            $('#district').append('<option value="">Choose District</option>');
+                            $.each(data, function (key, item) {
+                                $('select[name="district"]').append('<option value="' + item.id + '">' + item.bn_name + '</option>');
+                            });
+                        } else {
+                            $('#district').empty();
+                        }
+                    }
+                });
+            } else {
+                $('#sub_category_id').empty();
+            }
+        })
+
+        upozilla
+
+        $('#district').on('change', function () {
+            let districtID = $(this).val();
+            if (districtID) {
+                $.ajax({
+                    url: '{{URL('admin/news/get-upozilla')}}' + '/' + districtID,
+                    type: "GET",
+                    data: {"_token": "{{ csrf_token() }}"},
+                    dataType: "json",
+                    success: function (data) {
+                        if (data) {
+                            $('#upozilla').empty();
+                            $('#upozilla').append('<option value="">Choose upozilla</option>');
+                            $.each(data, function (key, item) {
+                                $('select[name="upozilla"]').append('<option value="' + item.id + '">' + item.bn_name + '</option>');
+                            });
+                        } else {
+                            $('#upozilla').empty();
+                        }
+                    }
+                });
+            } else {
+                $('#sub_category_id').empty();
+            }
+        })
+
         $('#sort_description').summernote()
         $('#details').summernote()
         $('#ticker').summernote()
         $('.select2').select2()
-        // $(function () {
-        //     $.validator.setDefaults({
-        //         submitHandler: function () {
-        //             alert( "Form successful submitted!" );
-        //         }
-        //     });
-        //     $('#quickForm').validate({
-        //         rules: {
-        //             email: {
-        //                 required: true,
-        //                 email: true,
-        //             },
-        //             password: {
-        //                 required: true,
-        //                 minlength: 5
-        //             },
-        //             terms: {
-        //                 required: true
-        //             },
-        //         },
-        //         messages: {
-        //             email: {
-        //                 required: "Please enter a email address",
-        //                 email: "Please enter a valid email address"
-        //             },
-        //             password: {
-        //                 required: "Please provide a password",
-        //                 minlength: "Your password must be at least 5 characters long"
-        //             },
-        //             terms: "Please accept our terms"
-        //         },
-        //         errorElement: 'span',
-        //         errorPlacement: function (error, element) {
-        //             error.addClass('invalid-feedback');
-        //             element.closest('.form-group').append(error);
-        //         },
-        //         highlight: function (element, errorClass, validClass) {
-        //             $(element).addClass('is-invalid');
-        //         },
-        //         unhighlight: function (element, errorClass, validClass) {
-        //             $(element).removeClass('is-invalid');
-        //         }
-        //     });
-        // });
     </script>
 @endsection

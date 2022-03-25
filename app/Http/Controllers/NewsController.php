@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Repositories\HelperRepositoryInterface;
+use App\Models\District;
 use App\Models\News;
 use App\Models\NewsDetails;
+use App\Models\Region;
+use App\Models\Thana;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Keyword;
@@ -28,7 +31,7 @@ class NewsController extends Controller
      */
     public function index()
     {
-        $news = News::all();
+        $news = News::orderby('date','DESC')->get();
         return view('admin.news.index', compact('news'));
     }
 
@@ -36,7 +39,8 @@ class NewsController extends Controller
     {
         $categories = Category::get();
         $keyWords = Keyword::get();
-        return view('admin.news.create', compact('categories', 'keyWords'));
+        $divisions = $this->_helepr->getDivsions();
+        return view('admin.news.create', compact('categories', 'keyWords', 'divisions'));
     }
 
     public function store(Request $request)
@@ -61,7 +65,7 @@ class NewsController extends Controller
         $news->order = $request->order;
         $news->type = $request->type;
         $news->image = $imagePath;
-        $news->created_at = $request->date;
+        $news->date = $request->date;
         $news->save();
         $newsDetails = new NewsDetails();
         $newsDetails->news_id = $news->id;
@@ -70,11 +74,29 @@ class NewsController extends Controller
         $newsDetails->representative = $request->representative;
         $newsDetails->keyword = json_encode($request->keyword);
         $newsDetails->save();
+        $region = new Region();
+        $region->news_id = $news->id;
+        $region->division = $request->division;
+        $region->district = $request->district;
+        $region->upozilla = $request->upozilla;
+        $region->save();
 
         return redirect('admin/news/index');
     }
 
-    public function test(){
+    public function getDistrictByDivId($divisionID)
+    {
+        $districts = District::where('division_id',$divisionID)->get();
+        return response()->json($districts);
+    }
+
+    public function getUpozillaByDisId($districtID){
+        $upozilla = Thana::where('district_id',$districtID)->get();
+        return response()->json($upozilla);
+    }
+
+    public function test()
+    {
         echo Date('Y-m-d');
     }
 }
