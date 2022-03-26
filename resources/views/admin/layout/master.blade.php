@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>ANews portal</title>
+    <title>{{ config('app.name', 'Laravel') }}</title>
     @include('admin.layout.partials.styles')
     @yield('styles')
 </head>
@@ -49,6 +49,22 @@
                     </form>
                 </div>
             </li>
+            <li>
+                <x-slot name="content">
+                    <!-- Authentication -->
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+
+                        <x-dropdown-link :href="route('logout')"
+                                         onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                            {{ __('Log Out') }}
+                        </x-dropdown-link>
+                    </form>
+                    Hello
+                </x-slot>
+            </li>
+
 
             <!-- Messages Dropdown Menu -->
             <li class="nav-item dropdown">

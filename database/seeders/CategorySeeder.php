@@ -14,7 +14,7 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        $catArray = ['লাইফস্টাইল', 'চাকরি', 'বিনোদন', 'প্রচ্ছদ'];
+        $catArray = ['প্রচ্ছদ','লাইফস্টাইল', 'চাকরি', 'বিনোদন'];
 
         foreach($catArray as $item){
             Category::create([
