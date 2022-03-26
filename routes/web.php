@@ -107,3 +107,4 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('delete/{id}', [\App\Http\Controllers\ContactController::class, 'delete']);
     });
 });
+Route::get('/get-filter-news/{divisionId}/{districtId?}/{upozillaId?}',[App\Http\Controllers\API\SearchController::class, 'filterNews']);
