@@ -77,3 +77,4 @@ Route::get('/get-contact/{id}',[App\Http\Controllers\API\ContactController::clas
 Route::get('/get-all-divisions',[App\Http\Controllers\API\SearchController::class, 'getDivsions']);
 Route::get('/get-all-district-by-division/{divisionId}',[App\Http\Controllers\API\SearchController::class, 'getDistrictByDivision']);
 Route::get('/get-all-upozilla-by-district/{districtId}',[App\Http\Controllers\API\SearchController::class, 'getUpozillaByDivision']);
+Route::get('/get-filter-news/{divisionId}/{districtId?}/{upozillaId?}',[App\Http\Controllers\API\SearchController::class, 'filterNews']);

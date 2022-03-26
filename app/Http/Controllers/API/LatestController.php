@@ -26,10 +26,11 @@ class LatestController extends Controller
         return response()->json($news);
     }
 
-    public function mapArray($array){
+    public function mapArray($array): array
+    {
         $mappedArray = [];
         foreach ($array as $item){
-            array_push($mappedArray,$item->news_id);
+            $mappedArray[] = $item->news_id;
         }
         return $mappedArray;
     }
