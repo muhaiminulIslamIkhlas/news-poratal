@@ -16,6 +16,12 @@
 </div><!-- /.container-fluid -->
 @endsection()
 @section('body')
+<?php
+if($category->name == 'লাইফস্টাইল' || $category->name == 'চাকরি' || $category->name == 'বিনোদন' || $category->name == 'প্রচ্ছদ'){ ?>
+    <script type="text/javascript">
+        window.location = "{{ url('/admin/news/category/list') }}";
+    </script>
+<?php } ?>
 <div class="container-fluid">
     <div class="row">
         <!-- left column -->
