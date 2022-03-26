@@ -21,7 +21,7 @@ if($category->name == 'লাইফস্টাইল' || $category->name == '�
     <script type="text/javascript">
         window.location = "{{ url('/admin/news/category/list') }}";
     </script>
-<?php } ?>
+<?php exit; } ?>
 <div class="container-fluid">
     <div class="row">
         <!-- left column -->
