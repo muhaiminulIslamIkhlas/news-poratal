@@ -14,11 +14,12 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        $catArray = ['প্রচ্ছদ','লাইফস্টাইল', 'চাকরি', 'বিনোদন'];
+        $catArray = ['প্রচ্ছদ','রাজনীিত','জাতীয়','খেলা','আন্তর্জাতিক','বিনোদন','স্বাস্থ্য','ফিচার'];
 
-        foreach($catArray as $item){
+        foreach($catArray as $key=>$item){
             Category::create([
-                'name' => $item
+                'name' => $item,
+                'order' => $key+1
             ]);
         }
 

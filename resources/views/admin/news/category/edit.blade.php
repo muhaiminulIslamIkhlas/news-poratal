@@ -41,6 +41,10 @@ if($category->name == 'লাইফস্টাইল' || $category->name == '�
                         <label for="exampleInputEmail1">Category Name</label>
                         <input type="text" name="name" class="form-control" id="exampleInputEmail1" value="<?= $category->name; ?>">
                     </div>
+                    <div class="form-group">
+                        <label for="order">Order</label>
+                        <input type="number" min="1" name="order" class="form-control" id="order" value="<?= $category->order; ?>" placeholder="Category Order">
+                    </div>
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">

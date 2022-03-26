@@ -31,7 +31,7 @@ class NewsController extends Controller
      */
     public function index()
     {
-        $news = News::orderby('date','DESC')->get();
+        $news = News::orderby('date', 'DESC')->get();
         return view('admin.news.index', compact('news'));
     }
 
@@ -46,7 +46,7 @@ class NewsController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg,webp|max:2048',
             'title' => 'required',
             'sort_description' => 'required',
             'category_id' => 'required',
@@ -86,12 +86,13 @@ class NewsController extends Controller
 
     public function getDistrictByDivId($divisionID)
     {
-        $districts = District::where('division_id',$divisionID)->get();
+        $districts = District::where('division_id', $divisionID)->get();
         return response()->json($districts);
     }
 
-    public function getUpozillaByDisId($districtID){
-        $upozilla = Thana::where('district_id',$districtID)->get();
+    public function getUpozillaByDisId($districtID)
+    {
+        $upozilla = Thana::where('district_id', $districtID)->get();
         return response()->json($upozilla);
     }
 

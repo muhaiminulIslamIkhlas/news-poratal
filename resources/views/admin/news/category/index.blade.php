@@ -42,6 +42,10 @@
                         <label for="exampleInputEmail1">Category Name</label>
                         <input type="text" name="name" class="form-control" id="exampleInputEmail1" placeholder="Category Name">
                     </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Order</label>
+                        <input type="number" min="1" name="order" class="form-control" id="exampleInputEmail1" placeholder="Category Order">
+                    </div>
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
