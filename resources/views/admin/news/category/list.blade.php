@@ -19,6 +19,7 @@
                         <tr>
                             <th>Id</th>
                             <th>Category Name</th>
+                            <th>Order</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -27,10 +28,11 @@
                             <tr>
                                 <td><?= $category->id ?></td>
                                 <td><?= $category->name; ?></td>
+                                <td><?= $category->order; ?></td>
                                 <td>
                                     <a class="btn btn-primary mt-3" href="{{Url('/admin/news/category/view', $category->id)}}"><i class="fas fa-eye fa-fw"></i></a>
-                                    <?php if($category->name != 'লাইফস্টাইল' && $category->name != 'চাকরি' && $category->name != 'বিনোদন' && $category->name != 'প্রচ্ছদ'): ?>
-                                        <a class="btn btn-success mt-3" href="{{Url('/admin/news/category/edit', $category->id)}}"><i class="fas fa-edit fa-fw"></i></a>
+                                    <a class="btn btn-success mt-3" href="{{Url('/admin/news/category/edit', $category->id)}}"><i class="fas fa-edit fa-fw"></i></a>
+                                    <?php if($category->id != 1 && $category->id != 2 && $category->id != 3 && $category->id != 4 && $category->id != 5 && $category->id != 6 && $category->id != 7 && $category->id != 8): ?>
                                         <a class="btn btn-danger mt-3" href="{{Url('/admin/news/category/delete', $category->id)}}"><i class="fas fa-trash fa-fw"></i></a>
                                     <?php endif; ?>
                                 </td>
