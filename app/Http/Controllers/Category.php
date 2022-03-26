@@ -47,7 +47,14 @@ class Category extends Controller
     }
 
     public function delete($id){
+        $catArray = ['লাইফস্টাইল', 'চাকরি', 'বিনোদন', 'প্রচ্ছদ'];
+
         $category = CategoryModel::where('id', $id)->first();
+
+        if(in_array($category->name, $catArray)){
+            return redirect('/admin/news/category/list');
+        }
+        
         $category->delete();
 
         return back();
