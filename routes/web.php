@@ -30,6 +30,46 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function () {
         Route::get('get-district/{divisionID}', [\App\Http\Controllers\NewsController::class, 'getDistrictByDivId']);
         Route::get('get-upozilla/{districtID}', [\App\Http\Controllers\NewsController::class, 'getUpozillaByDisId']);
 
+        Route::group(['prefix' => 'procchod'], function () {
+            Route::get('index', [\App\Http\Controllers\NewsController::class, 'procchod']);
+            Route::get('create', [\App\Http\Controllers\NewsController::class, 'procchodCreate']);
+        });
+
+        Route::group(['prefix' => 'rajniti'], function () {
+            Route::get('index', [\App\Http\Controllers\NewsController::class, 'rajniti']);
+            Route::get('create', [\App\Http\Controllers\NewsController::class, 'rajnitiCreate']);
+        });
+
+        Route::group(['prefix' => 'jatio'], function () {
+            Route::get('index', [\App\Http\Controllers\NewsController::class, 'jatio']);
+            Route::get('create', [\App\Http\Controllers\NewsController::class, 'jatioCreate']);
+        });
+
+        Route::group(['prefix' => 'khela'], function () {
+            Route::get('index', [\App\Http\Controllers\NewsController::class, 'khela']);
+            Route::get('create', [\App\Http\Controllers\NewsController::class, 'khelaCreate']);
+        });
+
+        Route::group(['prefix' => 'antorjatik'], function () {
+            Route::get('index', [\App\Http\Controllers\NewsController::class, 'antorjatik']);
+            Route::get('create', [\App\Http\Controllers\NewsController::class, 'antorjatikCreate']);
+        });
+
+        Route::group(['prefix' => 'binodon'], function () {
+            Route::get('index', [\App\Http\Controllers\NewsController::class, 'binodon']);
+            Route::get('create', [\App\Http\Controllers\NewsController::class, 'binodonCreate']);
+        });
+
+        Route::group(['prefix' => 'health'], function () {
+            Route::get('index', [\App\Http\Controllers\NewsController::class, 'health']);
+            Route::get('create', [\App\Http\Controllers\NewsController::class, 'healthCreate']);
+        });
+
+        Route::group(['prefix' => 'feature'], function () {
+            Route::get('index', [\App\Http\Controllers\NewsController::class, 'feature']);
+            Route::get('create', [\App\Http\Controllers\NewsController::class, 'featureCreate']);
+        });
+
         Route::group(['prefix' => 'category'], function () {
             Route::get('index', [\App\Http\Controllers\Category::class, 'index']);
             Route::post('create', [\App\Http\Controllers\Category::class, 'create']);

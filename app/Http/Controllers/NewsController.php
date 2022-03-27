@@ -15,6 +15,14 @@ use Intervention\Image\Facades\Image;
 
 class NewsController extends Controller
 {
+    public const PRCCHOD_ID = 1;
+    public const RAJNITI_ID = 2;
+    public const JATIO_ID = 3;
+    public const KHELA_ID = 4;
+    public const ANTORJATIK_ID = 5;
+    public const BINODON_ID = 6;
+    public const HEALTH_ID = 7;
+    public const FEATURE_ID = 8;
 
     /**
      * @var HelperRepositoryInterface
@@ -81,6 +89,38 @@ class NewsController extends Controller
         $region->upozilla = $request->upozilla;
         $region->save();
 
+        if($request->category_id == self::PRCCHOD_ID){
+            return redirect('admin/news/procchod/index');
+        }
+
+        if($request->category_id == self::RAJNITI_ID){
+            return redirect('admin/news/rajniti/index');
+        }
+
+        if($request->category_id == self::JATIO_ID){
+            return redirect('admin/news/jatio/index');
+        }
+
+        if($request->category_id == self::KHELA_ID){
+            return redirect('admin/news/khela/index');
+        }
+
+        if($request->category_id == self::ANTORJATIK_ID){
+            return redirect('admin/news/antorjatik/index');
+        }
+
+        if($request->category_id == self::BINODON_ID){
+            return redirect('admin/news/binodon/index');
+        }
+
+        if($request->category_id == self::HEALTH_ID){
+            return redirect('admin/news/health/index');
+        }
+
+        if($request->category_id == self::FEATURE_ID){
+            return redirect('admin/news/feature/index');
+        }
+
         return redirect('admin/news/index');
     }
 
@@ -94,6 +134,118 @@ class NewsController extends Controller
     {
         $upozilla = Thana::where('district_id', $districtID)->get();
         return response()->json($upozilla);
+    }
+
+    public function procchod()
+    {
+        $news = News::where('category_id',self::PRCCHOD_ID)->orderby('date', 'DESC')->get();
+        return view('admin.news.procchod.index', compact('news'));
+    }
+
+    public function procchodCreate()
+    {
+        $categories = Category::get();
+        $keyWords = Keyword::get();
+        $divisions = $this->_helepr->getDivsions();
+        return view('admin.news.procchod.create', compact('categories', 'keyWords', 'divisions'));
+    }
+
+    public function rajniti()
+    {
+        $news = News::where('category_id',self::RAJNITI_ID)->orderby('date', 'DESC')->get();
+        return view('admin.news.rajniti.index', compact('news'));
+    }
+
+    public function rajnitiCreate()
+    {
+        $categories = Category::get();
+        $keyWords = Keyword::get();
+        $divisions = $this->_helepr->getDivsions();
+        return view('admin.news.rajniti.create', compact('categories', 'keyWords', 'divisions'));
+    }
+
+    public function jatio()
+    {
+        $news = News::where('category_id',self::JATIO_ID)->orderby('date', 'DESC')->get();
+        return view('admin.news.jatio.index', compact('news'));
+    }
+
+    public function jatioCreate()
+    {
+        $categories = Category::get();
+        $keyWords = Keyword::get();
+        $divisions = $this->_helepr->getDivsions();
+        return view('admin.news.jatio.create', compact('categories', 'keyWords', 'divisions'));
+    }
+
+    public function khela()
+    {
+        $news = News::where('category_id',self::KHELA_ID)->orderby('date', 'DESC')->get();
+        return view('admin.news.khela.index', compact('news'));
+    }
+
+    public function khelaCreate()
+    {
+        $categories = Category::get();
+        $keyWords = Keyword::get();
+        $divisions = $this->_helepr->getDivsions();
+        return view('admin.news.khela.create', compact('categories', 'keyWords', 'divisions'));
+    }
+
+    public function antorjatik()
+    {
+        $news = News::where('category_id',self::ANTORJATIK_ID)->orderby('date', 'DESC')->get();
+        return view('admin.news.antorjatik.index', compact('news'));
+    }
+
+    public function antorjatikCreate()
+    {
+        $categories = Category::get();
+        $keyWords = Keyword::get();
+        $divisions = $this->_helepr->getDivsions();
+        return view('admin.news.antorjatik.create', compact('categories', 'keyWords', 'divisions'));
+    }
+
+    public function binodon()
+    {
+        $news = News::where('category_id',self::BINODON_ID)->orderby('date', 'DESC')->get();
+        return view('admin.news.binodon.index', compact('news'));
+    }
+
+    public function binodonCreate()
+    {
+        $categories = Category::get();
+        $keyWords = Keyword::get();
+        $divisions = $this->_helepr->getDivsions();
+        return view('admin.news.binodon.create', compact('categories', 'keyWords', 'divisions'));
+    }
+
+    public function health()
+    {
+        $news = News::where('category_id',self::HEALTH_ID)->orderby('date', 'DESC')->get();
+        return view('admin.news.health.index', compact('news'));
+    }
+
+    public function healthCreate()
+    {
+        $categories = Category::get();
+        $keyWords = Keyword::get();
+        $divisions = $this->_helepr->getDivsions();
+        return view('admin.news.health.create', compact('categories', 'keyWords', 'divisions'));
+    }
+
+    public function feature()
+    {
+        $news = News::where('category_id',self::FEATURE_ID)->orderby('date', 'DESC')->get();
+        return view('admin.news.feature.index', compact('news'));
+    }
+
+    public function featureCreate()
+    {
+        $categories = Category::get();
+        $keyWords = Keyword::get();
+        $divisions = $this->_helepr->getDivsions();
+        return view('admin.news.feature.create', compact('categories', 'keyWords', 'divisions'));
     }
 
     public function test()

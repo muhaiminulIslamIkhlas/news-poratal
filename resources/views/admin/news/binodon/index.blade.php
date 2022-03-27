@@ -10,7 +10,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">All News lists</h3>
+                        <h3 class="card-title">All বিনোদন news lists</h3>
                     </div>
                     <div class="p-3">
                         <table id="categorylist" class="table table-bordered table-striped">
@@ -22,24 +22,24 @@
                                 <th>Type</th>
                                 <th>Category</th>
                                 <th>Date and Time</th>
-{{--                                <th>Action</th>--}}
+                                {{--                                <th>Action</th>--}}
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($news as $item)
-                            <tr>
-                                <td>{{$item->title}}</td>
-                                <td>{!! $item->sort_description !!}</td>
-                                <td>{{$item->order}}</td>
-                                <td>{{$item->type}}</td>
-                                <td>{{$item->category->name}} </td>
-                                <td>{{$item->created_at->diffForHumans()}}({{$item->created_at}}) </td>
-{{--                                <td>--}}
-{{--                                    <a class="btn btn-primary mt-3" href="{{Url('/admin/news/category/view', $category->id)}}"><i class="fas fa-eye fa-fw"></i></a>--}}
-{{--                                    <a class="btn btn-success mt-3" href="{{Url('/admin/news/category/edit', $category->id)}}"><i class="fas fa-edit fa-fw"></i></a>--}}
-{{--                                    <a class="btn btn-danger mt-3" href="{{Url('/admin/news/category/delete', $category->id)}}"><i class="fas fa-trash fa-fw"></i></a>--}}
-{{--                                </td>--}}
-                            </tr>
+                                <tr>
+                                    <td>{{$item->title}}</td>
+                                    <td>{!! $item->sort_description !!}</td>
+                                    <td>{{$item->order}}</td>
+                                    <td>{{$item->type}}</td>
+                                    <td>{{$item->category->name}} </td>
+                                    <td>{{$item->created_at->diffForHumans()}}({{$item->created_at}}) </td>
+                                    {{--                                <td>--}}
+                                    {{--                                    <a class="btn btn-primary mt-3" href="{{Url('/admin/news/category/view', $category->id)}}"><i class="fas fa-eye fa-fw"></i></a>--}}
+                                    {{--                                    <a class="btn btn-success mt-3" href="{{Url('/admin/news/category/edit', $category->id)}}"><i class="fas fa-edit fa-fw"></i></a>--}}
+                                    {{--                                    <a class="btn btn-danger mt-3" href="{{Url('/admin/news/category/delete', $category->id)}}"><i class="fas fa-trash fa-fw"></i></a>--}}
+                                    {{--                                </td>--}}
+                                </tr>
 
                             @endforeach
                             </tbody>
