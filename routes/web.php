@@ -154,6 +154,12 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function () {
         Route::post('store', [\App\Http\Controllers\ContactController::class, 'store']);
         Route::get('delete/{id}', [\App\Http\Controllers\ContactController::class, 'delete']);
     });
+    Route::group(['prefix' => 'user'], function () {
+        Route::get('index', [\App\Http\Controllers\UserController::class, 'index']);
+        Route::get('create', [\App\Http\Controllers\UserController::class, 'create']);
+        Route::post('store', [\App\Http\Controllers\UserController::class, 'store']);
+        Route::get('delete/{id}', [\App\Http\Controllers\UserController::class, 'delete']);
+    });
 });
 
 require __DIR__.'/auth.php';
