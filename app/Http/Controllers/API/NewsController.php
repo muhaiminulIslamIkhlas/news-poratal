@@ -12,7 +12,7 @@ class NewsController extends Controller
 {
     public function getCategory(): \Illuminate\Http\JsonResponse
     {
-        $categories = Category::with('subCategories')->get();
+        $categories = Category::with('subCategories')->orderBy('order','ASC')->get();
         return response()->json([$categories]);
     }
 

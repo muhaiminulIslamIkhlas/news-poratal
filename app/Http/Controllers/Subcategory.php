@@ -72,7 +72,7 @@ class Subcategory extends Controller
 
     public function getSubCategory($categoryId): \Illuminate\Http\JsonResponse
     {
-        $subCategory = SubcategoryModel::where('id', $categoryId)->get();
+        $subCategory = SubcategoryModel::where('category_id', $categoryId)->get();
         return response()->json($subCategory);
     }
 }
