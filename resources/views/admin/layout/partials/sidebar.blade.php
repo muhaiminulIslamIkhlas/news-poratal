@@ -58,12 +58,29 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{url('/register')}}" class="nav-link">
+                    <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
-                            Register new user
+                            User
+                            <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
+                    <ul class="nav nav-treeview">
+                        <?php if(\Illuminate\Support\Facades\Auth::user()->id == 1): ?>
+                        <li class="nav-item">
+                            <a href="{{URL('admin/user/create')}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Create User</p>
+                            </a>
+                        </li>
+                        <?php endif; ?>
+                        <li class="nav-item">
+                            <a href="{{URL('admin/user/index')}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>All User List</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
