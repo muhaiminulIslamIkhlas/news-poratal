@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 class LatestController extends Controller
 {
-    public function getAllLatest($limit, $date = '')
+    public function getAllSorbadhik($limit, $date = '')
     {
         if ($date) {
             $latest = Latest::select('news_id')->where('date', $date)->orderBy('count', 'DESC')->take($limit)->get();
@@ -33,5 +33,11 @@ class LatestController extends Controller
             $mappedArray[] = $item->news_id;
         }
         return $mappedArray;
+    }
+
+    public function getAllLatest($limit,$date): \Illuminate\Http\JsonResponse
+    {
+        $latest = News::whereRaw("DATE_FORMAT(date,'%Y-%m-%d') like ?", ["%$date%"])->where('type','latest')->orderBy('order','ASC')->take($limit)->get()->map->format();
+        return response()->json($latest);
     }
 }

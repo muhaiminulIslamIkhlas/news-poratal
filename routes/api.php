@@ -61,6 +61,11 @@ Route::get('/get-image/{id}',[App\Http\Controllers\API\ImageController::class, '
 Route::get('/get-all-info',[App\Http\Controllers\API\InformationController::class, 'getAllInfo']);
 
 /**
+ * Sorbadhik
+ */
+Route::get('/get-all-sorbadhik/{limit}/{date?}',[App\Http\Controllers\API\LatestController::class, 'getAllSorbadhik']);
+
+/**
  * latest
  */
 Route::get('/get-all-latest/{limit}/{date?}',[App\Http\Controllers\API\LatestController::class, 'getAllLatest']);

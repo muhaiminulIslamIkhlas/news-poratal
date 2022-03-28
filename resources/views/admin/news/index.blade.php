@@ -33,7 +33,7 @@
                                 <td>{{$item->order}}</td>
                                 <td>{{$item->type}}</td>
                                 <td>{{$item->category->name}} </td>
-                                <td>{{$item->created_at->diffForHumans()}}({{$item->created_at}}) </td>
+                                <td>{{$item->date}}</td>
 {{--                                <td>--}}
 {{--                                    <a class="btn btn-primary mt-3" href="{{Url('/admin/news/category/view', $category->id)}}"><i class="fas fa-eye fa-fw"></i></a>--}}
 {{--                                    <a class="btn btn-success mt-3" href="{{Url('/admin/news/category/edit', $category->id)}}"><i class="fas fa-edit fa-fw"></i></a>--}}
