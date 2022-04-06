@@ -20,6 +20,7 @@ class CreateNewsDetailsTable extends Migration
             $table->text('ticker');
             $table->string('representative');
             $table->string('keyword');
+            $table->text('shoulder');
             $table->timestamps();
         });
 

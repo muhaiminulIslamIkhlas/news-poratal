@@ -55,7 +55,7 @@ class NewsController extends Controller
     {
         $validatedData = $request->validate([
             'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg,webp|max:2048',
-            'title' => 'required',
+            'title' => 'required|max:255',
             'sort_description' => 'required',
             'category_id' => 'required',
             'type' => 'required',
@@ -80,6 +80,7 @@ class NewsController extends Controller
         $newsDetails->details = $request->details;
         $newsDetails->ticker = $request->ticker;
         $newsDetails->representative = $request->representative;
+        $newsDetails->shoulder = $request->shoulder;
         $newsDetails->keyword = json_encode($request->keyword);
         $newsDetails->save();
         $region = new Region();
@@ -89,39 +90,88 @@ class NewsController extends Controller
         $region->upozilla = $request->upozilla;
         $region->save();
 
-        if($request->category_id == self::PRCCHOD_ID){
-            return redirect('admin/news/procchod/index');
-        }
+        return redirect('admin/news/index-by-category/' . $request->category_id . '/' . $request->category_name);
+    }
 
-        if($request->category_id == self::RAJNITI_ID){
-            return redirect('admin/news/rajniti/index');
-        }
+    public function createByCategory($categoryId, $categoryName)
+    {
+        $keyWords = Keyword::get();
+        $divisions = $this->_helepr->getDivsions();
+        return view('admin.news.add-by-category.create', compact('categoryId', 'keyWords', 'divisions', 'categoryName'));
+    }
 
-        if($request->category_id == self::JATIO_ID){
-            return redirect('admin/news/jatio/index');
-        }
+    public function getList($categoryId, $categoryName)
+    {
+        $news = News::where('category_id', $categoryId)->orderby('date', 'DESC')->get();
+        return view('admin.news.add-by-category.index', compact('news', 'categoryName'));
+    }
 
-        if($request->category_id == self::KHELA_ID){
-            return redirect('admin/news/khela/index');
-        }
+    public function edit($newsId, $categoryName)
+    {
+        $newskeyWordJson = NewsDetails::select('keyword')->where('news_id', $newsId)->first();
+        $newsKeywords = json_decode($newskeyWordJson->keyword);
+        $keyWords = Keyword::get();
+        $news = News::find($newsId);
+        $divisions = $this->_helepr->getDivsions();
+        return view('admin.news.add-by-category.edit', compact('news', 'keyWords', 'divisions', 'newsKeywords', 'categoryName'));
+    }
 
-        if($request->category_id == self::ANTORJATIK_ID){
-            return redirect('admin/news/antorjatik/index');
-        }
+    public function delete($newsId)
+    {
+        $news = News::find($newsId);
+        $news->delete();
+        return back();
+    }
 
-        if($request->category_id == self::BINODON_ID){
-            return redirect('admin/news/binodon/index');
-        }
+    public function update(Request $request)
+    {
+        $validatedData = $request->validate([
+            'image' => 'image|mimes:jpg,png,jpeg,gif,svg,webp|max:2048',
+            'title' => 'required|max:255',
+            'sort_description' => 'required',
+            'category_id' => 'required',
+            'type' => 'required',
+            'details' => 'required',
+            'ticker' => 'required',
+            'representative' => 'required',
+            'keyword' => 'required',
+        ]);
 
-        if($request->category_id == self::HEALTH_ID){
-            return redirect('admin/news/health/index');
-        }
 
-        if($request->category_id == self::FEATURE_ID){
-            return redirect('admin/news/feature/index');
+        $news = News::find($request->id);
+        $news->title = $request->title;
+        $news->sort_description = $request->sort_description;
+        $news->category_id = $request->category_id;
+        $news->sub_category_id = $request->sub_category_id;
+        $news->order = $request->order;
+        $news->type = $request->type;
+        if ($request->hasFile('image')) {
+            $imagePath = $this->_helepr->imageUpload($request->file('image'));
+            $news->image = $imagePath;
         }
+        $news->date = $request->date;
+        $news->save();
+        $newsDetails = NewsDetails::where('news_id', $request->id)->first();
+        $newsDetails->details = $request->details;
+        $newsDetails->ticker = $request->ticker;
+        $newsDetails->representative = $request->representative;
+        $newsDetails->shoulder = $request->shoulder;
+        $newsDetails->keyword = json_encode($request->keyword);
+        $newsDetails->save();
+        $region = Region::where('news_id', $request->id)->first();
+        $region->news_id = $news->id;
+        $region->division = $request->division;
+        $region->district = $request->district;
+        $region->upozilla = $request->upozilla;
+        $region->save();
 
-        return redirect('admin/news/index');
+        return redirect('admin/news/index-by-category/' . $request->category_id . '/' . $request->categoryName);
+    }
+
+    public function view($newsId)
+    {
+        $news = News::find($newsId);
+        return view('admin.news.add-by-category.view', compact('news'));
     }
 
     public function getDistrictByDivId($divisionID)
@@ -136,116 +186,19 @@ class NewsController extends Controller
         return response()->json($upozilla);
     }
 
-    public function procchod()
+    public function getKeyWord($newsId)
     {
-        $news = News::where('category_id',self::PRCCHOD_ID)->orderby('date', 'DESC')->get();
-        return view('admin.news.procchod.index', compact('news'));
-    }
+        $newskeyWordJson = NewsDetails::select('keyword')->where('news_id', $newsId)->first();
+        $keywords = Keyword::get();
+        $newsKeywords = json_decode($newskeyWordJson->keyword);
 
-    public function procchodCreate()
-    {
-        $categories = Category::get();
-        $keyWords = Keyword::get();
-        $divisions = $this->_helepr->getDivsions();
-        return view('admin.news.procchod.create', compact('categories', 'keyWords', 'divisions'));
-    }
+        $html = '';
+        foreach ($keywords as $keyWord) {
+            $selected = in_array($keyWord->name, $newsKeywords) ? 'selected' : '';
+            $html .= '<option value"' . $keyWord->id . ' ' . $selected . '>' . $keyWord->name . '</option>';
+        }
 
-    public function rajniti()
-    {
-        $news = News::where('category_id',self::RAJNITI_ID)->orderby('date', 'DESC')->get();
-        return view('admin.news.rajniti.index', compact('news'));
-    }
-
-    public function rajnitiCreate()
-    {
-        $categories = Category::get();
-        $keyWords = Keyword::get();
-        $divisions = $this->_helepr->getDivsions();
-        return view('admin.news.rajniti.create', compact('categories', 'keyWords', 'divisions'));
-    }
-
-    public function jatio()
-    {
-        $news = News::where('category_id',self::JATIO_ID)->orderby('date', 'DESC')->get();
-        return view('admin.news.jatio.index', compact('news'));
-    }
-
-    public function jatioCreate()
-    {
-        $categories = Category::get();
-        $keyWords = Keyword::get();
-        $divisions = $this->_helepr->getDivsions();
-        return view('admin.news.jatio.create', compact('categories', 'keyWords', 'divisions'));
-    }
-
-    public function khela()
-    {
-        $news = News::where('category_id',self::KHELA_ID)->orderby('date', 'DESC')->get();
-        return view('admin.news.khela.index', compact('news'));
-    }
-
-    public function khelaCreate()
-    {
-        $categories = Category::get();
-        $keyWords = Keyword::get();
-        $divisions = $this->_helepr->getDivsions();
-        return view('admin.news.khela.create', compact('categories', 'keyWords', 'divisions'));
-    }
-
-    public function antorjatik()
-    {
-        $news = News::where('category_id',self::ANTORJATIK_ID)->orderby('date', 'DESC')->get();
-        return view('admin.news.antorjatik.index', compact('news'));
-    }
-
-    public function antorjatikCreate()
-    {
-        $categories = Category::get();
-        $keyWords = Keyword::get();
-        $divisions = $this->_helepr->getDivsions();
-        return view('admin.news.antorjatik.create', compact('categories', 'keyWords', 'divisions'));
-    }
-
-    public function binodon()
-    {
-        $news = News::where('category_id',self::BINODON_ID)->orderby('date', 'DESC')->get();
-        return view('admin.news.binodon.index', compact('news'));
-    }
-
-    public function binodonCreate()
-    {
-        $categories = Category::get();
-        $keyWords = Keyword::get();
-        $divisions = $this->_helepr->getDivsions();
-        return view('admin.news.binodon.create', compact('categories', 'keyWords', 'divisions'));
-    }
-
-    public function health()
-    {
-        $news = News::where('category_id',self::HEALTH_ID)->orderby('date', 'DESC')->get();
-        return view('admin.news.health.index', compact('news'));
-    }
-
-    public function healthCreate()
-    {
-        $categories = Category::get();
-        $keyWords = Keyword::get();
-        $divisions = $this->_helepr->getDivsions();
-        return view('admin.news.health.create', compact('categories', 'keyWords', 'divisions'));
-    }
-
-    public function feature()
-    {
-        $news = News::where('category_id',self::FEATURE_ID)->orderby('date', 'DESC')->get();
-        return view('admin.news.feature.index', compact('news'));
-    }
-
-    public function featureCreate()
-    {
-        $categories = Category::get();
-        $keyWords = Keyword::get();
-        $divisions = $this->_helepr->getDivsions();
-        return view('admin.news.feature.create', compact('categories', 'keyWords', 'divisions'));
+        return response()->json($html);
     }
 
     public function test()

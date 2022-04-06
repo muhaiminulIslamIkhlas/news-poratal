@@ -19,6 +19,7 @@
                             <tr>
                                 <th>Sub Category Name</th>
                                 <th>Parent Category</th>
+                                <th>Visibility</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -27,6 +28,17 @@
                             <tr>
                                 <td><?= $subcategory->name; ?></td>
                                 <td><?= $subcategory->category_name; ?></td>
+                                <td>
+                                    @if ($subcategory->visible)
+                                        <a href="{{ URL('admin/news/subcategory/invisible/' . $subcategory->id) }}">
+                                            <span class="badge badge-success">Visible</span>
+                                        </a>
+                                    @else
+                                        <a href="{{ URL('admin/news/subcategory/visible/' . $subcategory->id) }}">
+                                            <span class="badge badge-danger">Hidden</span>
+                                        </a>
+                                    @endif
+                                </td>
                                 <td>
                                     <a class="btn btn-primary mt-3"
                                        href="{{Url('/admin/news/subcategory/view', $subcategory->id)}}"><i

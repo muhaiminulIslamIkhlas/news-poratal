@@ -75,4 +75,20 @@ class Subcategory extends Controller
         $subCategory = SubcategoryModel::where('category_id', $categoryId)->get();
         return response()->json($subCategory);
     }
+
+    public function visible($id)
+    {
+        $subCategory = SubcategoryModel::where('id', $id)->first();
+        $subCategory->visible = 1;
+        $subCategory->save();
+        return back();
+    }
+
+    public function invisible($id)
+    {
+        $subCategory = SubcategoryModel::where('id', $id)->first();
+        $subCategory->visible = 0;
+        $subCategory->save();
+        return back();
+    }
 }

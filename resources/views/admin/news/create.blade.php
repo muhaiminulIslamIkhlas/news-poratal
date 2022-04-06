@@ -195,8 +195,6 @@
             }
         })
 
-        upozilla
-
         $('#district').on('change', function () {
             let districtID = $(this).val();
             if (districtID) {

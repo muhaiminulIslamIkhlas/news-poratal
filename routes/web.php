@@ -27,48 +27,17 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function () {
         Route::get('index', [\App\Http\Controllers\NewsController::class, 'index']);
         Route::get('create', [\App\Http\Controllers\NewsController::class, 'create']);
         Route::post('store', [\App\Http\Controllers\NewsController::class, 'store']);
+        Route::post('update', [\App\Http\Controllers\NewsController::class, 'update']);
         Route::get('get-district/{divisionID}', [\App\Http\Controllers\NewsController::class, 'getDistrictByDivId']);
         Route::get('get-upozilla/{districtID}', [\App\Http\Controllers\NewsController::class, 'getUpozillaByDisId']);
 
-        Route::group(['prefix' => 'procchod'], function () {
-            Route::get('index', [\App\Http\Controllers\NewsController::class, 'procchod']);
-            Route::get('create', [\App\Http\Controllers\NewsController::class, 'procchodCreate']);
-        });
 
-        Route::group(['prefix' => 'rajniti'], function () {
-            Route::get('index', [\App\Http\Controllers\NewsController::class, 'rajniti']);
-            Route::get('create', [\App\Http\Controllers\NewsController::class, 'rajnitiCreate']);
-        });
-
-        Route::group(['prefix' => 'jatio'], function () {
-            Route::get('index', [\App\Http\Controllers\NewsController::class, 'jatio']);
-            Route::get('create', [\App\Http\Controllers\NewsController::class, 'jatioCreate']);
-        });
-
-        Route::group(['prefix' => 'khela'], function () {
-            Route::get('index', [\App\Http\Controllers\NewsController::class, 'khela']);
-            Route::get('create', [\App\Http\Controllers\NewsController::class, 'khelaCreate']);
-        });
-
-        Route::group(['prefix' => 'antorjatik'], function () {
-            Route::get('index', [\App\Http\Controllers\NewsController::class, 'antorjatik']);
-            Route::get('create', [\App\Http\Controllers\NewsController::class, 'antorjatikCreate']);
-        });
-
-        Route::group(['prefix' => 'binodon'], function () {
-            Route::get('index', [\App\Http\Controllers\NewsController::class, 'binodon']);
-            Route::get('create', [\App\Http\Controllers\NewsController::class, 'binodonCreate']);
-        });
-
-        Route::group(['prefix' => 'health'], function () {
-            Route::get('index', [\App\Http\Controllers\NewsController::class, 'health']);
-            Route::get('create', [\App\Http\Controllers\NewsController::class, 'healthCreate']);
-        });
-
-        Route::group(['prefix' => 'feature'], function () {
-            Route::get('index', [\App\Http\Controllers\NewsController::class, 'feature']);
-            Route::get('create', [\App\Http\Controllers\NewsController::class, 'featureCreate']);
-        });
+        Route::get('create-by-category/{categoryId}/{categoryName}', [\App\Http\Controllers\NewsController::class, 'createByCategory']);
+        Route::get('index-by-category/{categoryId}/{categoryName}', [\App\Http\Controllers\NewsController::class, 'getList']);
+        Route::get('delete/{newsId}/', [\App\Http\Controllers\NewsController::class, 'delete']);
+        Route::get('edit/{newsId}/{categoryName}', [\App\Http\Controllers\NewsController::class, 'edit']);
+        Route::get('view/{newsId}/', [\App\Http\Controllers\NewsController::class, 'view']);
+        Route::get('keyword-by-id/{newsId}/', [\App\Http\Controllers\NewsController::class, 'getKeyWord']);
 
         Route::group(['prefix' => 'category'], function () {
             Route::get('index', [\App\Http\Controllers\Category::class, 'index']);
@@ -78,6 +47,8 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function () {
             Route::get('edit/{id}', [\App\Http\Controllers\Category::class, 'edit']);
             Route::post('update', [\App\Http\Controllers\Category::class, 'update']);
             Route::get('delete/{id}', [\App\Http\Controllers\Category::class, 'delete']);
+            Route::get('visible/{id}', [\App\Http\Controllers\Category::class, 'visible']);
+            Route::get('invisible/{id}', [\App\Http\Controllers\Category::class, 'invisible']);
         });
 
         Route::group(['prefix' => 'subcategory'], function () {
@@ -89,6 +60,8 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function () {
             Route::post('update', [\App\Http\Controllers\Subcategory::class, 'update']);
             Route::get('delete/{id}', [\App\Http\Controllers\Subcategory::class, 'delete']);
             Route::get('get-sub-category/{categoryId}', [\App\Http\Controllers\Subcategory::class, 'getSubCategory']);
+            Route::get('visible/{id}', [\App\Http\Controllers\Subcategory::class, 'visible']);
+            Route::get('invisible/{id}', [\App\Http\Controllers\Subcategory::class, 'invisible']);
 
         });
 

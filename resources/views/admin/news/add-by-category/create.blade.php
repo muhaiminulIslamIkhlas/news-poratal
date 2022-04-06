@@ -1,10 +1,10 @@
 @extends('admin.layout.master')
 @section('styles')
-    <link rel="stylesheet" href="{{asset("assets/plugins/summernote/summernote-bs4.min.css")}}">
-    <link rel="stylesheet" href="{{asset("assets/plugins/codemirror/codemirror.css")}}">
-    <link rel="stylesheet" href="{{asset("assets/plugins/codemirror/theme/monokai.css")}}">
-    <link rel="stylesheet" href="{{asset("assets/plugins/simplemde/simplemde.min.css")}}">
-    <link rel="stylesheet" href="{{asset("assets/plugins/select2/css/select2.min.css")}}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/summernote/summernote-bs4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/codemirror/codemirror.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/codemirror/theme/monokai.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/simplemde/simplemde.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/select2/css/select2.min.css') }}">
 @endsection
 @section('body')
     <div class="container-fluid">
@@ -12,7 +12,7 @@
             <div class="col-md-12">
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">Create News</h3>
+                        <h3 class="card-title">Create {{ $categoryName }} News</h3>
                     </div>
                     @if ($errors->any())
                         <ul class="mt-3">
@@ -21,33 +21,38 @@
                             @endforeach
                         </ul>
                     @endif
-                    <form id="quickForm" method="post" action="{{URL('admin/news/store')}}"
-                          enctype="multipart/form-data">
+                    <form id="quickForm" method="post" action="{{ URL('admin/news/store') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="title">Title</label>
-                                <input type="text" name="title" class="form-control" id="title"
-                                       placeholder="Enter title">
+                                <input type="text" name="title" class="form-control" id="title" placeholder="Enter title">
                             </div>
                             <div class="form-group">
                                 <label for="sort_description">Sort Description</label>
-                                <textarea id="sort_description" name="sort_description">Place <em>sort</em> <u>description</u> <strong>here</strong></textarea>
+                                <textarea id="sort_description"
+                                    name="sort_description">Place <em>sort</em> <u>description</u> <strong>here</strong></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="date">Date Time</label>
                                 <input type="datetime-local" name="date" class="form-control" id="date"
-                                       placeholder="Date Time">
+                                    placeholder="Date Time">
                             </div>
-                            <input type="hidden" name="category_id" value="1" />
+                            <input type="hidden" id="category_id" name="category_id" value="{{ $categoryId }}" />
+                            <input type="hidden" id="category_name" name="category_name" value="{{ $categoryName }}" />
+                            <div class="form-group">
+                                <label for="sub_category_id">Sub Category</label>
+                                <select name="sub_category_id" id="sub_category_id" class="form-control">
+                                </select>
+                            </div>
                             <div class="form-group">
                                 <label for="order">Order</label>
                                 <input type="number" min="1" name="order" class="form-control" id="order"
-                                       placeholder="Enter order">
+                                    placeholder="Enter order">
                             </div>
                             <div class="form-group">
                                 <label for="image">Image</label>
-                                <input type="file" class="d-block" name="image" id="image"/>
+                                <input type="file" class="d-block" name="image" id="image" />
                             </div>
                             <div class="form-group">
                                 <label for="type">Type</label>
@@ -66,24 +71,26 @@
                             </div>
                             <div class="form-group">
                                 <label for="ticker">Ticker</label>
-                                <textarea id="ticker"
-                                          name="ticker">Place <em>ticker</em> <strong>here</strong></textarea>
+                                <textarea id="ticker" name="ticker">Place <em>ticker</em> <strong>here</strong></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="ticker">Shoulder</label>
+                                <textarea id="shoulder" name="shoulder">Place <em>shoulder</em> <strong>here</strong></textarea>
                             </div>
                             <div class="row">
                                 <div class="form-group col-6">
                                     <label for="representative">Representative</label>
                                     <input type="text" name="representative" class="form-control" id="representative"
-                                           placeholder="Enter representative">
+                                        placeholder="Enter representative">
                                 </div>
                                 <div class="form-group col-6">
                                     <label>Keyword</label>
                                     <div class="select2-purple">
                                         <select class="select2" name="keyword[]" multiple="multiple"
-                                                data-placeholder="Select keyword"
-                                                data-dropdown-css-class="select2-purple"
-                                                style="width: 100%;">
-                                            @foreach($keyWords as $keyWord)
-                                                <option value="{{$keyWord->name}}">{{$keyWord->name}}</option>
+                                            data-placeholder="Select keyword" data-dropdown-css-class="select2-purple"
+                                            style="width: 100%;">
+                                            @foreach ($keyWords as $keyWord)
+                                                <option value="{{ $keyWord->name }}">{{ $keyWord->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -94,8 +101,8 @@
                                     <label for="division">Division</label>
                                     <select id="division" name="division" class="form-control">
                                         <option value="">Select division</option>
-                                        @foreach($divisions as $division)
-                                            <option value="{{$division->id}}">{{$division->bn_name}}</option>
+                                        @foreach ($divisions as $division)
+                                            <option value="{{ $division->id }}">{{ $division->bn_name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -114,7 +121,7 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <input type="submit" class="btn btn-primary" value="Submit"/>
+                            <input type="submit" class="btn btn-primary" value="Submit" />
                         </div>
                     </form>
                 </div>
@@ -125,52 +132,55 @@
     </div>
 @endsection
 @section('scripts')
-    <script src="{{asset('assets/plugins/jquery-validation/jquery.validate.min.js')}}"></script>
-    <script src="{{asset('assets/plugins/jquery-validation/additional-methods.min.js')}}"></script>
-    <script src="{{asset('assets/plugins/summernote/summernote-bs4.min.js')}}"></script>
-    <script src="{{asset('assets/plugins/select2/js/select2.full.min.js')}}"></script>
-    <script src="{{asset('assets/plugins/bs-custom-file-input/bs-custom-file-input.min.js')}}"></script>
+    <script src="{{ asset('assets/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/jquery-validation/additional-methods.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/summernote/summernote-bs4.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/select2/js/select2.full.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
 
     <script>
-        $('#category_id').on('change', function () {
-            let categoryID = $(this).val();
-            if (categoryID) {
-                $.ajax({
-                    url: '{{URL('admin/news/subcategory/get-sub-category/')}}' + '/' + categoryID,
-                    type: "GET",
-                    data: {"_token": "{{ csrf_token() }}"},
-                    dataType: "json",
-                    success: function (data) {
-                        if (data) {
-                            $('#sub_category_id').empty();
-                            $('#sub_category_id').append('<option value="">Choose Sub-Category</option>');
-                            $.each(data, function (key, item) {
-                                $('select[name="sub_category_id"]').append('<option value="' + key + '">' + item.name + '</option>');
-                            });
-                        } else {
-                            $('#sub_category_id').empty();
-                        }
+        let categoryID = $('#category_id').val();
+        if (categoryID) {
+            $.ajax({
+                url: '{{ URL('admin/news/subcategory/get-sub-category/') }}' + '/' + categoryID,
+                type: "GET",
+                data: {
+                    "_token": "{{ csrf_token() }}"
+                },
+                dataType: "json",
+                success: function(data) {
+                    if (data) {
+                        $('#sub_category_id').empty();
+                        $('#sub_category_id').append('<option value="">Choose Sub-Category</option>');
+                        $.each(data, function(key, item) {
+                            $('select[name="sub_category_id"]').append('<option value="' + item.id + '">' +
+                                item.name + '</option>');
+                        });
+                    } else {
+                        $('#sub_category_id').empty();
                     }
-                });
-            } else {
-                $('#sub_category_id').empty();
-            }
-        })
-
-        $('#division').on('change', function () {
+                }
+            });
+        } else {
+            $('#sub_category_id').empty();
+        }
+        $('#division').on('change', function() {
             let divisionID = $(this).val();
             if (divisionID) {
                 $.ajax({
-                    url: '{{URL('admin/news/get-district')}}' + '/' + divisionID,
+                    url: '{{ URL('admin/news/get-district') }}' + '/' + divisionID,
                     type: "GET",
-                    data: {"_token": "{{ csrf_token() }}"},
+                    data: {
+                        "_token": "{{ csrf_token() }}"
+                    },
                     dataType: "json",
-                    success: function (data) {
+                    success: function(data) {
                         if (data) {
                             $('#district').empty();
                             $('#district').append('<option value="">Choose District</option>');
-                            $.each(data, function (key, item) {
-                                $('select[name="district"]').append('<option value="' + item.id + '">' + item.bn_name + '</option>');
+                            $.each(data, function(key, item) {
+                                $('select[name="district"]').append('<option value="' + item
+                                    .id + '">' + item.bn_name + '</option>');
                             });
                         } else {
                             $('#district').empty();
@@ -184,20 +194,23 @@
 
         upozilla
 
-        $('#district').on('change', function () {
+        $('#district').on('change', function() {
             let districtID = $(this).val();
             if (districtID) {
                 $.ajax({
-                    url: '{{URL('admin/news/get-upozilla')}}' + '/' + districtID,
+                    url: '{{ URL('admin/news/get-upozilla') }}' + '/' + districtID,
                     type: "GET",
-                    data: {"_token": "{{ csrf_token() }}"},
+                    data: {
+                        "_token": "{{ csrf_token() }}"
+                    },
                     dataType: "json",
-                    success: function (data) {
+                    success: function(data) {
                         if (data) {
                             $('#upozilla').empty();
                             $('#upozilla').append('<option value="">Choose upozilla</option>');
-                            $.each(data, function (key, item) {
-                                $('select[name="upozilla"]').append('<option value="' + item.id + '">' + item.bn_name + '</option>');
+                            $.each(data, function(key, item) {
+                                $('select[name="upozilla"]').append('<option value="' + item
+                                    .id + '">' + item.bn_name + '</option>');
                             });
                         } else {
                             $('#upozilla').empty();
@@ -212,6 +225,7 @@
         $('#sort_description').summernote()
         $('#details').summernote()
         $('#ticker').summernote()
+        $('#shoulder').summernote()
         $('.select2').select2()
     </script>
 @endsection

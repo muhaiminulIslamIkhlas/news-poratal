@@ -66,4 +66,20 @@ class Category extends Controller
 
         return back();
     }
+
+    public function visible($id)
+    {
+        $category = CategoryModel::where('id', $id)->first();
+        $category->visible = 1;
+        $category->save();
+        return back();
+    }
+
+    public function invisible($id)
+    {
+        $category = CategoryModel::where('id', $id)->first();
+        $category->visible = 0;
+        $category->save();
+        return back();
+    }
 }
