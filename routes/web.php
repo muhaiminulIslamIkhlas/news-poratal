@@ -133,6 +133,21 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function () {
         Route::post('store', [\App\Http\Controllers\UserController::class, 'store']);
         Route::get('delete/{id}', [\App\Http\Controllers\UserController::class, 'delete']);
     });
+    Route::group(['prefix' => 'designation'], function () {
+        Route::get('index', [\App\Http\Controllers\DesignationController::class, 'index']);
+        Route::post('store', [\App\Http\Controllers\DesignationController::class, 'store']);
+        Route::get('delete/{id}', [\App\Http\Controllers\DesignationController::class, 'delete']);
+    });
+    Route::group(['prefix' => 'weare'], function () {
+        Route::get('index', [\App\Http\Controllers\WeAreController::class, 'index']);
+        Route::get('create', [\App\Http\Controllers\WeAreController::class, 'create']);
+        Route::get('edit/{id}', [\App\Http\Controllers\WeAreController::class, 'edit']);
+        Route::post('store', [\App\Http\Controllers\WeAreController::class, 'store']);
+        Route::post('update/', [\App\Http\Controllers\WeAreController::class, 'update']);
+        Route::get('delete/{id}', [\App\Http\Controllers\WeAreController::class, 'delete']);
+    });
+
+
 });
 
 require __DIR__.'/auth.php';

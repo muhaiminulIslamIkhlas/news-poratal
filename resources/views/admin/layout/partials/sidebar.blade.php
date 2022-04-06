@@ -326,6 +326,29 @@ $category = DB::table('categories')
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-table"></i>
                         <p>
+                            We Are
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ Url('/admin/weare/index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>আমরা</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ Url('/admin/designation/index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>All Designation</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-table"></i>
+                        <p>
                             Contact
                             <i class="fas fa-angle-left right"></i>
                         </p>

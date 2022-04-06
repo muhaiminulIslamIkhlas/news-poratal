@@ -24,8 +24,8 @@
                     <form id="quickForm" method="post" action="{{ URL('admin/news/update') }}"
                         enctype="multipart/form-data">
                         @csrf
-                        <input type="hidden" name="id" value="{{$news->id}}" />
-                        <input type="hidden" name="categoryName" value="{{$categoryName}}" />
+                        <input type="hidden" name="id" value="{{ $news->id }}" />
+                        <input type="hidden" name="categoryName" value="{{ $categoryName }}" />
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="title">Title</label>
@@ -54,8 +54,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="order">Order</label>
-                                <input type="number" min="1" name="order" value="{{$news->order}}" class="form-control" id="order"
-                                    placeholder="Enter order">
+                                <input type="number" min="1" name="order" value="{{ $news->order }}"
+                                    class="form-control" id="order" placeholder="Enter order">
                             </div>
                             <div class="form-group">
                                 <label for="image">Image</label>
@@ -99,31 +99,36 @@
                             <div class="row">
                                 <div class="form-group col-6">
                                     <label for="representative">Representative</label>
-                                    <input type="text" value="{{$news->details->representative}}" name="representative" class="form-control" id="representative"
-                                        placeholder="Enter representative">
+                                    <input type="text" value="{{ $news->details->representative }}" name="representative"
+                                        class="form-control" id="representative" placeholder="Enter representative">
                                 </div>
                                 <div class="form-group col-6">
                                     <label>Keyword</label>
                                     <div class="select2-purple">
-                                        <select class="select2" id="keywordSelect" name="keyword[]" multiple="multiple"
-                                            data-placeholder="Select keyword" data-dropdown-css-class="select2-purple"
-                                            style="width: 100%;">
+                                        <select class="select2" id="keywordSelect" name="keyword[]"
+                                            multiple="multiple" data-placeholder="Select keyword"
+                                            data-dropdown-css-class="select2-purple" style="width: 100%;">
                                             @foreach ($keyWords as $keyWord)
-                                                <option value="{{ $keyWord->name }}" @if(in_array($keyWord->name,$newsKeywords)) selected @endif>{{ $keyWord->name }}</option>
+                                                <option value="{{ $keyWord->name }}"
+                                                    @if (in_array($keyWord->name, $newsKeywords)) selected @endif>
+                                                    {{ $keyWord->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
                             </div>
-                            <input type="hidden" id="disVal" value="{{$news->region->district}}" />
-                            <input type="hidden" id="upoVal" value="{{$news->region->upozilla}}" />
+                            <input type="hidden" id="disVal" value="{{ $news->region->district }}" />
+                            <input type="hidden" id="upoVal" value="{{ $news->region->upozilla }}" />
                             <div class="row">
                                 <div class="form-groupv col-4">
                                     <label for="division">Division</label>
                                     <select id="division" name="division" class="form-control">
                                         <option value="">Select division</option>
                                         @foreach ($divisions as $division)
-                                            <option value="{{ $division->id }}" <?php if($news->region->division == $division->id){echo 'selected';} ?>>{{ $division->bn_name }}</option>
+                                            <option value="{{ $division->id }}" <?php if ($news->region->division == $division->id) {
+    echo 'selected';
+} ?>>
+                                                {{ $division->bn_name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -160,34 +165,38 @@
     <script src="{{ asset('assets/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
 
     <script>
+        var jk = 0;
         $('#sub_category_id').on('click', function() {
-            let categoryID = $('#category_id').val();
-            if (categoryID) {
-                $.ajax({
-                    url: '{{ URL('admin/news/subcategory/get-sub-category/') }}' + '/' + categoryID,
-                    type: "GET",
-                    data: {
-                        "_token": "{{ csrf_token() }}"
-                    },
-                    dataType: "json",
-                    success: function(data) {
-                        if (data) {
-                            $('#sub_category_id').empty();
-                            $('#sub_category_id').append(
-                                '<option value="">Choose Sub-Category</option>');
-                            $.each(data, function(key, item) {
-                                $('select[name="sub_category_id"]').append('<option value="' +
-                                    item.id + '">' +
-                                    item.name + '</option>');
-                            });
-                        } else {
-                            $('#sub_category_id').empty();
+            if (jk < 1) {
+                let categoryID = $('#category_id').val();
+                if (categoryID) {
+                    $.ajax({
+                        url: '{{ URL('admin/news/subcategory/get-sub-category/') }}' + '/' + categoryID,
+                        type: "GET",
+                        data: {
+                            "_token": "{{ csrf_token() }}"
+                        },
+                        dataType: "json",
+                        success: function(data) {
+                            if (data) {
+                                $('#sub_category_id').empty();
+                                $('#sub_category_id').append(
+                                    '<option value="">Choose Sub-Category</option>');
+                                $.each(data, function(key, item) {
+                                    $('select[name="sub_category_id"]').append(
+                                        '<option value="' +
+                                        item.id + '">' +
+                                        item.name + '</option>');
+                                });
+                            } else {
+                                $('#sub_category_id').empty();
+                            }
                         }
-                    }
-                });
-
-            } else {
-                $('#sub_category_id').empty();
+                    });
+                    jk += 1;
+                } else {
+                    $('#sub_category_id').empty();
+                }
             }
         });
 
@@ -198,7 +207,7 @@
         getDistrict(division)
         getUpozilla(district)
 
-        function getDistrict(divisionID){
+        function getDistrict(divisionID) {
             if (divisionID) {
                 $.ajax({
                     url: '{{ URL('admin/news/get-district') }}' + '/' + divisionID,
@@ -213,11 +222,11 @@
                             $('#district').append('<option value="">Choose District</option>');
                             $.each(data, function(key, item) {
                                 let select = '';
-                                if(item.id == district){
+                                if (item.id == district) {
                                     select = 'selected'
                                 }
                                 $('select[name="district"]').append('<option value="' + item
-                                    .id + '"' + select +'>' + item.bn_name + '</option>');
+                                    .id + '"' + select + '>' + item.bn_name + '</option>');
                             });
                         } else {
                             $('#district').empty();
@@ -229,7 +238,7 @@
             }
         }
 
-        function getUpozilla(districtID){
+        function getUpozilla(districtID) {
             if (districtID) {
                 $.ajax({
                     url: '{{ URL('admin/news/get-upozilla') }}' + '/' + districtID,
@@ -244,11 +253,11 @@
                             $('#upozilla').append('<option value="">Choose upozilla</option>');
                             $.each(data, function(key, item) {
                                 let select = '';
-                                if(item.id == upozilla){
+                                if (item.id == upozilla) {
                                     select = 'selected'
                                 }
                                 $('select[name="upozilla"]').append('<option value="' + item
-                                    .id + '"' + select +'>' + item.bn_name + '</option>');
+                                    .id + '"' + select + '>' + item.bn_name + '</option>');
                             });
                         } else {
                             $('#upozilla').empty();

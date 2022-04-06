@@ -36,6 +36,8 @@ Route::get('/change-vote/{id}/{prev}/{new}', [App\Http\Controllers\API\VoteContr
  */
 Route::get('/get-all-news/{categoryId}/{type}/{limit}', [App\Http\Controllers\API\NewsController::class, 'getAllNews']);
 Route::get('/get-news/{id}', [App\Http\Controllers\API\NewsController::class, 'getNews']);
+Route::get('/get-news-by-category/{categoryId}/{limit}', [App\Http\Controllers\API\NewsController::class, 'getAllNewsByCategory']);
+Route::get('/get-news-by-sub-category/{subCategoryId}/{limit}', [App\Http\Controllers\API\NewsController::class, 'getAllNewsBySubCategory']);
 
 /**
  * opinion
@@ -83,3 +85,14 @@ Route::get('/get-all-divisions',[App\Http\Controllers\API\SearchController::clas
 Route::get('/get-all-district-by-division/{divisionId}',[App\Http\Controllers\API\SearchController::class, 'getDistrictByDivision']);
 Route::get('/get-all-upozilla-by-district/{districtId}',[App\Http\Controllers\API\SearchController::class, 'getUpozillaByDivision']);
 Route::get('/get-filter-news/{divisionId}/{districtId?}/{upozillaId?}',[App\Http\Controllers\API\SearchController::class, 'filterNews']);
+/**
+ * Weare
+ */
+Route::get('/get-all-weare',[App\Http\Controllers\API\WeAreController::class, 'getAllWeAre']);
+/**
+ * archive
+ */
+Route::group(['prefix' => 'archive'], function () {
+    Route::get('index/{limit}', [\App\Http\Controllers\API\ArchiveController::class, 'index']);
+    Route::post('filter', [\App\Http\Controllers\API\ArchiveController::class, 'filter']);
+});

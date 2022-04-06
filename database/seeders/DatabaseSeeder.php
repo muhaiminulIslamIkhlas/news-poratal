@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             DivisionSeeder::class,
             DistrictSeeder::class,
             ThanaSeeder::class,
+            DesignationSeeder::class,
         ]);
     }
 }
