@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             DistrictSeeder::class,
             ThanaSeeder::class,
             DesignationSeeder::class,
+            KeywordSeeder::class,
         ]);
     }
 }

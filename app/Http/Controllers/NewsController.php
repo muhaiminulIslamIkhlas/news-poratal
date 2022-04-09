@@ -11,6 +11,7 @@ use App\Models\Thana;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Keyword;
+use App\Models\Published;
 use Intervention\Image\Facades\Image;
 
 class NewsController extends Controller
@@ -89,6 +90,10 @@ class NewsController extends Controller
         $region->district = $request->district;
         $region->upozilla = $request->upozilla;
         $region->save();
+        $publisher = new Published();
+        $publisher->news_id = $news->id;
+        $publisher->created_by = auth()->user()->id;
+        $publisher->save();
 
         return redirect('admin/news/index-by-category/' . $request->category_id . '/' . $request->category_name);
     }
@@ -199,6 +204,18 @@ class NewsController extends Controller
         }
 
         return response()->json($html);
+    }
+
+    public function publishNews($id)
+    {
+        $news = News::find($id);
+        $news->published = 1;
+        $news->save();
+        $published = Published::where('news_id',$id)->first();
+        $published->published_by = auth()->user()->id;
+        $published->save();
+
+        return back();
     }
 
     public function test()
