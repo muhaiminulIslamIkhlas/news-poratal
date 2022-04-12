@@ -36,11 +36,22 @@
                                 <label for="sort_description">Sort Description</label>
                                 <textarea id="sort_description" name="sort_description">{!! $news->sort_description !!}</textarea>
                             </div>
-                            <div class="form-group">
+                            <div class="row">
+                            <div class="form-group col-6">
                                 <label for="date">Date Time</label>
                                 <input type="datetime-local" value="{{ date('Y-m-d\TH:i:s', strtotime($news->date)) }}"
                                     name="date" class="form-control" id="date" placeholder="Date Time">
                             </div>
+                            <div class="form-group col-6">
+                                <label for="date">Timeline</label>
+                                <select class="form-control" name="timeline_id">
+                                    <option value="">--Select one--</option>
+                                    @foreach ($timelines as $timeline)
+                                        <option value="{{ $timeline->id }}" <?php if($news->timeline_id == $timeline->id){echo 'selected';} ?>>{{ $timeline->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
                             <input type="hidden" id="category_id" name="category_id" value="{{ $news->category_id }}" />
                             {{-- <input type="hidden" id="category_name" name="category_name" value="{{ $categoryName }}" /> --}}
                             <div class="form-group">

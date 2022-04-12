@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Keyword;
 use App\Models\Published;
+use App\Models\Timeline;
 use Intervention\Image\Facades\Image;
 
 class NewsController extends Controller
@@ -46,10 +47,11 @@ class NewsController extends Controller
 
     public function create()
     {
+        $timelines = Timeline::orderBy('id','desc')->get();
         $categories = Category::get();
         $keyWords = Keyword::get();
         $divisions = $this->_helepr->getDivsions();
-        return view('admin.news.create', compact('categories', 'keyWords', 'divisions'));
+        return view('admin.news.create', compact('categories', 'keyWords', 'divisions','timelines'));
     }
 
     public function store(Request $request)
@@ -75,6 +77,7 @@ class NewsController extends Controller
         $news->type = $request->type;
         $news->image = $imagePath;
         $news->date = $request->date;
+        $news->timeline_id = $request->timeline_id;
         $news->save();
         $newsDetails = new NewsDetails();
         $newsDetails->news_id = $news->id;
@@ -111,9 +114,10 @@ class NewsController extends Controller
 
     public function createByCategory($categoryId, $categoryName)
     {
+        $timelines = Timeline::orderBy('id','desc')->get();
         $keyWords = Keyword::get();
         $divisions = $this->_helepr->getDivsions();
-        return view('admin.news.add-by-category.create', compact('categoryId', 'keyWords', 'divisions', 'categoryName'));
+        return view('admin.news.add-by-category.create', compact('categoryId', 'keyWords', 'divisions', 'categoryName','timelines'));
     }
 
     public function getList($categoryId, $categoryName)
@@ -124,12 +128,13 @@ class NewsController extends Controller
 
     public function edit($newsId, $categoryName)
     {
+        $timelines = Timeline::orderBy('id','desc')->get();
         $newskeyWordJson = NewsDetails::select('keyword')->where('news_id', $newsId)->first();
         $newsKeywords = json_decode($newskeyWordJson->keyword);
         $keyWords = Keyword::get();
         $news = News::find($newsId);
         $divisions = $this->_helepr->getDivsions();
-        return view('admin.news.add-by-category.edit', compact('news', 'keyWords', 'divisions', 'newsKeywords', 'categoryName'));
+        return view('admin.news.add-by-category.edit', compact('news', 'keyWords', 'divisions', 'newsKeywords', 'categoryName','timelines'));
     }
 
     public function delete($newsId)
@@ -161,6 +166,7 @@ class NewsController extends Controller
         $news->sub_category_id = $request->sub_category_id;
         $news->order = $request->order;
         $news->type = $request->type;
+        $news->timeline_id = $request->timeline_id;
         if ($request->hasFile('image')) {
             $imagePath = $this->_helepr->imageUpload($request->file('image'));
             $news->image = $imagePath;

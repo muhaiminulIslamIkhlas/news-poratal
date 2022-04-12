@@ -146,6 +146,14 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function () {
         Route::get('delete/{id}', [\App\Http\Controllers\DesignationController::class, 'delete']);
     });
 
+    Route::group(['prefix' => 'timeline'], function () {
+        Route::get('index', [\App\Http\Controllers\TimelineController::class, 'index']);
+        Route::post('store', [\App\Http\Controllers\TimelineController::class, 'store']);
+        Route::get('delete/{id}', [\App\Http\Controllers\TimelineController::class, 'delete']);
+        Route::get('news/{id}', [\App\Http\Controllers\TimelineController::class, 'timelineNews']);
+        Route::get('news/remove/{id}', [\App\Http\Controllers\TimelineController::class, 'removeNews']);
+    });
+
     Route::group(['prefix' => 'division'], function () {
         Route::get('index', [\App\Http\Controllers\DivisionController::class, 'index']);
         Route::post('store', [\App\Http\Controllers\DivisionController::class, 'store']);

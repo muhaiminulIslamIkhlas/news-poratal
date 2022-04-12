@@ -70,7 +70,7 @@ Route::get('/get-all-sorbadhik/{limit}/{date?}',[App\Http\Controllers\API\Latest
 /**
  * latest
  */
-Route::get('/get-all-latest/{limit}/{date?}',[App\Http\Controllers\API\LatestController::class, 'getAllLatest']);
+Route::get('/get-all-latest/{limit}',[App\Http\Controllers\API\LatestController::class, 'getAllLatest']);
 
 /**
  * contact
@@ -85,10 +85,12 @@ Route::get('/get-all-divisions',[App\Http\Controllers\API\SearchController::clas
 Route::get('/get-all-district-by-division/{divisionId}',[App\Http\Controllers\API\SearchController::class, 'getDistrictByDivision']);
 Route::get('/get-all-upozilla-by-district/{districtId}',[App\Http\Controllers\API\SearchController::class, 'getUpozillaByDivision']);
 Route::get('/get-filter-news/{divisionId}/{districtId?}/{upozillaId?}',[App\Http\Controllers\API\SearchController::class, 'filterNews']);
+
 /**
  * Weare
  */
 Route::get('/get-all-weare',[App\Http\Controllers\API\WeAreController::class, 'getAllWeAre']);
+
 /**
  * archive
  */
@@ -96,3 +98,8 @@ Route::group(['prefix' => 'archive'], function () {
     Route::get('index/{limit}/{skip?}', [\App\Http\Controllers\API\ArchiveController::class, 'index']);
     Route::post('filter', [\App\Http\Controllers\API\ArchiveController::class, 'filter']);
 });
+
+/**
+ * archive
+ */
+Route::get('/get-timeline-news/{timelineId}/{limit}',[App\Http\Controllers\API\TimelineController::class, 'getTimelineNews']);

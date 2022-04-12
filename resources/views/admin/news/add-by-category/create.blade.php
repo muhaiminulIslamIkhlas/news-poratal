@@ -21,7 +21,8 @@
                             @endforeach
                         </ul>
                     @endif
-                    <form id="quickForm" method="post" action="{{ URL('admin/news/store') }}" enctype="multipart/form-data">
+                    <form id="quickForm" method="post" action="{{ URL('admin/news/store') }}"
+                        enctype="multipart/form-data">
                         @csrf
                         <div class="card-body">
                             <div class="form-group">
@@ -33,18 +34,31 @@
                                 <textarea id="sort_description"
                                     name="sort_description">Place <em>sort</em> <u>description</u> <strong>here</strong></textarea>
                             </div>
-                            <div class="form-group">
-                                <label for="date">Date Time</label>
-                                <input type="datetime-local" name="date" class="form-control" id="date"
-                                    placeholder="Date Time">
+                            <div class="row">
+                                <div class="form-group col-6">
+                                    <label for="date">Date Time</label>
+                                    <input type="datetime-local" name="date" class="form-control" id="date"
+                                        placeholder="Date Time">
+                                </div>
+                                <div class="form-group col-6">
+                                    <label for="date">Timeline</label>
+                                    <select class="form-control" name="timeline_id">
+                                        <option value="">--Select one--</option>
+                                        @foreach ($timelines as $timeline)
+                                            <option value="{{ $timeline->id }}">{{ $timeline->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
                             <input type="hidden" id="category_id" name="category_id" value="{{ $categoryId }}" />
                             <input type="hidden" id="category_name" name="category_name" value="{{ $categoryName }}" />
+                            @if($categoryId != 18)
                             <div class="form-group">
                                 <label for="sub_category_id">Sub Category</label>
                                 <select name="sub_category_id" id="sub_category_id" class="form-control">
                                 </select>
                             </div>
+                            @endif
                             <div class="form-group">
                                 <label for="order">Order</label>
                                 <input type="number" min="1" name="order" class="form-control" id="order"
@@ -153,7 +167,8 @@
                         $('#sub_category_id').empty();
                         $('#sub_category_id').append('<option value="">Choose Sub-Category</option>');
                         $.each(data, function(key, item) {
-                            $('select[name="sub_category_id"]').append('<option value="' + item.id + '">' +
+                            $('select[name="sub_category_id"]').append('<option value="' + item.id +
+                                '">' +
                                 item.name + '</option>');
                         });
                     } else {

@@ -37,7 +37,7 @@ class News extends Model
             'sort_description' => $this->sort_description,
             'order' => $this->order,
             'category' => $this->category->name,
-            'time' => $this->created_at,
+            'timeline_id' => $this->timeline_id,
             'image' => $this->image,
             'type' => $this->type,
             'date' => $this->date
@@ -53,13 +53,14 @@ class News extends Model
             'order' => $this->order,
             'category' => $this->category->name,
             'sub_category' => $this->subCategory->name ?? '',
-            'time' => $this->created_at,
+            'date' => $this->date,
             'image' => $this->image,
             'type' => $this->type,
             'details' => $this->details->details,
             'ticker' => $this->details->ticker,
             'representative' => $this->details->representative,
             'keyword' => $this->details->keyword,
+            'timeline_id' => $this->timeline_id,
         ];
     }
 
@@ -71,7 +72,7 @@ class News extends Model
             'sort_description' => $this->sort_description,
             'order' => $this->order,
             'category' => $this->category->name,
-            'time' => $this->created_at,
+            'timeline_id' => $this->timeline_id,
             'image' => $this->image,
             'type' => $this->type,
             'date' => $this->date,

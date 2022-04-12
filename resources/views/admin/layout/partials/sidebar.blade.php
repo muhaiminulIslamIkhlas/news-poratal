@@ -101,6 +101,7 @@ $category = DB::table('categories')
                     </a>
                     <ul class="nav nav-treeview">
                         @foreach ($category as $item)
+                            @if($item->id != 18)
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
                                     <i class="far fa-file-alt"></i>
@@ -126,7 +127,31 @@ $category = DB::table('categories')
                                     </li>
                                 </ul>
                             </li>
+                            @endif
                         @endforeach
+                    </ul>
+                </li>
+                <li class="nav-item ">
+                    <a href="#" class="nav-link">
+                        <i class="far fa-newspaper"></i>
+                        <p>
+                            সর্বশেষ
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ URL('admin/news/index-by-category/18/সর্বশেষ') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>List</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ URL('admin/news/create-by-category/18/সর্বশেষ') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Create New</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 {{-- <li class="nav-item">
@@ -199,6 +224,15 @@ $category = DB::table('categories')
                             </a>
                         </li>
                     </ul>
+                </li>
+                <li class="nav-header">News Timeline</li>
+                <li class="nav-item">
+                    <a href="{{ url('admin/timeline/index') }}" class="nav-link">
+                        <i class="nav-icon fas fa-calendar"></i>
+                        <p>
+                            Timeline
+                        </p>
+                    </a>
                 </li>
                 <li class="nav-header">Keyword</li>
                 <li class="nav-item">
