@@ -120,8 +120,8 @@
                                             multiple="multiple" data-placeholder="Select keyword"
                                             data-dropdown-css-class="select2-purple" style="width: 100%;">
                                             @foreach ($keyWords as $keyWord)
-                                                <option value="{{ $keyWord->name }}"
-                                                    @if (in_array($keyWord->name, $newsKeywords)) selected @endif>
+                                                <option value="{{ $keyWord->id }}"
+                                                    @if (in_array($keyWord->id, $newsKeywords)) selected @endif>
                                                     {{ $keyWord->name }}</option>
                                             @endforeach
                                         </select>

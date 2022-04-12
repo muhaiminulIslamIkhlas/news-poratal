@@ -119,9 +119,8 @@
                     </div>
                     <div class="item pt-3">
                         <p class="text-md-left font-weight-bold">Keywords</p>
-                        <?php $keywords = json_decode($news->details->keyword); ?>
-                        @foreach ($keywords as $keword)
-                            <span class="badge badge-info pr-1">{{ $keword }}</span>
+                        @foreach ($keyWords as $keword)
+                            <span class="badge badge-info pr-1">{{ $keword->name }}</span>
                         @endforeach
                     </div>
                 </div>

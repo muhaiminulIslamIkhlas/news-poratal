@@ -29,6 +29,11 @@ class News extends Model
         return $this->hasOne('App\Models\Region','news_id');
     }
 
+    public function keywordList(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany('App\Models\NewsKeyword','news_id');
+    }
+
     public function format(): array
     {
         return [
@@ -46,6 +51,13 @@ class News extends Model
 
     public function formatDetails(): array
     {
+        $keyWords = [];
+        foreach($this->keywordList as $item ){
+            $keyWords[]=[
+                'id'=> $item->keywordItem->id,
+                'name'=> $item->keywordItem->name,
+            ];
+        }
         return [
             'id' => $this->id,
             'title' => $this->title,
@@ -59,7 +71,7 @@ class News extends Model
             'details' => $this->details->details,
             'ticker' => $this->details->ticker,
             'representative' => $this->details->representative,
-            'keyword' => $this->details->keyword,
+            'keyword' => $keyWords,
             'timeline_id' => $this->timeline_id,
         ];
     }

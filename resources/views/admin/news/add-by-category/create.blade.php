@@ -104,7 +104,7 @@
                                             data-placeholder="Select keyword" data-dropdown-css-class="select2-purple"
                                             style="width: 100%;">
                                             @foreach ($keyWords as $keyWord)
-                                                <option value="{{ $keyWord->name }}">{{ $keyWord->name }}</option>
+                                                <option value="{{ $keyWord->id }}">{{ $keyWord->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>

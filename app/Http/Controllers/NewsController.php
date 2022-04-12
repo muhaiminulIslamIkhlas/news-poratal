@@ -11,8 +11,10 @@ use App\Models\Thana;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Keyword;
+use App\Models\NewsKeyword;
 use App\Models\Published;
 use App\Models\Timeline;
+use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image;
 
 class NewsController extends Controller
@@ -87,6 +89,12 @@ class NewsController extends Controller
         $newsDetails->shoulder = $request->shoulder;
         $newsDetails->keyword = json_encode($request->keyword);
         $newsDetails->save();
+        foreach($request->keyword as $keyword){
+            $item = new NewsKeyword();
+            $item->news_id = $news->id;
+            $item->keyword_id = $keyword;
+            $item->save();
+        }
         $region = new Region();
         $region->news_id = $news->id;
         $region->division = $request->division;
@@ -141,6 +149,7 @@ class NewsController extends Controller
     {
         $news = News::find($newsId);
         $news->delete();
+        DB::table("news_keywords")->where('news_id',$newsId)->delete();
         return back();
     }
 
@@ -186,6 +195,13 @@ class NewsController extends Controller
         $region->district = $request->district;
         $region->upozilla = $request->upozilla;
         $region->save();
+        DB::table("news_keywords")->where('news_id',$news->id)->delete();
+        foreach($request->keyword as $keyword){
+            $item = new NewsKeyword();
+            $item->news_id = $news->id;
+            $item->keyword_id = $keyword;
+            $item->save();
+        }
 
         return redirect('admin/news/index-by-category/' . $request->category_id . '/' . $request->categoryName);
     }
@@ -193,7 +209,8 @@ class NewsController extends Controller
     public function view($newsId)
     {
         $news = News::find($newsId);
-        return view('admin.news.add-by-category.view', compact('news'));
+        $keyWords = Keyword::whereIn('id',json_decode($news->details->keyword))->get();
+        return view('admin.news.add-by-category.view', compact('news','keyWords'));
     }
 
     public function getDistrictByDivId($divisionID)
