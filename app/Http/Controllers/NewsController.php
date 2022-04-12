@@ -98,6 +98,17 @@ class NewsController extends Controller
         return redirect('admin/news/index-by-category/' . $request->category_id . '/' . $request->category_name);
     }
 
+    public function publish($newsId)
+    {
+        $news = News::find($newsId);
+        $news->published = 1;
+        $news->save();
+        $publisher =  Published::where('news_id',$newsId)->first();
+        $publisher->published_by = auth()->user()->id;
+        $publisher->save();
+        return back();
+    }
+
     public function createByCategory($categoryId, $categoryName)
     {
         $keyWords = Keyword::get();

@@ -93,6 +93,6 @@ Route::get('/get-all-weare',[App\Http\Controllers\API\WeAreController::class, 'g
  * archive
  */
 Route::group(['prefix' => 'archive'], function () {
-    Route::get('index/{limit}', [\App\Http\Controllers\API\ArchiveController::class, 'index']);
+    Route::get('index/{limit}/{skip?}', [\App\Http\Controllers\API\ArchiveController::class, 'index']);
     Route::post('filter', [\App\Http\Controllers\API\ArchiveController::class, 'filter']);
 });

@@ -3,7 +3,7 @@
 <div class="container-fluid">
     <div class="row mb-2">
         <div class="col-sm-6">
-            <h1>Add New Contact</h1>
+            <h1>Edit Profile</h1>
         </div>
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -24,7 +24,7 @@
         <!-- jquery validation -->
         <div class="card card-primary">
             <div class="card-header">
-            <h3 class="card-title">Create New User</h3>
+            <h3 class="card-title">Profile</h3>
             </div>
             @if ($errors->any())
                 <ul class="mt-3">
@@ -35,28 +35,17 @@
             @endif
             <!-- /.card-header -->
             <!-- form start -->
-            <form id="quickForm" method="POST" action="{{Url('/admin/user/store')}}">
+            <form id="quickForm" method="POST" action="{{Url('/admin/profile-update')}}">
                 @csrf
+                <input type="hidden" name="id" value="{{$user->id}}">
                 <div class="card-body">
                     <div class="form-group">
                         <label for="name">User Name</label>
-                        <input type="text" name="name" class="form-control" id="name" placeholder="User Name">
+                        <input type="text" name="name" class="form-control" value="{{$user->name}}" id="name" placeholder="User Name">
                     </div>
                     <div class="form-group">
                         <label for="name">User Email</label>
-                        <input type="email" name="email" class="form-control" id="email" placeholder="User Email">
-                    </div>
-                    <div class="form-group">
-                        <label for="name">Role</label>
-                        <select name="role" class="form-control">
-                            <option value="">--Choose one--</option>
-                            <option value="admin">admin</option>
-                            <option value="publisher">publisher</option>
-                            <option value="representative">representative</option>
-                            <option value="developer">developer</option>
-                            <option value="editor">editor</option>
-                            <option value="desk-reporter">desk-reporter</option>
-                        </select>
+                        <input type="email" name="email" class="form-control" value="{{$user->email}}" id="email" disabled placeholder="User Email">
                     </div>
                     <div class="form-group">
                         <label for="name">Password</label>

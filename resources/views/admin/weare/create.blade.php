@@ -56,6 +56,16 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="image">Division</label>
+                        <select name="div_id" class="form-control">
+                            <option value="">--Select one--</option>
+                            @foreach($divisions as $division)
+                            <option value="{{$division->id}}">{{$division->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-group">
                         <label for="image">Designation</label>
                         <select name="designation" class="form-control">
                             <option value="">--Select one--</option>

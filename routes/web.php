@@ -28,6 +28,7 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function () {
         Route::get('create', [\App\Http\Controllers\NewsController::class, 'create']);
         Route::post('store', [\App\Http\Controllers\NewsController::class, 'store']);
         Route::post('update', [\App\Http\Controllers\NewsController::class, 'update']);
+        Route::get('publish/{newsId}', [\App\Http\Controllers\NewsController::class, 'publish'])->middleware('publisher');
         Route::get('get-district/{divisionID}', [\App\Http\Controllers\NewsController::class, 'getDistrictByDivId']);
         Route::get('get-upozilla/{districtID}', [\App\Http\Controllers\NewsController::class, 'getUpozillaByDisId']);
 
@@ -127,17 +128,32 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function () {
         Route::post('store', [\App\Http\Controllers\ContactController::class, 'store']);
         Route::get('delete/{id}', [\App\Http\Controllers\ContactController::class, 'delete']);
     });
-    Route::group(['prefix' => 'user'], function () {
+    Route::group(['prefix' => 'user', 'middleware'=>'admin' ], function () {
         Route::get('index', [\App\Http\Controllers\UserController::class, 'index']);
         Route::get('create', [\App\Http\Controllers\UserController::class, 'create']);
         Route::post('store', [\App\Http\Controllers\UserController::class, 'store']);
+        Route::post('update', [\App\Http\Controllers\UserController::class, 'update']);
         Route::get('delete/{id}', [\App\Http\Controllers\UserController::class, 'delete']);
+        Route::get('edit/{id}', [\App\Http\Controllers\UserController::class, 'edit']);
     });
+
+    Route::get('profile', [\App\Http\Controllers\UserController::class, 'profile']);
+    Route::post('profile-update', [\App\Http\Controllers\UserController::class, 'profileUpdate']);
+
     Route::group(['prefix' => 'designation'], function () {
         Route::get('index', [\App\Http\Controllers\DesignationController::class, 'index']);
         Route::post('store', [\App\Http\Controllers\DesignationController::class, 'store']);
         Route::get('delete/{id}', [\App\Http\Controllers\DesignationController::class, 'delete']);
     });
+
+    Route::group(['prefix' => 'division'], function () {
+        Route::get('index', [\App\Http\Controllers\DivisionController::class, 'index']);
+        Route::post('store', [\App\Http\Controllers\DivisionController::class, 'store']);
+        Route::post('update', [\App\Http\Controllers\DivisionController::class, 'update']);
+        Route::get('delete/{id}', [\App\Http\Controllers\DivisionController::class, 'delete']);
+        Route::get('edit/{id}', [\App\Http\Controllers\DivisionController::class, 'edit']);
+    });
+
     Route::group(['prefix' => 'weare'], function () {
         Route::get('index', [\App\Http\Controllers\WeAreController::class, 'index']);
         Route::get('create', [\App\Http\Controllers\WeAreController::class, 'create']);

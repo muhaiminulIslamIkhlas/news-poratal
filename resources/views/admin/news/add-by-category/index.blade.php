@@ -5,6 +5,12 @@
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
 @endsection()
 @section('body')
+    <style>
+        td {
+            padding-top: 0 !important;
+        }
+
+    </style>
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
@@ -20,8 +26,8 @@
                                     <th>Sort Description</th>
                                     <th>Order</th>
                                     <th>Type</th>
-                                    <th>Category</th>
                                     <th>Date and Time</th>
+                                    <th>Published</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -32,22 +38,28 @@
                                         <td>{!! $item->sort_description !!}</td>
                                         <td>{{ $item->order }}</td>
                                         <td>{{ $item->type }}</td>
-                                        <td>{{ $item->category->name }} </td>
                                         <td>{{ $item->date }}</td>
+                                        <td>
+                                            @if ($item->published)
+                                                <span class="badge badge-success">Yes</span>
+                                            @else
+                                                <span class="badge badge-danger">No</span>
+                                            @endif
+                                        </td>
                                         <td>
                                             <a class="btn btn-primary mt-3"
                                                 href="{{ Url('/admin/news/view', $item->id) }}"><i
-                                                    class="fas fa-eye fa-fw"></i></a>
+                                                    class="fas fa-folder"></i> View</a>
                                             <a class="btn btn-success mt-3"
                                                 href="{{ Url('/admin/news/edit/' . $item->id . '/' . $categoryName) }}"><i
-                                                    class="fas fa-edit fa-fw"></i></a>
+                                                    class="fas fa-edit"></i> Edit</a>
                                             <a class="btn btn-danger mt-3"
                                                 href="{{ Url('/admin/news/delete', $item->id) }}"><i
-                                                    class="fas fa-trash fa-fw"></i></a>
-                                            @if (auth()->user()->role == 'publisher' && $item->published == 0)
-                                                <a class=" mt-3"
-                                                    href="{{ Url('/admin/news/delete', $item->id) }}"><span
-                                                        class="badge badge-success">Publish</span></a>
+                                                    class="fas fa-trash"></i> Delete</a>
+                                            @if ((auth()->user()->role == 'publisher' || auth()->user()->role == 'admin') && $item->published == 0)
+                                                <a class="btn btn-success mt-3"
+                                                    href="{{ Url('/admin/news/publish', $item->id) }}"><i
+                                                        class="fas fa-eye"></i> Publish</a></a>
                                             @endif
                                         </td>
                                     </tr>

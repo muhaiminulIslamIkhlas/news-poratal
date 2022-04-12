@@ -19,6 +19,8 @@ class CreateWeAresTable extends Migration
             $table->string('image');
             $table->string('designation');
             $table->text('details');
+            $table->unsignedBigInteger('div_id');
+            $table->foreign('div_id')->references('id')->on('division_wes')->onDelete('cascade');
             $table->timestamps();
         });
     }

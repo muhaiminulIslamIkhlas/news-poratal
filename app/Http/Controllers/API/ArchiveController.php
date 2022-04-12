@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\DB;
 
 class ArchiveController extends Controller
 {
-    public function index($limit)
+    public function index($limit,$skip = 0)
     {
-        $news = News::orderBy(DB::raw("DATE_FORMAT(date,'%d-%M-%Y')"), 'DESC')->take($limit)->get();
+        $news = News::orderBy(DB::raw("DATE_FORMAT(date,'%d-%M-%Y')"), 'DESC')->skip($skip)->take($limit)->get();
         return response()->json($news);
     }
 

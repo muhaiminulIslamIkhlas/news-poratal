@@ -58,22 +58,29 @@ $category = DB::table('categories')
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{ url('admin/profile') }}" class="nav-link">
+                        <i class="nav-icon far fa-address-card"></i>
+                        <p>
+                            Edit Profile
+                        </p>
+                    </a>
+                </li>
+                @if (auth()->user()->role == 'admin')
+                <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <i class="nav-icon fas fa-users"></i>
                         <p>
                             User
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-                        <?php if(\Illuminate\Support\Facades\Auth::user()->id == 1): ?>
                         <li class="nav-item">
                             <a href="{{ URL('admin/user/create') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Create User</p>
                             </a>
                         </li>
-                        <?php endif; ?>
                         <li class="nav-item">
                             <a href="{{ URL('admin/user/index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
@@ -82,10 +89,11 @@ $category = DB::table('categories')
                         </li>
                     </ul>
                 </li>
+                @endif
                 <li class="nav-header">News</li>
                 <li class="nav-item ">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-chart-pie"></i>
+                        <i class="far fa-newspaper"></i>
                         <p>
                             News
                             <i class="right fas fa-angle-left"></i>
@@ -95,7 +103,7 @@ $category = DB::table('categories')
                         @foreach ($category as $item)
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
-                                    <i class="nav-icon fas fa-chart-pie"></i>
+                                    <i class="far fa-file-alt"></i>
                                     <p>
                                         {{ $item->name }}
                                         <i class="right fas fa-angle-left"></i>
@@ -147,7 +155,8 @@ $category = DB::table('categories')
                 <li class="nav-header">Category</li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-table"></i>
+
+                        <i class="nav-icon fas fa-sitemap"></i>
                         <p>
                             Category
                             <i class="fas fa-angle-left right"></i>
@@ -170,7 +179,7 @@ $category = DB::table('categories')
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-table"></i>
+                        <i class="nav-icon fas fa-project-diagram"></i>
                         <p>
                             SubCategory
                             <i class="fas fa-angle-left right"></i>
@@ -215,59 +224,59 @@ $category = DB::table('categories')
                         </li>
                     </ul>
                 </li>
-                @if(auth()->user()->role != 'publisher')
-                <li class="nav-header">Video and Image</li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-table"></i>
-                        <p>
-                            Video
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ Url('/admin/news/video/index') }}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Add New Video</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ Url('/admin/news/video/list') }}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>View All Videos</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-table"></i>
-                        <p>
-                            Image
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ Url('/admin/news/image/index') }}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Add New Image</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ Url('/admin/news/image/list') }}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>View All Images</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                @if (auth()->user()->role != 'publisher')
+                    <li class="nav-header">Video and Image</li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-video"></i>
+                            <p>
+                                Video
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ Url('/admin/news/video/index') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Add New Video</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ Url('/admin/news/video/list') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>View All Videos</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-image"></i>
+                            <p>
+                                Image
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ Url('/admin/news/image/index') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Add New Image</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ Url('/admin/news/image/list') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>View All Images</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                 @endif
                 <li class="nav-header">Votes</li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-chart-pie"></i>
+                        <i class="nav-icon fas fa-vote-yea"></i>
                         <p>
                             Votes
                             <i class="right fas fa-angle-left"></i>
@@ -290,7 +299,7 @@ $category = DB::table('categories')
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-table"></i>
+                        <i class="nav-icon fas fa-comment-alt"></i>
                         <p>
                             Opinion
                             <i class="fas fa-angle-left right"></i>
@@ -314,7 +323,7 @@ $category = DB::table('categories')
                 <li class="nav-header">MISCELLANEOUS</li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-table"></i>
+                        <i class="nav-icon fas fa-file-alt"></i>
                         <p>
                             Information
                             <i class="fas fa-angle-left right"></i>
@@ -331,13 +340,19 @@ $category = DB::table('categories')
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-table"></i>
+                        <i class="nav-icon fas fa-stream"></i>
                         <p>
                             We Are
                             <i class="fas fa-angle-left right"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ Url('/admin/division/index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>All Divisions</p>
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a href="{{ Url('/admin/weare/index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
@@ -354,7 +369,7 @@ $category = DB::table('categories')
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-table"></i>
+                        <i class="nav-icon fas fa-at"></i>
                         <p>
                             Contact
                             <i class="fas fa-angle-left right"></i>

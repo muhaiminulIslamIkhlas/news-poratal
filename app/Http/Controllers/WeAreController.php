@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Repositories\HelperRepositoryInterface;
 use App\Models\Designation;
+use App\Models\DivisionWe;
 use App\Models\WeAre;
 use Illuminate\Http\Request;
 
@@ -24,7 +25,8 @@ class WeAreController extends Controller
     public function create()
     {
         $designations = Designation::all();
-        return view('admin.weare.create', compact('designations'));
+        $divisions = DivisionWe::all();
+        return view('admin.weare.create', compact('designations','divisions'));
     }
 
     public function store(Request $request)
@@ -34,13 +36,14 @@ class WeAreController extends Controller
             'name' => 'required|max:255',
             'details' => 'required',
             'designation' => 'required',
+            'div_id' => 'required',
         ]);
-
         $member = new WeAre();
         $member->name = $request->name;
         $imagePath = $this->_helepr->imageUpload($request->file('image'));
         $member->image = $imagePath;
         $member->details = $request->details;
+        $member->div_id = $request->div_id;
         $member->designation = $request->designation;
         $member->save();
 

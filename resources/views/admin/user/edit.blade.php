@@ -3,7 +3,7 @@
 <div class="container-fluid">
     <div class="row mb-2">
         <div class="col-sm-6">
-            <h1>Add New Contact</h1>
+            <h1>Edit User</h1>
         </div>
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -24,7 +24,7 @@
         <!-- jquery validation -->
         <div class="card card-primary">
             <div class="card-header">
-            <h3 class="card-title">Create New User</h3>
+            <h3 class="card-title">User</h3>
             </div>
             @if ($errors->any())
                 <ul class="mt-3">
@@ -35,36 +35,29 @@
             @endif
             <!-- /.card-header -->
             <!-- form start -->
-            <form id="quickForm" method="POST" action="{{Url('/admin/user/store')}}">
+            <form id="quickForm" method="POST" action="{{Url('/admin/user/update')}}">
                 @csrf
+                <input type="hidden" name="id" value="{{$user->id}}">
                 <div class="card-body">
                     <div class="form-group">
                         <label for="name">User Name</label>
-                        <input type="text" name="name" class="form-control" id="name" placeholder="User Name">
+                        <input type="text" name="name" class="form-control" value="{{$user->name}}" id="name" placeholder="User Name">
                     </div>
                     <div class="form-group">
                         <label for="name">User Email</label>
-                        <input type="email" name="email" class="form-control" id="email" placeholder="User Email">
+                        <input type="email" name="email" class="form-control" value="{{$user->email}}" id="email" disabled placeholder="User Email">
                     </div>
                     <div class="form-group">
                         <label for="name">Role</label>
                         <select name="role" class="form-control">
                             <option value="">--Choose one--</option>
-                            <option value="admin">admin</option>
-                            <option value="publisher">publisher</option>
-                            <option value="representative">representative</option>
-                            <option value="developer">developer</option>
-                            <option value="editor">editor</option>
-                            <option value="desk-reporter">desk-reporter</option>
+                            <option value="admin" <?php if($user->role == 'admin'){echo 'selected';} ?>>admin</option>
+                            <option value="publisher" <?php if($user->role == 'publisher'){echo 'selected';} ?> >publisher</option>
+                            <option value="representative" <?php if($user->role == 'representative'){echo 'selected';} ?> >representative</option>
+                            <option value="developer" <?php if($user->role == 'developer'){echo 'selected';} ?> >developer</option>
+                            <option value="editor" <?php if($user->role == 'editor'){echo 'selected';} ?> >editor</option>
+                            <option value="desk-reporter" <?php if($user->role == 'desk-reporter'){echo 'selected';} ?> >desk-reporter</option>
                         </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="name">Password</label>
-                        <input type="password" name="password" class="form-control" id="password" placeholder="User Password">
-                    </div>
-                    <div class="form-group">
-                        <label for="password_confirmation">Confirm Password</label>
-                        <input type="password" name="password_confirmation" class="form-control" id="password_confirmation" placeholder="Confirm Password">
                     </div>
                 </div>
                 <!-- /.card-body -->

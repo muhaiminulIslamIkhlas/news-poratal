@@ -23,6 +23,7 @@
                                     <th>Designation</th>
                                     <th>Image</th>
                                     <th>Details</th>
+                                    <th>Division</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -34,6 +35,7 @@
                                     <td><?= $item->designation ?></td>
                                     <td><img src="{{ $item->image }}" height="100" width="100" /></td>
                                     <td>{!! $item->details !!}</td>
+                                    <td>{{ $item->division->name }}</td>
                                     <td>
                                         <a class="btn btn-danger mt-3"
                                             href="{{ Url('/admin/weare/delete', $item->id) }}"><i

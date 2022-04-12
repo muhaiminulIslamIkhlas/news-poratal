@@ -11,8 +11,9 @@
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">All Designation lists</h3>
-                            <a class="btn btn-primary float-right listbutton" data-toggle="modal" data-target="#exampleModal">Add New
-                                Designation</a>
+                        <a class="btn btn-primary float-right listbutton" data-toggle="modal" data-target="#exampleModal">Add
+                            New
+                            Designation</a>
                     </div>
                     <div class="p-3">
                         <table id="contactList" class="table table-bordered table-striped">
@@ -89,6 +90,7 @@
     <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --}}
     <!-- Page specific script -->
     <script>
         $(function() {
