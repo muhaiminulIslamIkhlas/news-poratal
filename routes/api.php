@@ -109,3 +109,9 @@ Route::get('/get-timeline-news/{timelineId}/{limit}',[App\Http\Controllers\API\T
  */
 Route::get('/get-keyword-news/{keywordId}/{limit}',[App\Http\Controllers\API\KeywordController::class, 'getNewsByKeyword']);
 Route::get('/get-related-news/{newsId}/{limit}',[App\Http\Controllers\API\KeywordController::class, 'relatedNews']);
+
+/**
+ * trending news
+ */
+Route::get('/get-all-trending/{limit}',[App\Http\Controllers\API\TrendingController::class, 'allTrending']);
+Route::get('/get-trending-news/{keywordId}/{limit}',[App\Http\Controllers\API\KeywordController::class, 'getNewsByKeyword']);
