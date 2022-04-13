@@ -100,6 +100,12 @@ Route::group(['prefix' => 'archive'], function () {
 });
 
 /**
- * archive
+ * timeline
  */
 Route::get('/get-timeline-news/{timelineId}/{limit}',[App\Http\Controllers\API\TimelineController::class, 'getTimelineNews']);
+
+/**
+ * news keyword
+ */
+Route::get('/get-keyword-news/{keywordId}/{limit}',[App\Http\Controllers\API\KeywordController::class, 'getNewsByKeyword']);
+Route::get('/get-related-news/{newsId}/{limit}',[App\Http\Controllers\API\KeywordController::class, 'relatedNews']);

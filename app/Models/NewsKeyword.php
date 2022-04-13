@@ -13,4 +13,9 @@ class NewsKeyword extends Model
     {
         return $this->belongsTo('App\Models\Keyword','keyword_id');
     }
+
+    public function relatedNews(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany('App\Models\News','news_keywords','news_id','keyword_id');
+    }
 }
