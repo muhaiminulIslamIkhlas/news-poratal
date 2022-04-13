@@ -258,6 +258,14 @@ $category = DB::table('categories')
                         </li>
                     </ul>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ url('/admin/news/keyword/index-trending') }}" class="nav-link">
+                        <i class="nav-icon fas fa-calendar"></i>
+                        <p>
+                            Trending
+                        </p>
+                    </a>
+                </li>
                 @if (auth()->user()->role != 'publisher')
                     <li class="nav-header">Video and Image</li>
                     <li class="nav-item">

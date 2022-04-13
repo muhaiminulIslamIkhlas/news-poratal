@@ -10,50 +10,24 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">All Categories lists</h3>
-                        <a class="btn btn-primary float-right listbutton" href="{{ Url('/admin/news/category/index') }}">Add
-                            New Category</a>
+                        <h3 class="card-title">All Trending lists</h3>
                     </div>
                     <div class="p-3">
-                        <table id="categorylist" class="table table-bordered table-striped">
+                        <table id="keywordlist" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>Id</th>
-                                    <th>Category Name</th>
-                                    <th>Order</th>
-                                    <th>Visible</th>
+                                    <th>Trending</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($categorylist as $category) { ?>
+                                <?php foreach($keywordlist as $keyword){ ?>
                                 <tr>
-                                    <td><?= $category->id ?></td>
-                                    <td><?= $category->name ?></td>
-                                    <td><?= $category->order ?></td>
+                                    <td><?= $keyword->name ?></td>
                                     <td>
-                                        @if ($category->visible)
-                                            <a href="{{ URL('admin/news/category/invisible/' . $category->id) }}">
-                                                <span class="badge badge-success">Visible</span>
-                                            </a>
-                                        @else
-                                            <a href="{{ URL('admin/news/category/visible/' . $category->id) }}">
-                                                <span class="badge badge-danger">Hidden</span>
-                                            </a>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <a class="btn btn-primary mt-3"
-                                            href="{{ Url('/admin/news/category/view', $category->id) }}"><i
-                                                class="fas fa-eye fa-fw"></i></a>
-                                        <a class="btn btn-success mt-3"
-                                            href="{{ Url('/admin/news/category/edit', $category->id) }}"><i
-                                                class="fas fa-edit fa-fw"></i></a>
-                                        <?php if ($category->id > 19) : ?>
                                         <a class="btn btn-danger mt-3"
-                                            href="{{ Url('/admin/news/category/delete', $category->id) }}"><i
-                                                class="fas fa-trash fa-fw"></i></a>
-                                        <?php endif; ?>
+                                            href="{{ Url('/admin/news/keyword/remove-trending', $keyword->id) }}"><i
+                                                class="fas fa-folder fa-fw"></i>Remove trending</a>
                                     </td>
                                 </tr>
                                 <?php } ?>
@@ -73,6 +47,7 @@
         <!-- /.row -->
     </div><!-- /.container-fluid -->
 @endsection()
+
 @section('scripts')
     <!-- DataTables  & Plugins -->
     <script src="{{ asset('assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
@@ -90,13 +65,13 @@
     <!-- Page specific script -->
     <script>
         $(function() {
-            $('#categorylist').DataTable({
+            $('#keywordlist').DataTable({
                 "pageLength": 10,
                 "paging": true,
                 "lengthChange": false,
                 "searching": true,
-                "ordering": true,
                 "info": true,
+                'order': false,
                 "autoWidth": false,
                 "responsive": true,
             });

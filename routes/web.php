@@ -68,12 +68,15 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function () {
 
         Route::group(['prefix' => 'keyword'], function () {
             Route::get('index', [\App\Http\Controllers\Keyword::class, 'index']);
+            Route::get('index-trending', [\App\Http\Controllers\Keyword::class, 'indexTrending']);
             Route::post('create', [\App\Http\Controllers\Keyword::class, 'create']);
             Route::get('list', [\App\Http\Controllers\Keyword::class, 'list']);
             Route::get('view/{id}', [\App\Http\Controllers\Keyword::class, 'view']);
             Route::get('edit/{id}', [\App\Http\Controllers\Keyword::class, 'edit']);
             Route::post('update', [\App\Http\Controllers\Keyword::class, 'update']);
             Route::get('delete/{id}', [\App\Http\Controllers\Keyword::class, 'delete']);
+            Route::get('make-trending/{id}', [\App\Http\Controllers\Keyword::class, 'makeTrending']);
+            Route::get('remove-trending/{id}', [\App\Http\Controllers\Keyword::class, 'removeTrending']);
         });
 
         Route::group(['prefix' => 'video'], function () {

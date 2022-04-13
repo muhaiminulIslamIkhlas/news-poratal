@@ -12,6 +12,12 @@ class Keyword extends Controller
         return view('admin.news.keyword.index');
     }
 
+    public function indexTrending()
+    {
+        $keywordlist = KeywordModel::where('trending',1)->orderBy('id','desc')->get();
+        return view('admin.trending.index', compact('keywordlist'));
+    }
+
     public function create(Request $request)
     {
         $validatedData = $request->validate([
@@ -26,7 +32,7 @@ class Keyword extends Controller
 
     public function list()
     {
-        $keywordlist = KeywordModel::get();
+        $keywordlist = KeywordModel::orderBy('id','desc')->get();
         return view('admin.news.keyword.list', compact('keywordlist'));
     }
 
@@ -56,6 +62,24 @@ class Keyword extends Controller
     {
         $keyword = KeywordModel::where('id', $id)->first();
         $keyword->delete();
+
+        return back();
+    }
+
+    public function makeTrending($id)
+    {
+        $keyword = KeywordModel::find($id);
+        $keyword->trending = 1;
+        $keyword->save();
+
+        return back();
+    }
+
+    public function removeTrending($id)
+    {
+        $keyword = KeywordModel::find($id);
+        $keyword->trending = 0;
+        $keyword->save();
 
         return back();
     }
