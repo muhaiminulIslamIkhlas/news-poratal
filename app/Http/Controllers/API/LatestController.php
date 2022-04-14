@@ -22,7 +22,7 @@ class LatestController extends Controller
             $latestId = $this->mapArray($latest);
         }
 
-        $news = News::where('id', $latestId)->get()->map->format();
+        $news = News::where('published',1)->where('id', $latestId)->get()->map->format();
 
         return response()->json($news);
     }
@@ -39,7 +39,7 @@ class LatestController extends Controller
     public function getAllLatest($limit): \Illuminate\Http\JsonResponse
     {
         // $latest = News::whereRaw("DATE_FORMAT(date,'%Y-%m-%d') like ?", ["%$date%"])->where('type','latest')->orderBy('order','ASC')->take($limit)->get()->map->format();
-        $latest = News::where('category_id',self::LATEST_ID)->where('published',1)->orderBy('order','ASC')->take($limit)->get()->map->format();
+        $latest = News::where('published',1)->where('category_id',self::LATEST_ID)->orderBy('order','ASC')->take($limit)->get()->map->format();
         return response()->json($latest);
     }
 }

@@ -19,7 +19,8 @@ class NewsController extends Controller
 
     public function getAllNews($categoryId, $type, $limit): \Illuminate\Http\JsonResponse
     {
-        $news = News::where('category_id', $categoryId)
+        $news = News::where('published',1)
+            ->where('category_id', $categoryId)
             ->where('type', $type)
             ->orderBy('order', 'ASC')
             ->take($limit)
@@ -52,7 +53,7 @@ class NewsController extends Controller
 
     public function getAllNewsByCategory($categoryId, $limit)
     {
-        $news = News::where('category_id', $categoryId)
+        $news = News::where('published',1)->where('category_id', $categoryId)
             ->take($limit)
             ->get()
             ->map->format();
@@ -66,7 +67,7 @@ class NewsController extends Controller
 
     public function getAllNewsBySubCategory($subCategoryId, $limit)
     {
-        $news = News::where('sub_category_id', $subCategoryId)
+        $news = News::where('published',1)->where('sub_category_id', $subCategoryId)
             ->take($limit)
             ->get()
             ->map->format();

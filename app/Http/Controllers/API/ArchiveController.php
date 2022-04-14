@@ -11,13 +11,13 @@ class ArchiveController extends Controller
 {
     public function index($limit,$skip = 0)
     {
-        $news = News::orderBy(DB::raw("DATE_FORMAT(date,'%d-%M-%Y')"), 'DESC')->skip($skip)->take($limit)->get();
+        $news = News::where('published',1)->orderBy(DB::raw("DATE_FORMAT(date,'%d-%M-%Y')"), 'DESC')->skip($skip)->take($limit)->get();
         return response()->json($news);
     }
 
     public function filter(Request $request)
     {
-        $news = News::select('*');
+        $news = News::where('published',1)->select('*');
         if($request->category_id){
             $news->where('category_id', $request->category_id);
         }

@@ -53,7 +53,7 @@ class SearchController extends Controller
 
         $newsIds = $this->mapArray($newsIdObj->get());
 
-        $news = News::whereIn('id',$newsIds)->orderBy('order','ASC')->get()->map->filterFormat();
+        $news = News::where('published',1)->whereIn('id',$newsIds)->orderBy('order','ASC')->get()->map->filterFormat();
 
         return response()->json($news);
     }

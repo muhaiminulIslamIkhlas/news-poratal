@@ -14,13 +14,13 @@ class LiveNewsController extends Controller
 
     public function getAllLiveNews($limit)
     {
-        $news = News::where('category_id', self::LIVE_NEWS)->orderBy('order', 'asc')->take($limit)->get();
+        $news = News::where('published',1)->where('category_id', self::LIVE_NEWS)->orderBy('order', 'asc')->take($limit)->get();
         return response($news);
     }
 
     public function getLiveNews($newsId, $limit)
     {
-        $news = News::where('id', $newsId)->first();
+        $news = News::where('published',1)->where('id', $newsId)->first();
         $liveNews = LiveNews::where('news_id', $newsId)->orderBy(DB::raw("DATE_FORMAT(date,'%d-%M-%Y')"), 'DESC')->take($limit)->get();
         return response([
             'news' => $news,

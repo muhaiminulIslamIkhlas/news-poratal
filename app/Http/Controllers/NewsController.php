@@ -70,6 +70,7 @@ class NewsController extends Controller
             'date' => 'required',
             'representative' => 'required',
             'keyword' => 'required',
+            'order' => 'required',
         ]);
         $imagePath = $this->_helepr->imageUpload($request->file('image'));
         $news = new News();
@@ -144,7 +145,8 @@ class NewsController extends Controller
         $keyWords = Keyword::get();
         $news = News::find($newsId);
         $divisions = $this->_helepr->getDivsions();
-        return view('admin.news.add-by-category.edit', compact('news', 'keyWords', 'divisions', 'newsKeywords', 'categoryName','timelines'));
+        $categoryId = $news->category_id;
+        return view('admin.news.add-by-category.edit', compact('news', 'keyWords', 'divisions', 'newsKeywords', 'categoryName','timelines','categoryId'));
     }
 
     public function delete($newsId)
@@ -168,6 +170,7 @@ class NewsController extends Controller
             'date' => 'required',
             'representative' => 'required',
             'keyword' => 'required',
+            'order' => 'required',
         ]);
 
 

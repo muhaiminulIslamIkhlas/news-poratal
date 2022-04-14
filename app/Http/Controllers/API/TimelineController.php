@@ -10,7 +10,7 @@ class TimelineController extends Controller
 {
     public function getTimelineNews($timelineId,$limit)
     {
-        $news = News::where('timeline_id',$timelineId)->take($limit)->get()->map->format();
+        $news = News::where('published',1)->where('timeline_id',$timelineId)->take($limit)->get()->map->format();
         return response()->json($news);
         
     }
