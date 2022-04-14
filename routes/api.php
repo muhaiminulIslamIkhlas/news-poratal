@@ -24,6 +24,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
  * category
  */
 Route::get('/category', [App\Http\Controllers\API\NewsController::class, 'getCategory']);
+Route::get('/category-by-id/{id}', [App\Http\Controllers\API\NewsController::class, 'getCategoryById']);
 /**
  * vote
  */

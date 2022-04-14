@@ -17,6 +17,12 @@ class NewsController extends Controller
         return response()->json([$categories]);
     }
 
+    public function getCategoryById($id)
+    {
+        $category = Category::where('id',$id)->with('subCategories')->first();
+        return response()->json($category);
+    }
+
     public function getAllNews($categoryId, $type, $limit): \Illuminate\Http\JsonResponse
     {
         $news = News::where('published',1)
