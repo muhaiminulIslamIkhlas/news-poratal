@@ -20,6 +20,7 @@ class CreateNewsTable extends Migration
             $table->bigInteger('category_id');
             $table->bigInteger('sub_category_id')->nullable();
             $table->integer('order')->nullable();
+            $table->integer('proofreader')->nullable()->default(0);
             $table->string('image')->nullable();
             $table->string('type');
             $table->bigInteger('timeline_id')->nullable();

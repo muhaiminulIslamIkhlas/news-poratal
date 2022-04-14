@@ -29,10 +29,10 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('publisher123'),
             ],
             [
-                'name' => 'representative',
-                'email' => 'representative@gmail.com',
-                'role' => 'representative',
-                'password' => Hash::make('representative123'),
+                'name' => 'editor',
+                'email' => 'editor@gmail.com',
+                'role' => 'editor',
+                'password' => Hash::make('editor123'),
             ],
             [
                 'name' => 'developer',
@@ -41,16 +41,22 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('developer123'),
             ],
             [
-                'name' => 'editor',
-                'email' => 'editor@gmail.com',
-                'role' => 'editor',
-                'password' => Hash::make('editor123'),
+                'name' => 'desk_reporter',
+                'email' => 'desk_reporter@gmail.com',
+                'role' => 'desk_reporter',
+                'password' => Hash::make('desk-reporter123'),
             ],
             [
-                'name' => 'desk-reporter',
-                'email' => 'desk-reporter@gmail.com',
-                'role' => 'desk-reporter',
-                'password' => Hash::make('desk-reporter123'),
+                'name' => 'proofreader',
+                'email' => 'proofreader@gmail.com',
+                'role' => 'proofreader',
+                'password' => Hash::make('proofreader123'),
+            ],
+            [
+                'name' => 'representative',
+                'email' => 'representative@gmail.com',
+                'role' => 'representative',
+                'password' => Hash::make('representative123'),
             ]
         ];
 

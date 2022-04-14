@@ -50,11 +50,11 @@ class NewsController extends Controller
 
     public function create()
     {
-        $timelines = Timeline::orderBy('id','desc')->get();
+        $timelines = Timeline::orderBy('id', 'desc')->get();
         $categories = Category::get();
         $keyWords = Keyword::get();
         $divisions = $this->_helepr->getDivsions();
-        return view('admin.news.create', compact('categories', 'keyWords', 'divisions','timelines'));
+        return view('admin.news.create', compact('categories', 'keyWords', 'divisions', 'timelines'));
     }
 
     public function store(Request $request)
@@ -92,7 +92,7 @@ class NewsController extends Controller
         $newsDetails->shoulder = $request->shoulder;
         $newsDetails->keyword = json_encode($request->keyword);
         $newsDetails->save();
-        foreach($request->keyword as $keyword){
+        foreach ($request->keyword as $keyword) {
             $item = new NewsKeyword();
             $item->news_id = $news->id;
             $item->keyword_id = $keyword;
@@ -117,43 +117,79 @@ class NewsController extends Controller
         $news = News::find($newsId);
         $news->published = 1;
         $news->save();
-        $publisher =  Published::where('news_id',$newsId)->first();
+        $publisher =  Published::where('news_id', $newsId)->first();
         $publisher->published_by = auth()->user()->id;
         $publisher->save();
         return back();
     }
 
+    public function proofreader($newsId)
+    {
+        $news = News::find($newsId);
+        $news->proofreader = 1;
+        $news->save();
+        return back();
+    }
+
+    public function listProofreader()
+    {
+        $news = News::where('proofreader', 1)->orderby('date', 'DESC')->get();
+        return view('admin.proofreader.proofreader', compact('news'));
+    }
+
+    public function submitProofreader($newsId)
+    {
+        $news = News::find($newsId);
+        $news->proofreader = 2;
+        $news->save();
+        return back();
+    }
+
     public function createByCategory($categoryId, $categoryName)
     {
-        $timelines = Timeline::orderBy('id','desc')->get();
+        $timelines = Timeline::orderBy('id', 'desc')->get();
         $keyWords = Keyword::get();
         $divisions = $this->_helepr->getDivsions();
-        return view('admin.news.add-by-category.create', compact('categoryId', 'keyWords', 'divisions', 'categoryName','timelines'));
+        return view('admin.news.add-by-category.create', compact('categoryId', 'keyWords', 'divisions', 'categoryName', 'timelines'));
     }
 
     public function getList($categoryId, $categoryName)
     {
-        $news = News::where('category_id', $categoryId)->orderby('date', 'DESC')->get();
-        return view('admin.news.add-by-category.index', compact('news', 'categoryName','categoryId'));
+        $role = auth()->user()->role;
+        if ($role == 'representative') {
+            $news = News::select('news.*')->where('category_id', $categoryId)->orderby('date', 'DESC')->join('publisheds', 'publisheds.news_id', 'news.id')->join('users', 'users.id', 'publisheds.created_by')->where('users.id', auth()->user()->id)->get();
+        } else {
+            $news = News::where('category_id', $categoryId)->orderby('date', 'DESC')->get();
+        }
+
+        return view('admin.news.add-by-category.index', compact('news', 'categoryName', 'categoryId'));
     }
 
     public function edit($newsId, $categoryName)
     {
-        $timelines = Timeline::orderBy('id','desc')->get();
+        $timelines = Timeline::orderBy('id', 'desc')->get();
         $newskeyWordJson = NewsDetails::select('keyword')->where('news_id', $newsId)->first();
         $newsKeywords = json_decode($newskeyWordJson->keyword);
         $keyWords = Keyword::get();
         $news = News::find($newsId);
         $divisions = $this->_helepr->getDivsions();
         $categoryId = $news->category_id;
-        return view('admin.news.add-by-category.edit', compact('news', 'keyWords', 'divisions', 'newsKeywords', 'categoryName','timelines','categoryId'));
+        $role = auth()->user()->role;
+        if ($role == 'representative' && $news->published == 1) {
+            abort(403);
+        }
+        return view('admin.news.add-by-category.edit', compact('news', 'keyWords', 'divisions', 'newsKeywords', 'categoryName', 'timelines', 'categoryId'));
     }
 
     public function delete($newsId)
     {
         $news = News::find($newsId);
+        $role = auth()->user()->role;
+        if ($role == 'representative' && $news->published == 1) {
+            abort(403);
+        }
         $news->delete();
-        DB::table("news_keywords")->where('news_id',$newsId)->delete();
+        DB::table("news_keywords")->where('news_id', $newsId)->delete();
         return back();
     }
 
@@ -201,8 +237,8 @@ class NewsController extends Controller
         $region->district = $request->district;
         $region->upozilla = $request->upozilla;
         $region->save();
-        DB::table("news_keywords")->where('news_id',$news->id)->delete();
-        foreach($request->keyword as $keyword){
+        DB::table("news_keywords")->where('news_id', $news->id)->delete();
+        foreach ($request->keyword as $keyword) {
             $item = new NewsKeyword();
             $item->news_id = $news->id;
             $item->keyword_id = $keyword;
@@ -215,8 +251,8 @@ class NewsController extends Controller
     public function view($newsId)
     {
         $news = News::find($newsId);
-        $keyWords = Keyword::whereIn('id',json_decode($news->details->keyword))->get();
-        return view('admin.news.add-by-category.view', compact('news','keyWords'));
+        $keyWords = Keyword::whereIn('id', json_decode($news->details->keyword))->get();
+        return view('admin.news.add-by-category.view', compact('news', 'keyWords'));
     }
 
     public function getDistrictByDivId($divisionID)
@@ -251,7 +287,7 @@ class NewsController extends Controller
         $news = News::find($id);
         $news->published = 1;
         $news->save();
-        $published = Published::where('news_id',$id)->first();
+        $published = Published::where('news_id', $id)->first();
         $published->published_by = auth()->user()->id;
         $published->save();
 
@@ -260,8 +296,8 @@ class NewsController extends Controller
 
     public function liveNews($newsId)
     {
-        $liveNews = LiveNews::where('news_id',$newsId)->orderBy(DB::raw("DATE_FORMAT(date,'%d-%M-%Y')"), 'DESC')->get();
-        return view('admin.live-news.index',compact('newsId','liveNews'));
+        $liveNews = LiveNews::where('news_id', $newsId)->orderBy(DB::raw("DATE_FORMAT(date,'%d-%M-%Y')"), 'DESC')->get();
+        return view('admin.live-news.index', compact('newsId', 'liveNews'));
     }
 
     public function liveNewsStore(Request $request)
@@ -293,18 +329,18 @@ class NewsController extends Controller
     public function liveNewsEdit($newsId)
     {
         $liveNews = LiveNews::find($newsId);
-        return view('admin.live-news.edit',compact('liveNews'));
+        return view('admin.live-news.edit', compact('liveNews'));
     }
 
     public function liveNewsUpdate(Request $request)
     {
-        $liveNews =  LiveNews::where('news_id',$request->news_id)->first();
+        $liveNews =  LiveNews::where('news_id', $request->news_id)->first();
         $liveNews->title = $request->title;
         $liveNews->details = $request->details;
         $liveNews->date = $request->date;
         $liveNews->news_id = $request->news_id;
         $liveNews->save();
 
-        return redirect('admin/news/live-index/'.$request->news_id);
+        return redirect('admin/news/live-index/' . $request->news_id);
     }
 }

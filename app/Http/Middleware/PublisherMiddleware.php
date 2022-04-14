@@ -16,7 +16,7 @@ class PublisherMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->user()->role == 'publisher' || auth()->user()->role == 'admin') {
+        if (auth()->user()->role == 'editor' ||auth()->user()->role == 'desk_reporter'  ||auth()->user()->role == 'publisher' || auth()->user()->role == 'admin') {
             return $next($request);
         }
 

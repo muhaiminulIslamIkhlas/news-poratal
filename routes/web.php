@@ -21,14 +21,19 @@ Route::get('/', function () {
 //    return view('dashboard');
 //})->middleware(['auth'])->name('dashboard');
 
-Route::group(['prefix' => 'admin','middleware' => 'auth'], function () {
-    Route::get('/',[\App\Http\Controllers\HomeController::class, 'index']);
+Route::get('access-denied', [\App\Http\Controllers\HomeController::class, 'accessDenied'])->name('access-denied');
+
+Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
+    Route::get('/', [\App\Http\Controllers\HomeController::class, 'index']);
     Route::group(['prefix' => 'news'], function () {
         Route::get('index', [\App\Http\Controllers\NewsController::class, 'index']);
         Route::get('create', [\App\Http\Controllers\NewsController::class, 'create']);
         Route::post('store', [\App\Http\Controllers\NewsController::class, 'store']);
         Route::post('update', [\App\Http\Controllers\NewsController::class, 'update']);
         Route::get('publish/{newsId}', [\App\Http\Controllers\NewsController::class, 'publish'])->middleware('publisher');
+        Route::get('proofreader/{newsId}', [\App\Http\Controllers\NewsController::class, 'proofreader'])->middleware('publisher');
+        Route::get('list/proofreader', [\App\Http\Controllers\NewsController::class, 'listProofreader']);
+        Route::get('proofreader/submit/{newsId}', [\App\Http\Controllers\NewsController::class, 'submitProofreader']);
         Route::get('get-district/{divisionID}', [\App\Http\Controllers\NewsController::class, 'getDistrictByDivId']);
         Route::get('get-upozilla/{districtID}', [\App\Http\Controllers\NewsController::class, 'getUpozillaByDisId']);
         Route::get('live-index/{newsId}', [\App\Http\Controllers\NewsController::class, 'liveNews']);
@@ -44,7 +49,7 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function () {
         Route::get('view/{newsId}/', [\App\Http\Controllers\NewsController::class, 'view']);
         Route::get('keyword-by-id/{newsId}/', [\App\Http\Controllers\NewsController::class, 'getKeyWord']);
 
-        Route::group(['prefix' => 'category'], function () {
+        Route::group(['prefix' => 'category', 'middleware' => 'developer'], function () {
             Route::get('index', [\App\Http\Controllers\Category::class, 'index']);
             Route::post('create', [\App\Http\Controllers\Category::class, 'create']);
             Route::get('list', [\App\Http\Controllers\Category::class, 'list']);
@@ -56,7 +61,7 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function () {
             Route::get('invisible/{id}', [\App\Http\Controllers\Category::class, 'invisible']);
         });
 
-        Route::group(['prefix' => 'subcategory'], function () {
+        Route::group(['prefix' => 'subcategory', 'middleware' => 'developer'], function () {
             Route::get('index', [\App\Http\Controllers\Subcategory::class, 'index']);
             Route::post('create', [\App\Http\Controllers\Subcategory::class, 'create']);
             Route::get('list', [\App\Http\Controllers\Subcategory::class, 'list']);
@@ -67,10 +72,9 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function () {
             Route::get('get-sub-category/{categoryId}', [\App\Http\Controllers\Subcategory::class, 'getSubCategory']);
             Route::get('visible/{id}', [\App\Http\Controllers\Subcategory::class, 'visible']);
             Route::get('invisible/{id}', [\App\Http\Controllers\Subcategory::class, 'invisible']);
-
         });
 
-        Route::group(['prefix' => 'keyword'], function () {
+        Route::group(['prefix' => 'keyword', 'middleware' => 'developer'], function () {
             Route::get('index', [\App\Http\Controllers\Keyword::class, 'index']);
             Route::get('index-trending', [\App\Http\Controllers\Keyword::class, 'indexTrending']);
             Route::post('create', [\App\Http\Controllers\Keyword::class, 'create']);
@@ -83,7 +87,7 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function () {
             Route::get('remove-trending/{id}', [\App\Http\Controllers\Keyword::class, 'removeTrending']);
         });
 
-        Route::group(['prefix' => 'video'], function () {
+        Route::group(['prefix' => 'video', 'middleware' => 'developer'], function () {
             Route::get('index', [\App\Http\Controllers\VideoController::class, 'index']);
             Route::post('create', [\App\Http\Controllers\VideoController::class, 'create']);
             Route::get('list', [\App\Http\Controllers\VideoController::class, 'list']);
@@ -94,7 +98,7 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function () {
         });
 
 
-        Route::group(['prefix' => 'image'], function () {
+        Route::group(['prefix' => 'image', 'middleware' => 'developer'], function () {
             Route::get('index', [\App\Http\Controllers\ImageController::class, 'index']);
             Route::post('create', [\App\Http\Controllers\ImageController::class, 'create']);
             Route::get('list', [\App\Http\Controllers\ImageController::class, 'list']);
@@ -103,9 +107,8 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function () {
             Route::post('update', [\App\Http\Controllers\ImageController::class, 'update']);
             Route::get('delete/{id}', [\App\Http\Controllers\ImageController::class, 'delete']);
         });
-
     });
-    Route::group(['prefix' => 'vote'], function () {
+    Route::group(['prefix' => 'vote', 'middleware' => 'developer'], function () {
         Route::get('index', [\App\Http\Controllers\VoteController::class, 'index']);
         Route::get('create', [\App\Http\Controllers\VoteController::class, 'create']);
         Route::post('store', [\App\Http\Controllers\VoteController::class, 'store']);
@@ -114,7 +117,7 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function () {
         Route::post('update', [\App\Http\Controllers\VoteController::class, 'update']);
         Route::get('delete/{id}', [\App\Http\Controllers\VoteController::class, 'delete']);
     });
-    Route::group(['prefix' => 'opinion'], function () {
+    Route::group(['prefix' => 'opinion', 'middleware' => 'developer'], function () {
         Route::get('index', [\App\Http\Controllers\OpinionController::class, 'index']);
         Route::post('create', [\App\Http\Controllers\OpinionController::class, 'create']);
         Route::get('list', [\App\Http\Controllers\OpinionController::class, 'list']);
@@ -124,36 +127,38 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function () {
         Route::get('delete/{id}', [\App\Http\Controllers\OpinionController::class, 'delete']);
     });
 
-    Route::group(['prefix' => 'information'], function () {
+    Route::group(['prefix' => 'information', 'middleware' => 'developer'], function () {
         Route::get('index', [\App\Http\Controllers\InformationController::class, 'index']);
         Route::get('edit', [\App\Http\Controllers\InformationController::class, 'edit']);
         Route::post('store', [\App\Http\Controllers\InformationController::class, 'update']);
     });
-    Route::group(['prefix' => 'contact'], function () {
+
+    Route::group(['prefix' => 'contact', 'middleware' => 'developer'], function () {
         Route::get('index', [\App\Http\Controllers\ContactController::class, 'index']);
         Route::get('create', [\App\Http\Controllers\ContactController::class, 'create']);
         Route::post('store', [\App\Http\Controllers\ContactController::class, 'store']);
         Route::get('delete/{id}', [\App\Http\Controllers\ContactController::class, 'delete']);
     });
-    Route::group(['prefix' => 'user', 'middleware'=>'admin' ], function () {
+
+    Route::group(['prefix' => 'user'], function () {
         Route::get('index', [\App\Http\Controllers\UserController::class, 'index']);
         Route::get('create', [\App\Http\Controllers\UserController::class, 'create']);
         Route::post('store', [\App\Http\Controllers\UserController::class, 'store']);
-        Route::post('update', [\App\Http\Controllers\UserController::class, 'update']);
-        Route::get('delete/{id}', [\App\Http\Controllers\UserController::class, 'delete']);
-        Route::get('edit/{id}', [\App\Http\Controllers\UserController::class, 'edit']);
+        Route::post('update', [\App\Http\Controllers\UserController::class, 'update'])->middleware('admin');
+        Route::get('delete/{id}', [\App\Http\Controllers\UserController::class, 'delete'])->middleware('admin');
+        Route::get('edit/{id}', [\App\Http\Controllers\UserController::class, 'edit'])->middleware('admin');
     });
 
     Route::get('profile', [\App\Http\Controllers\UserController::class, 'profile']);
     Route::post('profile-update', [\App\Http\Controllers\UserController::class, 'profileUpdate']);
 
-    Route::group(['prefix' => 'designation'], function () {
+    Route::group(['prefix' => 'designation', 'middleware' => 'developer'], function () {
         Route::get('index', [\App\Http\Controllers\DesignationController::class, 'index']);
         Route::post('store', [\App\Http\Controllers\DesignationController::class, 'store']);
         Route::get('delete/{id}', [\App\Http\Controllers\DesignationController::class, 'delete']);
     });
 
-    Route::group(['prefix' => 'timeline'], function () {
+    Route::group(['prefix' => 'timeline', 'middleware' => 'developer'], function () {
         Route::get('index', [\App\Http\Controllers\TimelineController::class, 'index']);
         Route::post('store', [\App\Http\Controllers\TimelineController::class, 'store']);
         Route::get('delete/{id}', [\App\Http\Controllers\TimelineController::class, 'delete']);
@@ -161,7 +166,7 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function () {
         Route::get('news/remove/{id}', [\App\Http\Controllers\TimelineController::class, 'removeNews']);
     });
 
-    Route::group(['prefix' => 'division'], function () {
+    Route::group(['prefix' => 'division', 'middleware' => 'developer'], function () {
         Route::get('index', [\App\Http\Controllers\DivisionController::class, 'index']);
         Route::post('store', [\App\Http\Controllers\DivisionController::class, 'store']);
         Route::post('update', [\App\Http\Controllers\DivisionController::class, 'update']);
@@ -169,7 +174,7 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function () {
         Route::get('edit/{id}', [\App\Http\Controllers\DivisionController::class, 'edit']);
     });
 
-    Route::group(['prefix' => 'weare'], function () {
+    Route::group(['prefix' => 'weare', 'middleware' => 'developer'], function () {
         Route::get('index', [\App\Http\Controllers\WeAreController::class, 'index']);
         Route::get('create', [\App\Http\Controllers\WeAreController::class, 'create']);
         Route::get('edit/{id}', [\App\Http\Controllers\WeAreController::class, 'edit']);
@@ -177,8 +182,6 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function () {
         Route::post('update/', [\App\Http\Controllers\WeAreController::class, 'update']);
         Route::get('delete/{id}', [\App\Http\Controllers\WeAreController::class, 'delete']);
     });
-
-
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

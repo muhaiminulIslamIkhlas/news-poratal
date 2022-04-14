@@ -60,10 +60,21 @@
                                             <a class="btn btn-danger mt-3"
                                                 href="{{ Url('/admin/news/delete', $item->id) }}"><i
                                                     class="fas fa-trash"></i> Delete</a>
-                                            @if ((auth()->user()->role == 'publisher' || auth()->user()->role == 'admin') && $item->published == 0)
+                                            @if (in_array(auth()->user()->role, ['admin', 'publisher', 'editor', 'desk_reporter']) && $item->published == 0 && $item->proofreader != 1)
                                                 <a class="btn btn-success mt-3"
                                                     href="{{ Url('/admin/news/publish', $item->id) }}"><i
                                                         class="fas fa-eye"></i> Publish</a></a>
+                                            @endif
+                                            @if (in_array(auth()->user()->role, ['admin', 'publisher', 'editor', 'desk_reporter']) && $item->published == 0 && $item->proofreader == 0)
+                                                <a class="btn btn-info mt-3"
+                                                    href="{{ Url('/admin/news/proofreader', $item->id) }}"><i
+                                                        class="fas fa-eye"></i> Proofreader</a></a>
+                                            @endif
+                                            @if ($item->proofreader == 1)
+                                                <a class="btn btn-info mt-3"> Pending Proofreader</a></a>
+                                            @endif
+                                            @if ($item->proofreader == 2)
+                                                <a class="btn btn-success mt-3">Complete Proofreader</a></a>
                                             @endif
                                             @if ($categoryId == 19)
                                                 <a class="btn btn-success mt-3"

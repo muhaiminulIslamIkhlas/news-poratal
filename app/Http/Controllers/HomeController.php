@@ -10,4 +10,9 @@ class HomeController extends Controller
     {
         return view('admin.home');
     }
+
+    public function accessDenied()
+    {
+        return view('admin.access-denied');
+    }
 }

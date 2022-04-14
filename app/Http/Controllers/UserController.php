@@ -10,15 +10,36 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+    public function getRoles($role)
+    {
+        $roles = [];
+        if ($role == 'admin') {
+            $roles = ['admin', 'publisher', 'editor', 'developer', 'desk_reporter', 'proofreader', 'representative'];
+        } else if ($role == 'publisher') {
+            $roles = ['editor', 'developer', 'desk_reporter', 'proofreader', 'representative'];
+        } else if ($role == 'editor') {
+            $roles = ['developer', 'desk_reporter', 'proofreader', 'representative'];
+        } else if ($role == 'desk_reporter') {
+            $roles = ['proofreader', 'representative'];
+        }
+        
+        return $roles;
+    }
     public function index()
     {
         $userList = User::where('id', '!=', Auth::user()->id)->orderBy('id', 'DESC')->get();
-        return view('admin.user.index', compact('userList'));
+        $role = Auth::user()->role;
+        $roles = $this->getRoles($role);
+
+        return view('admin.user.index', compact('userList', 'roles'));
     }
 
     public function create()
     {
-        return view('admin.user.create');
+        $role = Auth::user()->role;
+        $roles = $this->getRoles($role);
+
+        return view('admin.user.create',compact('roles'));
     }
 
     public function store(Request $request)
@@ -29,13 +50,17 @@ class UserController extends Controller
             'role' => ['required', 'string'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
+        $role = Auth::user()->role;
+        $roles = $this->getRoles($role);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'role' => $request->role,
-            'password' => Hash::make($request->password),
-        ]);
+        if (in_array($request->role, $roles)) {
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'role' => $request->role,
+                'password' => Hash::make($request->password),
+            ]);
+        }
 
         return redirect('/admin/user/index');
     }
@@ -52,8 +77,10 @@ class UserController extends Controller
 
     public function edit($id)
     {
+        $role = Auth::user()->role;
+        $roles = $this->getRoles($role);
         $user = User::select('id', 'role', 'name', 'email')->where('id', $id)->first();
-        return view('admin.user.edit', compact('user'));
+        return view('admin.user.edit', compact('user', 'roles'));
     }
 
     public function update(Request $request)
@@ -63,10 +90,15 @@ class UserController extends Controller
             'role' => ['required', 'string']
         ]);
 
-        $user = User::where('id', $request->id)->first();
-        $user->name = $request->name;
-        $user->role = $request->role;
-        $user->save();
+        $role = Auth::user()->role;
+        $roles = $this->getRoles($role);
+
+        if (in_array($request->role, $roles)) {
+            $user = User::where('id', $request->id)->first();
+            $user->name = $request->name;
+            $user->role = $request->role;
+            $user->save();
+        }
 
         return redirect('/admin/user/index');
     }
@@ -79,17 +111,17 @@ class UserController extends Controller
 
     public function profileUpdate(Request $request)
     {
-        if($request->password){
+        if ($request->password) {
             $request->validate([
                 'name' => ['required', 'string', 'max:255'],
                 'password' => ['confirmed', Rules\Password::defaults()],
             ]);
-        }else{
+        } else {
             $request->validate([
                 'name' => ['required', 'string', 'max:255']
             ]);
         }
-        
+
 
         $user = User::find(Auth::user()->id);
         $user->name = $request->name;
