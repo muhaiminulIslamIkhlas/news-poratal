@@ -37,23 +37,28 @@
                                 <textarea id="sort_description" name="sort_description">{!! $news->sort_description !!}</textarea>
                             </div>
                             <div class="row">
-                            <div class="form-group col-6">
-                                <label for="date">Date Time</label>
-                                <input type="datetime-local" value="{{ date('Y-m-d\TH:i:s', strtotime($news->date)) }}"
-                                    name="date" class="form-control" id="date" placeholder="Date Time">
+                                <div class="form-group col-6">
+                                    <label for="date">Date Time</label>
+                                    <input type="datetime-local"
+                                        value="{{ date('Y-m-d\TH:i:s', strtotime($news->date)) }}" name="date"
+                                        class="form-control" id="date" placeholder="Date Time">
+                                </div>
+                                <div class="form-group col-6">
+                                    <label for="date">Timeline</label>
+                                    <select class="form-control" name="timeline_id">
+                                        <option value="">--Select one--</option>
+                                        @foreach ($timelines as $timeline)
+                                            <option value="{{ $timeline->id }}" <?php if ($news->timeline_id == $timeline->id) {
+    echo 'selected';
+} ?>>
+                                                {{ $timeline->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
-                            <div class="form-group col-6">
-                                <label for="date">Timeline</label>
-                                <select class="form-control" name="timeline_id">
-                                    <option value="">--Select one--</option>
-                                    @foreach ($timelines as $timeline)
-                                        <option value="{{ $timeline->id }}" <?php if($news->timeline_id == $timeline->id){echo 'selected';} ?>>{{ $timeline->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
                             <input type="hidden" id="category_id" name="category_id" value="{{ $news->category_id }}" />
                             {{-- <input type="hidden" id="category_name" name="category_name" value="{{ $categoryName }}" /> --}}
+                            @if($categoryId != 18 && $categoryId != 19)
                             <div class="form-group">
                                 <label for="sub_category_id">Sub Category</label>
                                 <select name="sub_category_id" id="sub_category_id" class="form-control">
@@ -63,6 +68,7 @@
                                     @endif
                                 </select>
                             </div>
+                            @endif
                             <div class="form-group">
                                 <label for="order">Order</label>
                                 <input type="number" min="1" name="order" value="{{ $news->order }}"
@@ -72,29 +78,31 @@
                                 <label for="image">Image</label>
                                 <input type="file" class="d-block" name="image" id="image" />
                             </div>
-                            <div class="form-group">
-                                <label for="type">Type</label>
-                                <select name="type" id="type" class="form-control">
-                                    <option value="general" <?php if ($news->type == 'general') {
+                            @if ($categoryId == 18 || $categoryId == 19)
+                                <input type="hidden" name="type" value="general" />
+                            @endif
+                            @if ($categoryId != 18 && $categoryId != 19)
+                                <div class="form-group">
+                                    <label for="type">Type</label>
+                                    <select name="type" id="type" class="form-control">
+                                        <option value="general" <?php if ($news->type == 'general') {
     echo 'selected';
 } ?>>General news</option>
-                                    <option value="lead_news" <?php if ($news->type == 'lead_news') {
+                                        <option value="lead_news" <?php if ($news->type == 'lead_news') {
     echo 'selected';
 } ?>>Lead news</option>
-                                    <option value="sub_lead_news" <?php if ($news->type == 'sub_lead_news') {
+                                        <option value="sub_lead_news" <?php if ($news->type == 'sub_lead_news') {
     echo 'selected';
 } ?>>Sub lead news</option>
-                                    <option value="second_lead" <?php if ($news->type == 'second_lead') {
+                                        <option value="second_lead" <?php if ($news->type == 'second_lead') {
     echo 'selected';
 } ?>>Second lead</option>
-                                    <option value="side_bar_news" <?php if ($news->type == 'side_bar_news') {
+                                        <option value="side_bar_news" <?php if ($news->type == 'side_bar_news') {
     echo 'selected';
 } ?>>Side bar news</option>
-                                    <option value="latest" <?php if ($news->type == 'latest') {
-    echo 'selected';
-} ?>>Latest</option>
-                                </select>
-                            </div>
+                                    </select>
+                                </div>
+                            @endif
                             <div class="form-group">
                                 <label for="summernote">Details</label>
                                 <textarea id="details" name="details">{!! $news->details->details !!}</textarea>

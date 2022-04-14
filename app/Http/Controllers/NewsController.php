@@ -11,6 +11,7 @@ use App\Models\Thana;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Keyword;
+use App\Models\LiveNews;
 use App\Models\NewsKeyword;
 use App\Models\Published;
 use App\Models\Timeline;
@@ -66,6 +67,7 @@ class NewsController extends Controller
             'type' => 'required',
             'details' => 'required',
             'ticker' => 'required',
+            'date' => 'required',
             'representative' => 'required',
             'keyword' => 'required',
         ]);
@@ -131,7 +133,7 @@ class NewsController extends Controller
     public function getList($categoryId, $categoryName)
     {
         $news = News::where('category_id', $categoryId)->orderby('date', 'DESC')->get();
-        return view('admin.news.add-by-category.index', compact('news', 'categoryName'));
+        return view('admin.news.add-by-category.index', compact('news', 'categoryName','categoryId'));
     }
 
     public function edit($newsId, $categoryName)
@@ -163,6 +165,7 @@ class NewsController extends Controller
             'type' => 'required',
             'details' => 'required',
             'ticker' => 'required',
+            'date' => 'required',
             'representative' => 'required',
             'keyword' => 'required',
         ]);
@@ -252,8 +255,53 @@ class NewsController extends Controller
         return back();
     }
 
-    public function test()
+    public function liveNews($newsId)
     {
-        echo Date('Y-m-d');
+        $liveNews = LiveNews::where('news_id',$newsId)->orderBy(DB::raw("DATE_FORMAT(date,'%d-%M-%Y')"), 'DESC')->get();
+        return view('admin.live-news.index',compact('newsId','liveNews'));
+    }
+
+    public function liveNewsStore(Request $request)
+    {
+        $validatedData = $request->validate([
+            'title' => 'required|max:255',
+            'details' => 'required',
+            'date' => 'required',
+        ]);
+
+        $liveNews = new LiveNews();
+        $liveNews->title = $request->title;
+        $liveNews->details = $request->details;
+        $liveNews->date = $request->date;
+        $liveNews->news_id = $request->news_id;
+        $liveNews->save();
+
+        return back();
+    }
+
+    public function liveNewsDelete($newsId)
+    {
+        $liveNews = LiveNews::find($newsId);
+        $liveNews->delete();
+
+        return back();
+    }
+
+    public function liveNewsEdit($newsId)
+    {
+        $liveNews = LiveNews::find($newsId);
+        return view('admin.live-news.edit',compact('liveNews'));
+    }
+
+    public function liveNewsUpdate(Request $request)
+    {
+        $liveNews =  LiveNews::where('news_id',$request->news_id)->first();
+        $liveNews->title = $request->title;
+        $liveNews->details = $request->details;
+        $liveNews->date = $request->date;
+        $liveNews->news_id = $request->news_id;
+        $liveNews->save();
+
+        return redirect('admin/news/live-index/'.$request->news_id);
     }
 }

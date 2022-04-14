@@ -52,7 +52,7 @@
                             </div>
                             <input type="hidden" id="category_id" name="category_id" value="{{ $categoryId }}" />
                             <input type="hidden" id="category_name" name="category_name" value="{{ $categoryName }}" />
-                            @if($categoryId != 18)
+                            @if($categoryId != 18 && $categoryId != 19)
                             <div class="form-group">
                                 <label for="sub_category_id">Sub Category</label>
                                 <select name="sub_category_id" id="sub_category_id" class="form-control">
@@ -68,6 +68,10 @@
                                 <label for="image">Image</label>
                                 <input type="file" class="d-block" name="image" id="image" />
                             </div>
+                            @if($categoryId == 18 || $categoryId == 19)
+                            <input type="hidden"  name="type" value="general" />
+                            @endif
+                            @if($categoryId != 18 && $categoryId != 19)
                             <div class="form-group">
                                 <label for="type">Type</label>
                                 <select name="type" id="type" class="form-control">
@@ -76,9 +80,9 @@
                                     <option value="sub_lead_news">Sub lead news</option>
                                     <option value="second_lead">Second lead</option>
                                     <option value="side_bar_news">Side bar news</option>
-                                    <option value="latest">Latest</option>
                                 </select>
                             </div>
+                            @endif
                             <div class="form-group">
                                 <label for="summernote">Details</label>
                                 <textarea id="details" name="details">Place <em>some</em> <u>text</u> <strong>here</strong></textarea>

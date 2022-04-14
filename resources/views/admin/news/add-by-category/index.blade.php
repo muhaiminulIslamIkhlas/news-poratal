@@ -25,7 +25,9 @@
                                     <th>Title</th>
                                     <th>Sort Description</th>
                                     <th>Order</th>
-                                    <th>Type</th>
+                                    @if ($categoryId != 18 && $categoryId != 19)
+                                        <th>Type</th>
+                                    @endif
                                     <th>Date and Time</th>
                                     <th>Published</th>
                                     <th>Action</th>
@@ -37,7 +39,9 @@
                                         <td>{{ $item->title }}</td>
                                         <td>{!! $item->sort_description !!}</td>
                                         <td>{{ $item->order }}</td>
-                                        <td>{{ $item->type }}</td>
+                                        @if ($categoryId != 18 && $categoryId != 19)
+                                            <td>{{ $item->type }}</td>
+                                        @endif
                                         <td>{{ $item->date }}</td>
                                         <td>
                                             @if ($item->published)
@@ -60,6 +64,11 @@
                                                 <a class="btn btn-success mt-3"
                                                     href="{{ Url('/admin/news/publish', $item->id) }}"><i
                                                         class="fas fa-eye"></i> Publish</a></a>
+                                            @endif
+                                            @if ($categoryId == 19)
+                                                <a class="btn btn-success mt-3"
+                                                    href="{{ Url('/admin/news/live-index', $item->id) }}"><i
+                                                        class="fa fa-life-ring" aria-hidden="true"></i> Live</a></a>
                                             @endif
                                         </td>
                                     </tr>
@@ -103,6 +112,7 @@
                 "lengthChange": false,
                 "searching": true,
                 "ordering": true,
+                'order': false,
                 "info": true,
                 "autoWidth": false,
                 "responsive": true,

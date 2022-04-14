@@ -115,3 +115,9 @@ Route::get('/get-related-news/{newsId}/{limit}',[App\Http\Controllers\API\Keywor
  */
 Route::get('/get-all-trending/{limit}',[App\Http\Controllers\API\TrendingController::class, 'allTrending']);
 Route::get('/get-trending-news/{keywordId}/{limit}',[App\Http\Controllers\API\KeywordController::class, 'getNewsByKeyword']);
+
+/**
+ * trending news
+ */
+Route::get('/get-all-live-news/{limit}',[App\Http\Controllers\API\LiveNewsController::class, 'getAllLiveNews']);
+Route::get('/get-live-news/{newsId}/{limit}',[App\Http\Controllers\API\LiveNewsController::class, 'getLiveNews']);

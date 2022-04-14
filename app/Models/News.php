@@ -34,6 +34,11 @@ class News extends Model
         return $this->hasMany('App\Models\NewsKeyword','news_id');
     }
 
+    public function liveNews(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany('App\Models\LiveNews', 'news_id');
+    }
+
     public function format(): array
     {
         return [

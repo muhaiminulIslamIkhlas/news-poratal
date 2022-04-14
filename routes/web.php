@@ -31,7 +31,11 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function () {
         Route::get('publish/{newsId}', [\App\Http\Controllers\NewsController::class, 'publish'])->middleware('publisher');
         Route::get('get-district/{divisionID}', [\App\Http\Controllers\NewsController::class, 'getDistrictByDivId']);
         Route::get('get-upozilla/{districtID}', [\App\Http\Controllers\NewsController::class, 'getUpozillaByDisId']);
-
+        Route::get('live-index/{newsId}', [\App\Http\Controllers\NewsController::class, 'liveNews']);
+        Route::post('live-index/store', [\App\Http\Controllers\NewsController::class, 'liveNewsStore']);
+        Route::get('live-news/edit/{newsId}', [\App\Http\Controllers\NewsController::class, 'liveNewsEdit']);
+        Route::get('live-news/delete/{newsId}', [\App\Http\Controllers\NewsController::class, 'liveNewsDelete']);
+        Route::post('live-news/update', [\App\Http\Controllers\NewsController::class, 'liveNewsUpdate']);
 
         Route::get('create-by-category/{categoryId}/{categoryName}', [\App\Http\Controllers\NewsController::class, 'createByCategory']);
         Route::get('index-by-category/{categoryId}/{categoryName}', [\App\Http\Controllers\NewsController::class, 'getList']);
