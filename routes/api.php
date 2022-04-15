@@ -35,7 +35,7 @@ Route::get('/change-vote/{id}/{prev}/{new}', [App\Http\Controllers\API\VoteContr
 /**
  * news
  */
-Route::get('/get-all-news/{categoryId}/{type}/{limit}', [App\Http\Controllers\API\NewsController::class, 'getAllNews']);
+Route::get('/get-all-news/{categoryId}/{type}/{limit}/{sub?}', [App\Http\Controllers\API\NewsController::class, 'getAllNews']);
 Route::get('/get-news/{id}', [App\Http\Controllers\API\NewsController::class, 'getNews']);
 Route::get('/get-news-by-category/{categoryId}/{limit}', [App\Http\Controllers\API\NewsController::class, 'getAllNewsByCategory']);
 Route::get('/get-news-by-sub-category/{subCategoryId}/{limit}', [App\Http\Controllers\API\NewsController::class, 'getAllNewsBySubCategory']);
