@@ -122,3 +122,13 @@ Route::get('/get-trending-news/{keywordId}/{limit}',[App\Http\Controllers\API\Ke
  */
 Route::get('/get-all-live-news/{limit}',[App\Http\Controllers\API\LiveNewsController::class, 'getAllLiveNews']);
 Route::get('/get-live-news/{newsId}/{limit}',[App\Http\Controllers\API\LiveNewsController::class, 'getLiveNews']);
+
+/**
+ * search news
+ */
+Route::get('/search/{title}',[App\Http\Controllers\API\SearchController::class, 'getSearchResult']);
+
+/**
+ * reders-choice news
+ */
+Route::get('/readers-choice/{limit}',[App\Http\Controllers\API\LatestController::class, 'readersChoice']);

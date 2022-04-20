@@ -9,6 +9,7 @@ use App\Models\News;
 use App\Models\Region;
 use App\Models\Thana;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SearchController extends Controller
 {
@@ -33,7 +34,7 @@ class SearchController extends Controller
     public function mapArray($array): array
     {
         $mappedArray = [];
-        foreach ($array as $item){
+        foreach ($array as $item) {
             $mappedArray[] = $item->news_id;
         }
         return $mappedArray;
@@ -53,8 +54,17 @@ class SearchController extends Controller
 
         $newsIds = $this->mapArray($newsIdObj->get());
 
-        $news = News::where('published',1)->whereIn('id',$newsIds)->orderBy('order','ASC')->get()->map->filterFormat();
+        $news = News::where('published', 1)->whereIn('id', $newsIds)->orderBy('order', 'ASC')->get()->map->filterFormat();
 
+        return response()->json($news);
+    }
+
+    public function getSearchResult($title)
+    {
+        $news = News::where('published', 1)->select('*')
+            ->where('title', 'LIKE', '%' . $title . '%')
+            ->orderBy(DB::raw("DATE_FORMAT(date,'%d-%M-%Y')"), 'DESC')
+            ->paginate(10);
         return response()->json($news);
     }
 }

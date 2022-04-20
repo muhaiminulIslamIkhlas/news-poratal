@@ -5,8 +5,10 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Latest;
 use App\Models\News;
+use Carbon\Carbon;
 use Carbon\Traits\Date;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class LatestController extends Controller
 {
@@ -22,7 +24,7 @@ class LatestController extends Controller
             $latestId = $this->mapArray($latest);
         }
 
-        $news = News::where('published',1)->where('id', $latestId)->get()->map->format();
+        $news = News::where('published', 1)->where('id', $latestId)->get()->map->format();
 
         return response()->json($news);
     }
@@ -30,7 +32,7 @@ class LatestController extends Controller
     public function mapArray($array): array
     {
         $mappedArray = [];
-        foreach ($array as $item){
+        foreach ($array as $item) {
             $mappedArray[] = $item->news_id;
         }
         return $mappedArray;
@@ -39,7 +41,21 @@ class LatestController extends Controller
     public function getAllLatest($limit): \Illuminate\Http\JsonResponse
     {
         // $latest = News::whereRaw("DATE_FORMAT(date,'%Y-%m-%d') like ?", ["%$date%"])->where('type','latest')->orderBy('order','ASC')->take($limit)->get()->map->format();
-        $latest = News::where('published',1)->where('category_id',self::LATEST_ID)->orderBy('order','ASC')->take($limit)->get()->map->format();
+        $latest = News::where('published', 1)->where('category_id', self::LATEST_ID)->orderBy('order', 'ASC')->take($limit)->get()->map->format();
         return response()->json($latest);
+    }
+
+    public function readersChoice($limit)
+    {
+        $latest = Latest::select('news_id')
+            ->distinct()
+            ->whereBetween(
+                DB::raw('DATE(date)'),
+                [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()]
+            )
+            ->orderBy('count', 'DESC')->take($limit)->get();
+        $latestId = $this->mapArray($latest);
+        $news = News::where('published', 1)->whereIn('id', $latestId)->get()->map->format();
+        return response()->json($news);
     }
 }

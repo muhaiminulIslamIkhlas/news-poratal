@@ -75,6 +75,7 @@ class News extends Model
             'type' => $this->type,
             'details' => $this->details->details,
             'ticker' => $this->details->ticker,
+            'shoulder' => $this->details->shoulder,
             'representative' => $this->details->representative,
             'keyword' => $keyWords,
             'timeline_id' => $this->timeline_id,
