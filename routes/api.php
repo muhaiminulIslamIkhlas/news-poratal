@@ -132,3 +132,8 @@ Route::get('/search/{title}',[App\Http\Controllers\API\SearchController::class, 
  * reders-choice news
  */
 Route::get('/readers-choice/{limit}',[App\Http\Controllers\API\LatestController::class, 'readersChoice']);
+
+/**
+ * cms
+ */
+Route::get('/cms/{type}',[App\Http\Controllers\API\CMSController::class, 'cms']);

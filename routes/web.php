@@ -182,6 +182,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
         Route::post('update/', [\App\Http\Controllers\WeAreController::class, 'update']);
         Route::get('delete/{id}', [\App\Http\Controllers\WeAreController::class, 'delete']);
     });
+
+    Route::group(['prefix' => 'cms', 'middleware' => 'developer'], function () {
+        Route::get('index', [\App\Http\Controllers\CMSController::class, 'index']);
+        Route::get('view/{id}', [\App\Http\Controllers\CMSController::class, 'view']);
+        Route::get('edit/{id}', [\App\Http\Controllers\CMSController::class, 'edit']);
+        Route::post('update', [\App\Http\Controllers\CMSController::class, 'update']);
+    });
 });
 
 require __DIR__ . '/auth.php';
