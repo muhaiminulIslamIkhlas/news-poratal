@@ -55,7 +55,7 @@ Route::get('/get-video/{id}',[App\Http\Controllers\API\VideoController::class, '
 /**
  * image
  */
-Route::get('/get-all-image/{limit}',[App\Http\Controllers\API\ImageController::class, 'getAllImage']);
+Route::get('/get-all-image/{limit}/{skip?}',[App\Http\Controllers\API\ImageController::class, 'getAllImage']);
 Route::get('/get-image/{id}',[App\Http\Controllers\API\ImageController::class, 'getImage']);
 
 /**
@@ -108,14 +108,14 @@ Route::get('/get-timeline-news/{timelineId}/{limit}',[App\Http\Controllers\API\T
 /**
  * news keyword
  */
-Route::get('/get-keyword-news/{keywordId}/{limit}',[App\Http\Controllers\API\KeywordController::class, 'getNewsByKeyword']);
-Route::get('/get-related-news/{newsId}/{limit}',[App\Http\Controllers\API\KeywordController::class, 'relatedNews']);
+Route::get('/get-keyword-news/{keywordId}/{limit}/{skip?}',[App\Http\Controllers\API\KeywordController::class, 'getNewsByKeyword']);
+Route::get('/get-related-news/{newsId}/{limit}/{skip?}',[App\Http\Controllers\API\KeywordController::class, 'relatedNews']);
 
 /**
  * trending news
  */
-Route::get('/get-all-trending/{limit}',[App\Http\Controllers\API\TrendingController::class, 'allTrending']);
-Route::get('/get-trending-news/{keywordId}/{limit}',[App\Http\Controllers\API\KeywordController::class, 'getNewsByKeyword']);
+Route::get('/get-all-trending/{limit}/{skip?}',[App\Http\Controllers\API\TrendingController::class, 'allTrending']);
+Route::get('/get-trending-news/{keywordId}/{limit}/{skip?}',[App\Http\Controllers\API\KeywordController::class, 'getNewsByKeyword']);
 
 /**
  * trending news
