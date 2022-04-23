@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 
 class ImageController extends Controller
 {
-    public function getAllImage($limit=10): \Illuminate\Http\JsonResponse
+    public function getAllImage($limit = 10, $skip = 0): \Illuminate\Http\JsonResponse
     {
-        $image = Image::take($limit)->orderBy('order','ASC')->get();
+        $image = Image::skip($skip)->take($limit)->orderBy('order', 'ASC')->get();
         return response()->json($image);
     }
 
