@@ -88,6 +88,8 @@ class NewsController extends Controller
         $newsDetails->news_id = $news->id;
         $newsDetails->details = $request->details;
         $newsDetails->ticker = $request->ticker;
+        $newsDetails->video_link = $request->video_link;
+        $newsDetails->google_drive_link = $request->google_drive_link;
         $newsDetails->representative = $request->representative;
         $newsDetails->shoulder = $request->shoulder;
         $newsDetails->keyword = json_encode($request->keyword);
@@ -227,11 +229,16 @@ class NewsController extends Controller
         $newsDetails = NewsDetails::where('news_id', $request->id)->first();
         $newsDetails->details = $request->details;
         $newsDetails->ticker = $request->ticker;
+        $newsDetails->video_link = $request->video_link;
+        $newsDetails->google_drive_link = $request->google_drive_link;
         $newsDetails->representative = $request->representative;
         $newsDetails->shoulder = $request->shoulder;
         $newsDetails->keyword = json_encode($request->keyword);
         $newsDetails->save();
         $region = Region::where('news_id', $request->id)->first();
+        if(!$region){
+            $region = new Region();
+        }
         $region->news_id = $news->id;
         $region->division = $request->division;
         $region->district = $request->district;
