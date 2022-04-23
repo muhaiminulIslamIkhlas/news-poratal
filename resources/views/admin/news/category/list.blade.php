@@ -46,7 +46,7 @@
                                         <a class="btn btn-primary mt-3"
                                             href="{{ Url('/admin/news/category/view', $category->id) }}"><i
                                                 class="fas fa-eye fa-fw"></i></a>
-                                        <?php if ($category->id > 19) : ?>
+                                        <?php if ($category->id > 20) : ?>
                                         <a class="btn btn-success mt-3"
                                         href="{{ Url('/admin/news/category/edit', $category->id) }}"><i
                                             class="fas fa-edit fa-fw"></i></a>

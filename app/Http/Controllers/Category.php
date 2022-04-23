@@ -29,7 +29,7 @@ class Category extends Controller
 
     public function list()
     {
-        $categorylist = CategoryModel::orderBy('order','ASC')->get();
+        $categorylist = CategoryModel::orderBy('order', 'ASC')->get();
         return view('admin.news.category.list', compact('categorylist'));
     }
 
@@ -47,6 +47,9 @@ class Category extends Controller
 
     public function update(Request $request)
     {
+        if ($request->id < 20) {
+            return redirect('/admin/news/category/list');
+        }
         $category = CategoryModel::where('id', $request->id)->first();
         $category->name = $request->name;
         $category->order = $request->order;
@@ -57,8 +60,7 @@ class Category extends Controller
 
     public function delete($id)
     {
-        $catArray = [1, 2, 3, 4, 5, 6, 7, 8];
-        if (in_array($id, $catArray)) {
+        if ($id < 20) {
             return redirect('/admin/news/category/list');
         }
         $category = CategoryModel::where('id', $id)->first();

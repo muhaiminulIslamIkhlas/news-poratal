@@ -114,7 +114,7 @@ $category = DB::table('categories')
                         </a>
                         <ul class="nav nav-treeview">
                             @foreach ($category as $item)
-                                @if ($item->id != 18)
+                                @if ($item->id != 18 && $item->id != 20)
                                     <li class="nav-item">
                                         <a href="#" class="nav-link">
                                             <i class="far fa-file-alt"></i>
@@ -381,21 +381,21 @@ $category = DB::table('categories')
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-comment-alt"></i>
                             <p>
-                                Opinion
+                                মতামত
                                 <i class="fas fa-angle-left right"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{ Url('/admin/opinion/index') }}" class="nav-link">
+                                <a href="{{ Url('admin/news/create-by-category/20/মতামত') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Add New Opinion</p>
+                                    <p>Add New মতামত</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ Url('/admin/opinion/list') }}" class="nav-link">
+                                <a href="{{ Url('admin/news/index-by-category/20/মতামত') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>View All Opinion</p>
+                                    <p>All মতামত</p>
                                 </a>
                             </li>
                         </ul>

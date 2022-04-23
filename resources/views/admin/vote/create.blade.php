@@ -43,7 +43,12 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Order</label>
+                        <label for="image">Image</label>
+                        <input type="file" name="image" class="form-control" id="image" >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="order">Order</label>
                         <input type="number" min="1" name="order" class="form-control" id="order" placeholder="Enter order">
                     </div>
                     <div class="form-group">

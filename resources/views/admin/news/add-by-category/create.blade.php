@@ -41,23 +41,25 @@
                                         placeholder="Date Time">
                                 </div>
                                 <div class="form-group col-6">
-                                    <label for="date">Timeline</label>
-                                    <select class="form-control" name="timeline_id">
-                                        <option value="">--Select one--</option>
-                                        @foreach ($timelines as $timeline)
-                                            <option value="{{ $timeline->id }}">{{ $timeline->name }}</option>
-                                        @endforeach
-                                    </select>
+                                    @if ($categoryId != 20)
+                                        <label for="date">Timeline</label>
+                                        <select class="form-control" name="timeline_id">
+                                            <option value="">--Select one--</option>
+                                            @foreach ($timelines as $timeline)
+                                                <option value="{{ $timeline->id }}">{{ $timeline->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    @endif
                                 </div>
                             </div>
                             <input type="hidden" id="category_id" name="category_id" value="{{ $categoryId }}" />
                             <input type="hidden" id="category_name" name="category_name" value="{{ $categoryName }}" />
-                            @if($categoryId != 18 && $categoryId != 19)
-                            <div class="form-group">
-                                <label for="sub_category_id">Sub Category</label>
-                                <select name="sub_category_id" id="sub_category_id" class="form-control">
-                                </select>
-                            </div>
+                            @if ($categoryId != 18 && $categoryId != 19 && $categoryId != 20)
+                                <div class="form-group">
+                                    <label for="sub_category_id">Sub Category</label>
+                                    <select name="sub_category_id" id="sub_category_id" class="form-control">
+                                    </select>
+                                </div>
                             @endif
                             <div class="form-group">
                                 <label for="order">Order</label>
@@ -68,20 +70,20 @@
                                 <label for="image">Image</label>
                                 <input type="file" class="d-block" name="image" id="image" />
                             </div>
-                            @if($categoryId == 18 || $categoryId == 19)
-                            <input type="hidden"  name="type" value="general" />
+                            @if ($categoryId == 18 || $categoryId == 19)
+                                <input type="hidden" name="type" value="general" />
                             @endif
-                            @if($categoryId != 18 && $categoryId != 19)
-                            <div class="form-group">
-                                <label for="type">Type</label>
-                                <select name="type" id="type" class="form-control">
-                                    <option value="general" selected>General news</option>
-                                    <option value="lead_news">Lead news</option>
-                                    <option value="sub_lead_news">Sub lead news</option>
-                                    <option value="second_lead">Second lead</option>
-                                    <option value="side_bar_news">Side bar news</option>
-                                </select>
-                            </div>
+                            @if ($categoryId != 18 && $categoryId != 19)
+                                <div class="form-group">
+                                    <label for="type">Type</label>
+                                    <select name="type" id="type" class="form-control">
+                                        <option value="general" selected>General news</option>
+                                        <option value="lead_news">Lead news</option>
+                                        <option value="sub_lead_news">Sub lead news</option>
+                                        <option value="second_lead">Second lead</option>
+                                        <option value="side_bar_news">Side bar news</option>
+                                    </select>
+                                </div>
                             @endif
                             <div class="form-group">
                                 <label for="summernote">Details</label>

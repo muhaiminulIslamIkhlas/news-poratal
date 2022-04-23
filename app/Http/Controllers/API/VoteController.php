@@ -31,6 +31,7 @@ class VoteController extends Controller
         return [
             'id' => $vote->id,
             'topic' => $vote->description,
+            'image' => $vote->image,
             'yes' => $yes,
             'no' => $no,
             'no_comments' => $noComments
