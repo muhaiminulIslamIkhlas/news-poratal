@@ -137,3 +137,8 @@ Route::get('/readers-choice/{limit}',[App\Http\Controllers\API\LatestController:
  * cms
  */
 Route::get('/cms/{type}',[App\Http\Controllers\API\CMSController::class, 'cms']);
+
+/**
+ * advertise
+ */
+Route::get('/advertise/{type}',[App\Http\Controllers\API\AdvertiseController::class, 'getAdvertise']);

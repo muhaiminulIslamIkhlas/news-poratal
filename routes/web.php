@@ -189,6 +189,16 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
         Route::get('edit/{id}', [\App\Http\Controllers\CMSController::class, 'edit']);
         Route::post('update', [\App\Http\Controllers\CMSController::class, 'update']);
     });
+
+    Route::group(['prefix' => 'advertise', 'middleware' => 'developer'], function () {
+        Route::get('index', [\App\Http\Controllers\AdvertiseController::class, 'index']);
+        Route::get('create', [\App\Http\Controllers\AdvertiseController::class, 'create']);
+        Route::get('view/{id}', [\App\Http\Controllers\AdvertiseController::class, 'view']);
+        Route::get('edit/{id}', [\App\Http\Controllers\AdvertiseController::class, 'edit']);
+        Route::post('store', [\App\Http\Controllers\AdvertiseController::class, 'store']);
+        Route::post('update', [\App\Http\Controllers\AdvertiseController::class, 'update']);
+        Route::get('active/{id}', [\App\Http\Controllers\AdvertiseController::class, 'makeActive']);
+    });
 });
 
 require __DIR__ . '/auth.php';

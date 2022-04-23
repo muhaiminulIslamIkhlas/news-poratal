@@ -37,7 +37,7 @@ class VoteController extends Controller
 
         $vote->save();
 
-        return view('admin.vote.index');
+        return redirect('admin/vote/index');
     }
 
     public function delete($id)
