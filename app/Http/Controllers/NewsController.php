@@ -251,7 +251,11 @@ class NewsController extends Controller
     public function view($newsId)
     {
         $news = News::find($newsId);
-        $keyWords = Keyword::whereIn('id', json_decode($news->details->keyword))->get();
+        if(isset($news->details->keyword)){
+            $keyWords = Keyword::whereIn('id', json_decode($news->details->keyword))->get();
+        }
+        $keyWords = ['null'=>0];
+        
         return view('admin.news.add-by-category.view', compact('news', 'keyWords'));
     }
 

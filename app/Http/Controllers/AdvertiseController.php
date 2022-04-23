@@ -101,4 +101,12 @@ class AdvertiseController extends Controller
         $advertise = Advertise::find($id);
         return view('admin.advertise.edit', compact('advertise'));
     }
+
+    public function delete($id)
+    {
+        $advertise = Advertise::find($id);
+        $advertise->delete();
+
+        return back();
+    }
 }

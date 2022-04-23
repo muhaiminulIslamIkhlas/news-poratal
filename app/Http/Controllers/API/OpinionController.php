@@ -3,20 +3,22 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\Opinion;
+use App\Models\News;
 use Illuminate\Http\Request;
 
 class OpinionController extends Controller
 {
-    public function getAllOpinion($limit=10): \Illuminate\Http\JsonResponse
+    protected const OPINION_ID = 20;
+
+    public function getAllOpinion($limit = 10): \Illuminate\Http\JsonResponse
     {
-        $opinion = Opinion::take($limit)->orderBy('order','ASC')->get();
+        $opinion = News::where('published', 1)->where('category_id', self::OPINION_ID)->take($limit)->orderBy('order', 'ASC')->get()->map->format();
         return response()->json($opinion);
     }
 
     public function getOpinion($id)
     {
-        $opinion = Opinion::find($id);
+        $opinion = News::find($id)->formatDetails();
         return response()->json($opinion);
     }
 }

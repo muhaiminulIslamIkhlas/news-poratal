@@ -17,6 +17,7 @@ class CreateVotesTable extends Migration
             $table->id();
             $table->text('description');
             $table->string('order');
+            $table->string('image')->nullable();
             $table->dateTime('date');
             $table->integer('yes');
             $table->integer('no');

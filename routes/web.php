@@ -198,6 +198,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
         Route::post('store', [\App\Http\Controllers\AdvertiseController::class, 'store']);
         Route::post('update', [\App\Http\Controllers\AdvertiseController::class, 'update']);
         Route::get('active/{id}', [\App\Http\Controllers\AdvertiseController::class, 'makeActive']);
+        Route::post('active/{id}', [\App\Http\Controllers\AdvertiseController::class, 'delete']);
     });
 });
 

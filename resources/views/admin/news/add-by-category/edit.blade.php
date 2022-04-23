@@ -43,31 +43,36 @@
                                         value="{{ date('Y-m-d\TH:i:s', strtotime($news->date)) }}" name="date"
                                         class="form-control" id="date" placeholder="Date Time">
                                 </div>
+
                                 <div class="form-group col-6">
-                                    <label for="date">Timeline</label>
-                                    <select class="form-control" name="timeline_id">
-                                        <option value="">--Select one--</option>
-                                        @foreach ($timelines as $timeline)
-                                            <option value="{{ $timeline->id }}" <?php if ($news->timeline_id == $timeline->id) {
+                                    @if ($categoryId != 20)
+                                        <label for="date">Timeline</label>
+                                        <select class="form-control" name="timeline_id">
+                                            <option value="">--Select one--</option>
+                                            @foreach ($timelines as $timeline)
+                                                <option value="{{ $timeline->id }}" <?php if ($news->timeline_id == $timeline->id) {
     echo 'selected';
 } ?>>
-                                                {{ $timeline->name }}</option>
-                                        @endforeach
-                                    </select>
+                                                    {{ $timeline->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    @endif
                                 </div>
+
                             </div>
                             <input type="hidden" id="category_id" name="category_id" value="{{ $news->category_id }}" />
                             {{-- <input type="hidden" id="category_name" name="category_name" value="{{ $categoryName }}" /> --}}
-                            @if($categoryId != 18 && $categoryId != 19)
-                            <div class="form-group">
-                                <label for="sub_category_id">Sub Category</label>
-                                <select name="sub_category_id" id="sub_category_id" class="form-control">
-                                    @if ($news->sub_category_id)
-                                        <option value="{{ $news->sub_category_id }}">{{ $news->subCategory->name }}
-                                        </option>
-                                    @endif
-                                </select>
-                            </div>
+                            @if ($categoryId != 18 && $categoryId != 19 && $categoryId != 20)
+                                <div class="form-group">
+                                    <label for="sub_category_id">Sub Category</label>
+                                    <select name="sub_category_id" id="sub_category_id" class="form-control">
+                                        @if ($news->sub_category_id)
+                                            <option value="{{ $news->sub_category_id }}">
+                                                {{ $news->subCategory->name }}
+                                            </option>
+                                        @endif
+                                    </select>
+                                </div>
                             @endif
                             <div class="form-group">
                                 <label for="order">Order</label>

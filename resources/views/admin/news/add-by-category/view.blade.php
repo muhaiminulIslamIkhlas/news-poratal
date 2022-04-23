@@ -33,19 +33,19 @@
                     <div class="item pt-3">
                         <p class="text-md-left font-weight-bold">Details</p>
                         <div>
-                            {!! $news->details->details !!}
+                            {!! $news->details->details?? '' !!}
                         </div>
                     </div>
                     <div class="item pt-3">
                         <p class="text-md-left font-weight-bold">Ticker</p>
                         <div>
-                            {!! $news->details->ticker !!}
+                            {!! $news->details->ticker?? '' !!}
                         </div>
                     </div>
                     <div class="item pt-3">
                         <p class="text-md-left font-weight-bold">Shoulder</p>
                         <div>
-                            {!! $news->details->shoulder !!}
+                            {!! $news->details->shoulder?? '' !!}
                         </div>
                     </div>
                     <hr />
@@ -87,7 +87,7 @@
                                 <div class="d-flex w-100 justify-content-between">
                                     <h5 class="mb-1">Representative</h5>
                                 </div>
-                                <p class="mb-1">{{ $news->details->representative }}</p>
+                                <p class="mb-1">{{ $news->details->representative?? '' }}</p>
                             </a>
                         </div>
                     </div>
@@ -97,7 +97,7 @@
                                 <div class="d-flex w-100 justify-content-between">
                                     <h5 class="mb-1">Division</h5>
                                 </div>
-                                <p class="mb-1">{{ $news->region->divisionInfo->name }}</p>
+                                <p class="mb-1">{{ $news->region->divisionInfo->name?? " " }}</p>
                             </a>
                         </div>
                         <div class="list-group pt-2 col-4">
@@ -120,7 +120,7 @@
                     <div class="item pt-3">
                         <p class="text-md-left font-weight-bold">Keywords</p>
                         @foreach ($keyWords as $keword)
-                            <span class="badge badge-info pr-1">{{ $keword->name }}</span>
+                            <span class="badge badge-info pr-1">{{ $keword->name?? '' }}</span>
                         @endforeach
                     </div>
                 </div>
