@@ -20,6 +20,8 @@ class CreateNewsDetailsTable extends Migration
             $table->text('ticker');
             $table->string('representative');
             $table->string('keyword');
+            $table->text('video_link')->nullable();
+            $table->text('google_drive_link')->nullable();
             $table->text('shoulder');
             $table->timestamps();
         });

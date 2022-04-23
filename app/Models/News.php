@@ -77,6 +77,8 @@ class News extends Model
             'ticker' => $this->details->ticker,
             'shoulder' => $this->details->shoulder,
             'representative' => $this->details->representative,
+            'video_link' => $this->details->video_link,
+            'google_drive_link' => $this->details->google_drive_link,
             'keyword' => $keyWords,
             'timeline_id' => $this->timeline_id,
         ];

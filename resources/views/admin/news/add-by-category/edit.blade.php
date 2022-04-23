@@ -80,6 +80,17 @@
                                     class="form-control" id="order" placeholder="Enter order">
                             </div>
                             <div class="form-group">
+                                <label for="video_link">Video link</label>
+                                <input type="text" value="{{ $news->details->video_link ?? '' }}" name="video_link"
+                                    class="form-control" id="video_link" placeholder="Enter link">
+                            </div>
+                            <div class="form-group">
+                                <label for="google_drive_link">Google drive link</label>
+                                <input type="text" value="{{ $news->details->google_drive_link ?? '' }}"
+                                    name="google_drive_link" class="form-control" id="google_drive_link"
+                                    placeholder="Enter link">
+                            </div>
+                            <div class="form-group">
                                 <label for="image">Image</label>
                                 <input type="file" class="d-block" name="image" id="image" />
                             </div>
@@ -141,15 +152,16 @@
                                     </div>
                                 </div>
                             </div>
-                            <input type="hidden" id="disVal" value="{{ $news->region->district }}" />
-                            <input type="hidden" id="upoVal" value="{{ $news->region->upozilla }}" />
+                            <input type="hidden" id="disVal" value="{{ $news->region->district ?? '' }}" />
+                            <input type="hidden" id="upoVal" value="{{ $news->region->upozilla ?? '' }}" />
                             <div class="row">
                                 <div class="form-groupv col-4">
                                     <label for="division">Division</label>
                                     <select id="division" name="division" class="form-control">
                                         <option value="">Select division</option>
                                         @foreach ($divisions as $division)
-                                            <option value="{{ $division->id }}" <?php if ($news->region->division == $division->id) {
+                                            <option value="{{ $division->id }}" <?php $divisionCheck = $news->region->division ?? '';
+if ($divisionCheck == $division->id) {
     echo 'selected';
 } ?>>
                                                 {{ $division->bn_name }}</option>

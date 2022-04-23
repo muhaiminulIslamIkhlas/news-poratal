@@ -67,6 +67,16 @@
                                     placeholder="Enter order">
                             </div>
                             <div class="form-group">
+                                <label for="video_link">Video link</label>
+                                <input type="text" min="1" name="video_link" class="form-control" id="video_link"
+                                    placeholder="Enter link">
+                            </div>
+                            <div class="form-group">
+                                <label for="google_drive_link">Google drive link</label>
+                                <input type="text"  name="google_drive_link" class="form-control" id="google_drive_link"
+                                    placeholder="Enter link">
+                            </div>
+                            <div class="form-group">
                                 <label for="image">Image</label>
                                 <input type="file" class="d-block" name="image" id="image" />
                             </div>
