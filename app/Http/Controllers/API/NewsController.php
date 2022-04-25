@@ -23,18 +23,19 @@ class NewsController extends Controller
         return response()->json($category);
     }
 
-    public function getAllNews($categoryId, $type, $limit, $sub = 0): \Illuminate\Http\JsonResponse
+    public function getAllNews($categoryId, $type, $limit, $skip = 0, $sub = 0): \Illuminate\Http\JsonResponse
     {
         $key = 'category_id';
         if ($sub) {
             $key = 'sub_category_id';
             $news = News::where('published', 1)
-            ->where($key, $categoryId)
-            ->where('type', $type)
-            ->orderBy('order', 'ASC')
-            ->take($limit)
-            ->get()
-            ->map->format();
+                ->where($key, $categoryId)
+                ->where('type', $type)
+                ->orderBy('order', 'ASC')
+                ->skip($skip)
+                ->take($limit)
+                ->get()
+                ->map->format();
             return response()->json($news);
         }
         $news = News::where('published', 1)
@@ -42,6 +43,7 @@ class NewsController extends Controller
             ->where('sub_category_id', null)
             ->where('type', $type)
             ->orderBy('order', 'ASC')
+            ->skip($skip)
             ->take($limit)
             ->get()
             ->map->format();
@@ -70,9 +72,10 @@ class NewsController extends Controller
         return response()->json($news);
     }
 
-    public function getAllNewsByCategory($categoryId, $limit)
+    public function getAllNewsByCategory($categoryId, $limit, $skip)
     {
         $news = News::where('published', 1)->where('category_id', $categoryId)
+            ->skip($skip)
             ->take($limit)
             ->get()
             ->map->format();
@@ -84,9 +87,10 @@ class NewsController extends Controller
         ]);
     }
 
-    public function getAllNewsBySubCategory($subCategoryId, $limit)
+    public function getAllNewsBySubCategory($subCategoryId, $limit,$skip)
     {
         $news = News::where('published', 1)->where('sub_category_id', $subCategoryId)
+            ->skip($skip)
             ->take($limit)
             ->get()
             ->map->format();

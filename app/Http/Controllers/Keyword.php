@@ -2,11 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Repositories\HelperRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Models\Keyword as KeywordModel;
+use App\Models\TrendingDetails;
 
 class Keyword extends Controller
 {
+    private $_helepr;
+
+    public function __construct(HelperRepositoryInterface $helper)
+    {
+        $this->_helepr = $helper;
+    }
+    
     public function index()
     {
         return view('admin.news.keyword.index');
@@ -82,5 +91,30 @@ class Keyword extends Controller
         $keyword->save();
 
         return back();
+    }
+
+    public function detailsTrending($id)
+    {
+        $trndingDetails = TrendingDetails::where('trending_id',$id)->first();
+        return view('admin.trending.details',compact('trndingDetails','id'));
+    }
+
+    public function detailsStoreTrending(Request $request)
+    {
+        if($request->id)
+        {
+            $trending = TrendingDetails::find($request->id);
+        }else{
+            $trending = new TrendingDetails();
+        }
+
+        $trending->trending_id = $request->trending_id;
+        $trending->details = $request->details;
+        if ($request->hasFile('image')) {
+            $imagePath = $this->_helepr->imageUpload($request->file('image'));
+            $trending->image = $imagePath;
+        }
+        $trending->save();
+        return redirect('admin/news/keyword/index-trending');
     }
 }

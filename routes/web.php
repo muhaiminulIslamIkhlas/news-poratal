@@ -85,6 +85,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
             Route::get('delete/{id}', [\App\Http\Controllers\Keyword::class, 'delete']);
             Route::get('make-trending/{id}', [\App\Http\Controllers\Keyword::class, 'makeTrending']);
             Route::get('remove-trending/{id}', [\App\Http\Controllers\Keyword::class, 'removeTrending']);
+            Route::get('details-trending/{id}', [\App\Http\Controllers\Keyword::class, 'detailsTrending']);
+            Route::post('trending-details-store', [\App\Http\Controllers\Keyword::class, 'detailsStoreTrending']);
         });
 
         Route::group(['prefix' => 'video', 'middleware' => 'developer'], function () {

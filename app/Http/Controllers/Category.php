@@ -60,7 +60,7 @@ class Category extends Controller
 
     public function delete($id)
     {
-        if ($id < 20) {
+        if ($id < 21) {
             return redirect('/admin/news/category/list');
         }
         $category = CategoryModel::where('id', $id)->first();

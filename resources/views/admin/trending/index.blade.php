@@ -28,6 +28,9 @@
                                         <a class="btn btn-danger mt-3"
                                             href="{{ Url('/admin/news/keyword/remove-trending', $keyword->id) }}"><i
                                                 class="fas fa-folder fa-fw"></i>Remove trending</a>
+                                                <a class="btn btn-info mt-3"
+                                            href="{{ Url('/admin/news/keyword/details-trending', $keyword->id) }}"><i
+                                                class="fas fa-folder fa-fw"></i>Details</a>
                                     </td>
                                 </tr>
                                 <?php } ?>

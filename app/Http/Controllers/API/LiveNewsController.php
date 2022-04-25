@@ -12,16 +12,16 @@ class LiveNewsController extends Controller
 {
     protected const LIVE_NEWS = 19;
 
-    public function getAllLiveNews($limit)
+    public function getAllLiveNews($limit,$skip = 0)
     {
-        $news = News::where('published',1)->where('category_id', self::LIVE_NEWS)->orderBy('order', 'asc')->take($limit)->get();
+        $news = News::where('published',1)->where('category_id', self::LIVE_NEWS)->orderBy('order', 'asc')->skip($skip)->take($limit)->get();
         return response($news);
     }
 
-    public function getLiveNews($newsId, $limit)
+    public function getLiveNews($newsId, $limit, $skip =0)
     {
         $news = News::where('published',1)->where('id', $newsId)->first();
-        $liveNews = LiveNews::where('news_id', $newsId)->orderBy(DB::raw("DATE_FORMAT(date,'%d-%M-%Y')"), 'DESC')->take($limit)->get();
+        $liveNews = LiveNews::where('news_id', $newsId)->orderBy(DB::raw("DATE_FORMAT(date,'%d-%M-%Y')"), 'DESC')->skip($skip)->take($limit)->get();
         return response([
             'news' => $news,
             'live_news' => $liveNews

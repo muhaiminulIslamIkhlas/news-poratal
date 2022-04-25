@@ -10,9 +10,9 @@ class OpinionController extends Controller
 {
     protected const OPINION_ID = 20;
 
-    public function getAllOpinion($limit = 10): \Illuminate\Http\JsonResponse
+    public function getAllOpinion($limit = 10,$skip = 0): \Illuminate\Http\JsonResponse
     {
-        $opinion = News::where('published', 1)->where('category_id', self::OPINION_ID)->take($limit)->orderBy('order', 'ASC')->get()->map->format();
+        $opinion = News::where('published', 1)->where('category_id', self::OPINION_ID)->skip($skip)->take($limit)->orderBy('order', 'ASC')->get()->map->format();
         return response()->json($opinion);
     }
 
