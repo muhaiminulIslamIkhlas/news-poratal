@@ -15,11 +15,11 @@ class VoteController extends Controller
     {
         $this->_helepr = $helper;
     }
-    
+
     public function index()
     {
         $votes = Vote::orderBy(DB::raw("DATE_FORMAT(date,'%d-%M-%Y')"), 'DESC')->get();
-        return view('admin.vote.index',compact('votes'));
+        return view('admin.vote.index', compact('votes'));
     }
 
     public function create()
@@ -37,9 +37,9 @@ class VoteController extends Controller
             'image' => 'sometimes|mimes:jpg,png,jpeg,gif,svg,webp|max:2048',
         ]);
 
-        if($request->id){
+        if ($request->id) {
             $vote = Vote::find($request->id);
-        }else{
+        } else {
             $vote = new Vote();
         }
 
@@ -69,11 +69,22 @@ class VoteController extends Controller
     public function edit($id)
     {
         $vote = Vote::find($id);
-        return view('admin.vote.edit',compact('vote'));
+        return view('admin.vote.edit', compact('vote'));
     }
 
-    public function vote($vote)
+    public function activate($id)
     {
+        $vote = Vote::find($id);
+        $vote->status = 1;
+        $vote->save();
+        return back();
+    }
 
+    public function deactivate($id)
+    {
+        $vote = Vote::find($id);
+        $vote->status = 0;
+        $vote->save();
+        return back();
     }
 }

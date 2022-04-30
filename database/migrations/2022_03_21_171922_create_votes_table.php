@@ -22,6 +22,7 @@ class CreateVotesTable extends Migration
             $table->integer('yes');
             $table->integer('no');
             $table->integer('no_comments');
+            $table->integer('status')->default(0);
             $table->timestamps();
         });
     }

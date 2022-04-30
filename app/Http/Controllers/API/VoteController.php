@@ -10,7 +10,13 @@ class VoteController extends Controller
 {
     public function getVote(): \Illuminate\Http\JsonResponse
     {
-        $result = $this->getResult();
+        $result = [];
+        $votes = Vote::where('status',1)->orderBy('order','ASC')->get();
+        foreach($votes as $item)
+        {
+            $result[] = $this->getResult($item->id);
+        }
+        
 
         return response()->json($result);
     }

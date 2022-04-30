@@ -41,9 +41,19 @@
                                         @endif
                                     </td>
                                     <td>
-                                        {{-- <a class="btn btn-primary mt-3" href="{{Url('/admin/news/category/view', $vote->id)}}"><i class="fas fa-eye fa-fw"></i></a> --}}
-                                        <a class="btn btn-success mt-3" href="{{Url('/admin/vote/edit', $vote->id)}}"><i class="fas fa-edit fa-fw"></i></a>
-                                        <a class="btn btn-danger mt-3" href="{{ Url('/admin/vote/delete', $vote->id) }}"><i
+                                        @if ($vote->status)
+                                            <a class="btn btn-danger mt-3"
+                                                href="{{ Url('/admin/vote/deactivate', $vote->id) }}"><i
+                                                    class="fas fa-folder fa-fw"></i>Deactivate</a>
+                                        @else
+                                            <a class="btn btn-info mt-3"
+                                                href="{{ Url('/admin/vote/activate', $vote->id) }}"><i
+                                                    class="fas fa-folder fa-fw"></i>Activate</a>
+                                        @endif
+                                        <a class="btn btn-success mt-3" href="{{ Url('/admin/vote/edit', $vote->id) }}"><i
+                                                class="fas fa-edit fa-fw"></i></a>
+                                        <a class="btn btn-danger mt-3"
+                                            href="{{ Url('/admin/vote/delete', $vote->id) }}"><i
                                                 class="fas fa-trash fa-fw"></i></a>
                                     </td>
                                 </tr>

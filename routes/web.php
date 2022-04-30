@@ -116,6 +116,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
         Route::post('store', [\App\Http\Controllers\VoteController::class, 'store']);
         Route::get('list', [\App\Http\Controllers\VoteController::class, 'list']);
         Route::get('edit/{id}', [\App\Http\Controllers\VoteController::class, 'edit']);
+        Route::get('activate/{id}', [\App\Http\Controllers\VoteController::class, 'activate']);
+        Route::get('deactivate/{id}', [\App\Http\Controllers\VoteController::class, 'deactivate']);
         Route::post('update', [\App\Http\Controllers\VoteController::class, 'update']);
         Route::get('delete/{id}', [\App\Http\Controllers\VoteController::class, 'delete']);
     });
