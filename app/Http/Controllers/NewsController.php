@@ -14,6 +14,7 @@ use App\Models\Keyword;
 use App\Models\LiveNews;
 use App\Models\NewsKeyword;
 use App\Models\Published;
+use App\Models\Seo;
 use App\Models\Timeline;
 use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image;
@@ -111,7 +112,92 @@ class NewsController extends Controller
         $publisher->created_by = auth()->user()->id;
         $publisher->save();
 
+        $seo = new Seo();
+        $seo->title = $request->title2;
+        $seo->news_id = $news->id;
+        $seo->share_title = $request->share_title;
+        $seo->description = $request->description;
+        $seo->keywords = $request->keywords;
+        if ($request->hasFile('page_img')) {
+            $imagePath = $this->_helepr->imageUpload($request->file('page_img'));
+            $seo->page_img = $imagePath;
+        }
+
+        $seo->save();
+
         return redirect('admin/news/index-by-category/' . $request->category_id . '/' . $request->category_name);
+    }
+
+    public function update(Request $request)
+    {
+        $validatedData = $request->validate([
+            'image' => 'image|mimes:jpg,png,jpeg,gif,svg,webp|max:2048',
+            'title' => 'required|max:255',
+            'sort_description' => 'required',
+            'category_id' => 'required',
+            'type' => 'required',
+            'details' => 'required',
+            'ticker' => 'required',
+            'date' => 'required',
+            'representative' => 'required',
+            'keyword' => 'required',
+            'order' => 'required',
+        ]);
+
+
+        $news = News::find($request->id);
+        $news->title = $request->title;
+        $news->sort_description = $request->sort_description;
+        $news->category_id = $request->category_id;
+        $news->sub_category_id = $request->sub_category_id;
+        $news->order = $request->order;
+        $news->type = $request->type;
+        $news->timeline_id = $request->timeline_id;
+        if ($request->hasFile('image')) {
+            $imagePath = $this->_helepr->imageUpload($request->file('image'));
+            $news->image = $imagePath;
+        }
+        $news->date = $request->date;
+        $news->save();
+        $newsDetails = NewsDetails::where('news_id', $request->id)->first();
+        $newsDetails->details = $request->details;
+        $newsDetails->ticker = $request->ticker;
+        $newsDetails->video_link = $request->video_link;
+        $newsDetails->google_drive_link = $request->google_drive_link;
+        $newsDetails->representative = $request->representative;
+        $newsDetails->shoulder = $request->shoulder;
+        $newsDetails->keyword = json_encode($request->keyword);
+        $newsDetails->save();
+        $region = Region::where('news_id', $request->id)->first();
+        if (!$region) {
+            $region = new Region();
+        }
+        $region->news_id = $news->id;
+        $region->division = $request->division;
+        $region->district = $request->district;
+        $region->upozilla = $request->upozilla;
+        $region->save();
+        DB::table("news_keywords")->where('news_id', $news->id)->delete();
+        foreach ($request->keyword as $keyword) {
+            $item = new NewsKeyword();
+            $item->news_id = $news->id;
+            $item->keyword_id = $keyword;
+            $item->save();
+        }
+
+        $seo = Seo::where('news_id', $request->id)->first();
+        $seo->title = $request->title2;
+        $seo->news_id = $news->id;
+        $seo->share_title = $request->share_title;
+        $seo->description = $request->description;
+        $seo->keywords = $request->keywords;
+        if ($request->hasFile('page_img')) {
+            $imagePath = $this->_helepr->imageUpload($request->file('page_img'));
+            $seo->page_img = $imagePath;
+        }
+        $seo->save();
+
+        return redirect('admin/news/index-by-category/' . $request->category_id . '/' . $request->categoryName);
     }
 
     public function publish($newsId)
@@ -177,10 +263,11 @@ class NewsController extends Controller
         $divisions = $this->_helepr->getDivsions();
         $categoryId = $news->category_id;
         $role = auth()->user()->role;
+        $seo = Seo::where('news_id', $newsId)->first();
         if ($role == 'representative' && $news->published == 1) {
             abort(403);
         }
-        return view('admin.news.add-by-category.edit', compact('news', 'keyWords', 'divisions', 'newsKeywords', 'categoryName', 'timelines', 'categoryId'));
+        return view('admin.news.add-by-category.edit', compact('news', 'keyWords', 'divisions', 'newsKeywords', 'categoryName', 'timelines', 'categoryId', 'seo'));
     }
 
     public function delete($newsId)
@@ -195,74 +282,14 @@ class NewsController extends Controller
         return back();
     }
 
-    public function update(Request $request)
-    {
-        $validatedData = $request->validate([
-            'image' => 'image|mimes:jpg,png,jpeg,gif,svg,webp|max:2048',
-            'title' => 'required|max:255',
-            'sort_description' => 'required',
-            'category_id' => 'required',
-            'type' => 'required',
-            'details' => 'required',
-            'ticker' => 'required',
-            'date' => 'required',
-            'representative' => 'required',
-            'keyword' => 'required',
-            'order' => 'required',
-        ]);
-
-
-        $news = News::find($request->id);
-        $news->title = $request->title;
-        $news->sort_description = $request->sort_description;
-        $news->category_id = $request->category_id;
-        $news->sub_category_id = $request->sub_category_id;
-        $news->order = $request->order;
-        $news->type = $request->type;
-        $news->timeline_id = $request->timeline_id;
-        if ($request->hasFile('image')) {
-            $imagePath = $this->_helepr->imageUpload($request->file('image'));
-            $news->image = $imagePath;
-        }
-        $news->date = $request->date;
-        $news->save();
-        $newsDetails = NewsDetails::where('news_id', $request->id)->first();
-        $newsDetails->details = $request->details;
-        $newsDetails->ticker = $request->ticker;
-        $newsDetails->video_link = $request->video_link;
-        $newsDetails->google_drive_link = $request->google_drive_link;
-        $newsDetails->representative = $request->representative;
-        $newsDetails->shoulder = $request->shoulder;
-        $newsDetails->keyword = json_encode($request->keyword);
-        $newsDetails->save();
-        $region = Region::where('news_id', $request->id)->first();
-        if(!$region){
-            $region = new Region();
-        }
-        $region->news_id = $news->id;
-        $region->division = $request->division;
-        $region->district = $request->district;
-        $region->upozilla = $request->upozilla;
-        $region->save();
-        DB::table("news_keywords")->where('news_id', $news->id)->delete();
-        foreach ($request->keyword as $keyword) {
-            $item = new NewsKeyword();
-            $item->news_id = $news->id;
-            $item->keyword_id = $keyword;
-            $item->save();
-        }
-
-        return redirect('admin/news/index-by-category/' . $request->category_id . '/' . $request->categoryName);
-    }
-
     public function view($newsId)
     {
         $news = News::find($newsId);
-        if(isset($news->details->keyword)){
+        if (isset($news->details->keyword)) {
             $keyWords = Keyword::whereIn('id', json_decode($news->details->keyword))->get();
         }
-        $keyWords = ['null'=>0];
-        
+        $keyWords = ['null' => 0];
+
         return view('admin.news.add-by-category.view', compact('news', 'keyWords'));
     }
 

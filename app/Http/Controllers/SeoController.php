@@ -40,7 +40,6 @@ class SeoController extends Controller
         $seo->share_title =$request->share_title;
         $seo->description =$request->description;
         $seo->keywords =$request->keywords;
-        $seo->keywords =$request->keywords;
         if ($request->hasFile('page_img')) {
             $imagePath = $this->_helepr->imageUpload($request->file('page_img'));
             $seo->page_img = $imagePath;

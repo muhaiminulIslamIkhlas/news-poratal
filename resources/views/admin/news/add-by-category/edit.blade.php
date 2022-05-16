@@ -181,6 +181,32 @@ if ($divisionCheck == $division->id) {
                                     </select>
                                 </div>
                             </div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <p>SEO</p>
+                                    <div class="form-group">
+                                        <label for="title2">Title</label>
+                                        <textarea id="title2" class="form-control" name="title2">{{$seo->title}}</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="description">Description</label>
+                                        <textarea id="description" class="form-control" name="description">{{$seo->description}}</textarea>
+                                        <!-- <textarea name="description" class="form-control" id="description"></textarea> -->
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="share_title">Share Title</label>
+                                        <textarea name="share_title" class="form-control" id="share_title">{{$seo->share_title}}</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="page_img">Image</label>
+                                        <input type="file" name="page_img" class="form-control" id="page_img" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="keywords">Keywords</label>
+                                        <textarea name="keywords" class="form-control" id="keywords">{{$seo->title}}</textarea>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="card-footer">
                             <input type="submit" class="btn btn-primary" value="Submit" />
