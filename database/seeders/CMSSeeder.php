@@ -22,6 +22,18 @@ class CMSSeeder extends Seeder
                 'type'=>'privacy_and_policy',
                 'content'=>'Dummy content'
             ],
+            [
+                'type'=>'terms_condition',
+                'content'=>'Dummy content'
+            ],
+            [
+                'type'=>'about_us',
+                'content'=>'Dummy content'
+            ],
+            [
+                'type'=>'advertise',
+                'content'=>'Dummy content'
+            ],
         ];
 
         \DB::table('c_m_s')->insert($pages);
