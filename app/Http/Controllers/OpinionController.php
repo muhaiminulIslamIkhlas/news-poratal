@@ -17,6 +17,7 @@ class OpinionController extends Controller
     {
         $this->_helepr = $helper;
     }
+    
     public function index(){
         return view('admin.opinion.index');
     }

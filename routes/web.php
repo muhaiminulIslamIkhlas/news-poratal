@@ -130,6 +130,15 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
         Route::post('update', [\App\Http\Controllers\OpinionController::class, 'update']);
         Route::get('delete/{id}', [\App\Http\Controllers\OpinionController::class, 'delete']);
     });
+    Route::group(['prefix' => 'seo', 'middleware' => 'developer'], function () {
+        Route::get('index', [\App\Http\Controllers\SeoController::class, 'index']);
+        Route::get('create', [\App\Http\Controllers\SeoController::class, 'create']);
+        Route::post('store', [\App\Http\Controllers\SeoController::class, 'store']);
+        Route::get('view/{id}', [\App\Http\Controllers\SeoController::class, 'view']);
+        Route::get('edit/{id}', [\App\Http\Controllers\SeoController::class, 'edit']);
+        Route::post('update', [\App\Http\Controllers\SeoController::class, 'update']);
+        Route::get('delete/{id}', [\App\Http\Controllers\SeoController::class, 'delete']);
+    });
 
     Route::group(['prefix' => 'information', 'middleware' => 'developer'], function () {
         Route::get('index', [\App\Http\Controllers\InformationController::class, 'index']);
