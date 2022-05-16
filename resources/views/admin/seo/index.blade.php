@@ -38,7 +38,6 @@
                                     <img src="{{ $seo->page_img }}" width="320" height="280" alt="">
                                 </td>
                                 <td>
-                                    <a class="btn btn-primary mt-3" href="{{Url('/admin/seo/view', $seo->id)}}"><i class="fas fa-eye fa-fw"></i></a>
                                     <a class="btn btn-success mt-3" href="{{Url('/admin/seo/edit', $seo->id)}}"><i class="fas fa-edit fa-fw"></i></a>
                                     <a class="btn btn-danger mt-3" href="{{Url('/admin/seo/delete', $seo->id)}}"><i class="fas fa-trash fa-fw"></i></a>
                                 </td>

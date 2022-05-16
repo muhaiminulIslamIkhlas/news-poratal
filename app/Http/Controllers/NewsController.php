@@ -186,6 +186,9 @@ class NewsController extends Controller
         }
 
         $seo = Seo::where('news_id', $request->id)->first();
+        if(!$seo){
+            $seo = new Seo();
+        }
         $seo->title = $request->title2;
         $seo->news_id = $news->id;
         $seo->share_title = $request->share_title;
