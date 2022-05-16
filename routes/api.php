@@ -144,3 +144,9 @@ Route::get('/cms/{type}', [App\Http\Controllers\API\CMSController::class, 'cms']
  * advertise
  */
 Route::get('/advertise/{type}', [App\Http\Controllers\API\AdvertiseController::class, 'getAdvertise']);
+
+/**
+ * seo
+ */
+Route::get('/seo-page/{type}', [App\Http\Controllers\API\SEOController::class, 'getPageSeo']);
+Route::get('/seo-news/{newsId}', [App\Http\Controllers\API\SEOController::class, 'getNewsSeo']);
