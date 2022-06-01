@@ -37,7 +37,8 @@
                     @endif
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form id="quickForm" method="POST" action="{{ Url('/admin/advertise/store') }}" enctype="multipart/form-data">
+                    <form id="quickForm" method="POST" action="{{ Url('/admin/advertise/store') }}"
+                        enctype="multipart/form-data">
                         @csrf
                         <div class="card-body">
                             <div class="form-group">
@@ -45,7 +46,7 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="form-check">
-                                            <input type="hidden" name="id" value="{{$advertise->id}}">
+                                            <input type="hidden" name="id" value="{{ $advertise->id }}">
                                             <input <?= $advertise->type == 'layout_top_add' ? 'checked' : '' ?>
                                                 class="form-check-input" type="radio" name="type" id="type_1"
                                                 value="layout_top_add">

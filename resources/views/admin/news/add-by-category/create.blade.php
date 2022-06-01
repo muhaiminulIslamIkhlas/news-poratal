@@ -25,80 +25,105 @@
                         enctype="multipart/form-data">
                         @csrf
                         <div class="card-body">
-                            <div class="form-group">
-                                <label for="title">Title</label>
-                                <input type="text" name="title" class="form-control" id="title" placeholder="Enter title">
-                            </div>
-                            <div class="form-group">
-                                <label for="sort_description">Sort Description</label>
-                                <textarea id="sort_description"
-                                    name="sort_description">Place <em>sort</em> <u>description</u> <strong>here</strong></textarea>
-                            </div>
                             <div class="row">
-                                <div class="form-group col-6">
-                                    <label for="date">Date Time</label>
-                                    <input type="datetime-local" name="date" class="form-control" id="date"
-                                        placeholder="Date Time">
+                                <div class="col-8">
+                                    <div class="form-group">
+                                        <label for="title">Title</label>
+                                        <input type="text" name="title" class="form-control" id="title"
+                                            placeholder="Enter title" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="summernote">Details</label>
+                                        <textarea id="details" name="details">Place <em>some</em> <u>text</u> <strong>here</strong></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sort_description">Sort Description</label>
+                                        <textarea id="sort_description"
+                                            name="sort_description">Place <em>sort</em> <u>description</u> <strong>here</strong></textarea>
+                                    </div>
                                 </div>
-                                <div class="form-group col-6">
-                                    @if ($categoryId != 20)
-                                        <label for="date">Timeline</label>
-                                        <select class="form-control" name="timeline_id">
-                                            <option value="">--Select one--</option>
-                                            @foreach ($timelines as $timeline)
-                                                <option value="{{ $timeline->id }}">{{ $timeline->name }}</option>
-                                            @endforeach
-                                        </select>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label for="date">Date Time</label>
+                                        <input type="datetime-local" name="date" class="form-control" id="date"
+                                            placeholder="Date Time" required>
+                                    </div>
+                                    @if ($categoryId == 18 || $categoryId == 19)
+                                        <input type="hidden" name="type" value="general" />
                                     @endif
+                                    @if ($categoryId != 18 && $categoryId != 19)
+                                        <div class="form-group">
+                                            <label for="type">Type</label>
+                                            <select name="type" id="type" class="form-control">
+                                                <option value="general" selected>General news</option>
+                                                <option value="lead_news">Lead news</option>
+                                                <option value="sub_lead_news">Sub lead news</option>
+                                                <option value="second_lead">Second lead</option>
+                                                <option value="side_bar_news">Side bar news</option>
+                                            </select>
+                                        </div>
+                                    @endif
+                                    <div class="form-group">
+                                        <label for="image">Image</label>
+                                        <input type="file" class="d-block" name="image" id="image" required />
+                                    </div>
+                                    <div class="form-group">
+                                        @if ($categoryId != 20)
+                                            <label for="date">Timeline</label>
+                                            <select class="form-control" name="timeline_id">
+                                                <option value="">--Select one--</option>
+                                                @foreach ($timelines as $timeline)
+                                                    <option value="{{ $timeline->id }}">{{ $timeline->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        @endif
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="representative">Representative</label>
+                                        <input type="text" name="representative" class="form-control" id="representative"
+                                            placeholder="Enter representative" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Keyword</label>
+                                        <div class="select2-purple">
+                                            <select class="select2" name="keyword[]" multiple="multiple"
+                                                data-placeholder="Select keyword" data-dropdown-css-class="select2-purple"
+                                                style="width: 100%;" required>
+                                                @foreach ($keyWords as $keyWord)
+                                                    <option value="{{ $keyWord->id }}">{{ $keyWord->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" id="category_id" name="category_id" value="{{ $categoryId }}" />
+                                    <input type="hidden" id="category_name" name="category_name"
+                                        value="{{ $categoryName }}" />
+                                    @if ($categoryId != 18 && $categoryId != 19 && $categoryId != 20)
+                                        <div class="form-group">
+                                            <label for="sub_category_id">Sub Category</label>
+                                            <select name="sub_category_id" id="sub_category_id" class="form-control">
+                                            </select>
+                                        </div>
+                                    @endif
+                                    <div class="form-group">
+                                        <label for="order">Order</label>
+                                        <input type="number" min="1" name="order" class="form-control" id="order"
+                                            placeholder="Enter order" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="video_link">Video link</label>
+                                        <input type="text" min="1" name="video_link" class="form-control" id="video_link"
+                                            placeholder="Enter link">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="google_drive_link">Google drive link</label>
+                                        <input type="text" name="google_drive_link" class="form-control"
+                                            id="google_drive_link" placeholder="Enter link">
+                                    </div>
                                 </div>
                             </div>
-                            <input type="hidden" id="category_id" name="category_id" value="{{ $categoryId }}" />
-                            <input type="hidden" id="category_name" name="category_name" value="{{ $categoryName }}" />
-                            @if ($categoryId != 18 && $categoryId != 19 && $categoryId != 20)
-                                <div class="form-group">
-                                    <label for="sub_category_id">Sub Category</label>
-                                    <select name="sub_category_id" id="sub_category_id" class="form-control">
-                                    </select>
-                                </div>
-                            @endif
-                            <div class="form-group">
-                                <label for="order">Order</label>
-                                <input type="number" min="1" name="order" class="form-control" id="order"
-                                    placeholder="Enter order">
-                            </div>
-                            <div class="form-group">
-                                <label for="video_link">Video link</label>
-                                <input type="text" min="1" name="video_link" class="form-control" id="video_link"
-                                    placeholder="Enter link">
-                            </div>
-                            <div class="form-group">
-                                <label for="google_drive_link">Google drive link</label>
-                                <input type="text" name="google_drive_link" class="form-control" id="google_drive_link"
-                                    placeholder="Enter link">
-                            </div>
-                            <div class="form-group">
-                                <label for="image">Image</label>
-                                <input type="file" class="d-block" name="image" id="image" />
-                            </div>
-                            @if ($categoryId == 18 || $categoryId == 19)
-                                <input type="hidden" name="type" value="general" />
-                            @endif
-                            @if ($categoryId != 18 && $categoryId != 19)
-                                <div class="form-group">
-                                    <label for="type">Type</label>
-                                    <select name="type" id="type" class="form-control">
-                                        <option value="general" selected>General news</option>
-                                        <option value="lead_news">Lead news</option>
-                                        <option value="sub_lead_news">Sub lead news</option>
-                                        <option value="second_lead">Second lead</option>
-                                        <option value="side_bar_news">Side bar news</option>
-                                    </select>
-                                </div>
-                            @endif
-                            <div class="form-group">
-                                <label for="summernote">Details</label>
-                                <textarea id="details" name="details">Place <em>some</em> <u>text</u> <strong>here</strong></textarea>
-                            </div>
+
                             <div class="form-group">
                                 <label for="ticker">Ticker</label>
                                 <textarea id="ticker" name="ticker">Place <em>ticker</em> <strong>here</strong></textarea>
@@ -108,23 +133,7 @@
                                 <textarea id="shoulder" name="shoulder">Place <em>shoulder</em> <strong>here</strong></textarea>
                             </div>
                             <div class="row">
-                                <div class="form-group col-6">
-                                    <label for="representative">Representative</label>
-                                    <input type="text" name="representative" class="form-control" id="representative"
-                                        placeholder="Enter representative">
-                                </div>
-                                <div class="form-group col-6">
-                                    <label>Keyword</label>
-                                    <div class="select2-purple">
-                                        <select class="select2" name="keyword[]" multiple="multiple"
-                                            data-placeholder="Select keyword" data-dropdown-css-class="select2-purple"
-                                            style="width: 100%;">
-                                            @foreach ($keyWords as $keyWord)
-                                                <option value="{{ $keyWord->id }}">{{ $keyWord->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
+
                             </div>
                             <div class="row">
                                 <div class="form-groupv col-4">

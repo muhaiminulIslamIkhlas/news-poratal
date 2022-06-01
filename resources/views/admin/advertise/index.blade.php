@@ -42,9 +42,6 @@
                                     @endif
                                     <td>
                                         <a class="btn btn-info mt-3"
-                                            href="{{ Url('/admin/advertise/view', $item->id) }}"><i
-                                                class="fas fa-folder fa-fw"></i>View</a>
-                                        <a class="btn btn-info mt-3"
                                             href="{{ Url('/admin/advertise/edit', $item->id) }}"><i
                                                 class="fas fa-pen fa-fw"></i>Edit</a>
                                         @if (!$item->status)
