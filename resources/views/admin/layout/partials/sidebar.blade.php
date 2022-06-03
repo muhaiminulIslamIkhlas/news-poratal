@@ -144,7 +144,7 @@ $category = DB::table('categories')
                             @endforeach
                         </ul>
                     </li>
-                    <li class="nav-item ">
+                    {{-- <li class="nav-item ">
                         <a href="#" class="nav-link">
                             <i class="far fa-newspaper"></i>
                             <p>
@@ -168,7 +168,7 @@ $category = DB::table('categories')
                                 </a>
                             </li>
                         </ul>
-                    </li>
+                    </li> --}}
                     <li class="nav-item ">
                         <a href="#" class="nav-link">
                             <i class="far fa-newspaper"></i>
@@ -191,88 +191,6 @@ $category = DB::table('categories')
                                 </a>
                             </li>
                         </ul>
-                    </li>
-                @endif
-                {{-- <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-chart-pie"></i>
-                        <p>
-                            News
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ URL('admin/news/index') }}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>All News</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ URL('admin/news/create') }}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Create New</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li> --}}
-                @if (in_array(auth()->user()->role, ['admin', 'developer']))
-                    <li class="nav-header">Category</li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-
-                            <i class="nav-icon fas fa-sitemap"></i>
-                            <p>
-                                Category
-                                <i class="fas fa-angle-left right"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{{ Url('/admin/news/category/index') }}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Add New Category</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ Url('/admin/news/category/list') }}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>View All Catgories</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-project-diagram"></i>
-                            <p>
-                                SubCategory
-                                <i class="fas fa-angle-left right"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{{ Url('/admin/news/subcategory/index') }}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Add New SubCategory</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ Url('/admin/news/subcategory/list') }}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>View All SubCatgories</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-header">News Timeline</li>
-                    <li class="nav-item">
-                        <a href="{{ url('admin/timeline/index') }}" class="nav-link">
-                            <i class="nav-icon fas fa-calendar"></i>
-                            <p>
-                                Timeline
-                            </p>
-                        </a>
                     </li>
                     <li class="nav-header">Keyword</li>
                     <li class="nav-item">
@@ -297,14 +215,6 @@ $category = DB::table('categories')
                                 </a>
                             </li>
                         </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ url('/admin/news/keyword/index-trending') }}" class="nav-link">
-                            <i class="nav-icon fas fa-calendar"></i>
-                            <p>
-                                Trending
-                            </p>
-                        </a>
                     </li>
                     <li class="nav-header">Video and Image</li>
                     <li class="nav-item">
@@ -399,6 +309,97 @@ $category = DB::table('categories')
                                 </a>
                             </li>
                         </ul>
+                    </li>
+                @endif
+                {{-- <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-chart-pie"></i>
+                        <p>
+                            News
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ URL('admin/news/index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>All News</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ URL('admin/news/create') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Create New</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li> --}}
+                @if (in_array(auth()->user()->role, ['admin', 'developer']))
+                    <li class="nav-header">Category</li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+
+                            <i class="nav-icon fas fa-sitemap"></i>
+                            <p>
+                                Category
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ Url('/admin/news/category/index') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Add New Category</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ Url('/admin/news/category/list') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>View All Catgories</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-project-diagram"></i>
+                            <p>
+                                SubCategory
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ Url('/admin/news/subcategory/index') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Add New SubCategory</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ Url('/admin/news/subcategory/list') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>View All SubCatgories</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-header">News Timeline</li>
+                    <li class="nav-item">
+                        <a href="{{ url('admin/timeline/index') }}" class="nav-link">
+                            <i class="nav-icon fas fa-calendar"></i>
+                            <p>
+                                Timeline
+                            </p>
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a href="{{ url('/admin/news/keyword/index-trending') }}" class="nav-link">
+                            <i class="nav-icon fas fa-calendar"></i>
+                            <p>
+                                Trending
+                            </p>
+                        </a>
                     </li>
                     <li class="nav-header">MISCELLANEOUS</li>
                     <li class="nav-item">

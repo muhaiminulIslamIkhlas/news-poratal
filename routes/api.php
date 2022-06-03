@@ -72,7 +72,7 @@ Route::get('/get-all-sorbadhik/{limit}/{date?}', [App\Http\Controllers\API\Lates
 /**
  * latest
  */
-Route::get('/get-all-latest/{limit}/{skip}', [App\Http\Controllers\API\LatestController::class, 'getAllLatest']);
+Route::get('/get-all-latest/{date}/{limit}/{skip}', [App\Http\Controllers\API\LatestController::class, 'getAllLatest']);
 
 /**
  * contact
@@ -150,3 +150,8 @@ Route::get('/advertise/{type}', [App\Http\Controllers\API\AdvertiseController::c
  */
 Route::get('/seo-page/{type}', [App\Http\Controllers\API\SEOController::class, 'getPageSeo']);
 Route::get('/seo-news/{newsId}', [App\Http\Controllers\API\SEOController::class, 'getNewsSeo']);
+
+/**
+ * marquee
+ */
+Route::get('/get-marquee/{date}', [App\Http\Controllers\API\MarqueeController::class, 'getNews']);

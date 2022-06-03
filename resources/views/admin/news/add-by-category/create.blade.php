@@ -121,6 +121,27 @@
                                         <input type="text" name="google_drive_link" class="form-control"
                                             id="google_drive_link" placeholder="Enter link">
                                     </div>
+                                    <div class="form-group">
+                                        <label for="audio_link">Audio link</label>
+                                        <input type="text" name="audio_link" class="form-control" id="audio_link"
+                                            placeholder="Enter link">
+                                    </div>
+                                    <div class="row" style="padding-left: 10px;">
+                                        <div class="form-check" style="margin-right: 10px;">
+                                            <input class="form-check-input" type="checkbox" value="1" name="latest"
+                                                id="latest">
+                                            <label class="form-check-label" for="latest">
+                                                Latest news
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="1" name="news_marquee"
+                                                id="news_marquee">
+                                            <label class="form-check-label" for="news_marquee">
+                                                News Marquee
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 

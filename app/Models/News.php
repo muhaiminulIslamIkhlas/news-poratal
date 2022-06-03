@@ -79,6 +79,7 @@ class News extends Model
             'representative' => $this->details->representative,
             'video_link' => $this->details->video_link,
             'google_drive_link' => $this->details->google_drive_link,
+            'audio_link' => $this->details->audio_link,
             'keyword' => $keyWords,
             'timeline_id' => $this->timeline_id,
         ];

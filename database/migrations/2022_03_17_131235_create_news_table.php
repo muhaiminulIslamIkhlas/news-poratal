@@ -25,6 +25,8 @@ class CreateNewsTable extends Migration
             $table->string('type');
             $table->bigInteger('timeline_id')->nullable();
             $table->boolean('published')->default(0);
+            $table->boolean('latest')->default(0);
+            $table->boolean('news_marquee')->default(0);
             $table->dateTime('date');
             $table->timestamps();
         });

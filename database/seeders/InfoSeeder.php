@@ -14,14 +14,25 @@ class InfoSeeder extends Seeder
      */
     public function run()
     {
-        $keyArray = ['total_affected_bd','total_recover_bd','total_death_bd','total_affected_int','total_recover_int','total_death_int'];
-        foreach($keyArray as $item){
+        $keyArray = [
+            'total_affected_bd' => 0,
+            'total_recover_bd' => 0,
+            'total_death_bd' => 0,
+            'total_affected_int' => 0,
+            'total_recover_int' => 0,
+            'total_death_int' => 0,
+            'address' => 'Dhaka 1212',
+            'phone' => '123456789',
+            'newsroom_hotline' => '123456789, 123456789',
+            'whatsapp_number' => '123456789',
+            'newsroom_email' => 'example@gmail.com, example2@gmail.com',
+            'email' => 'main@gmail.com'
+        ];
+        foreach ($keyArray as $key=>$item) {
             Information::create([
-                'info_key'=>$item,
-                'info_value'=>'0'
+                'info_key' => $key,
+                'info_value' => $item
             ]);
         }
-
-
     }
 }

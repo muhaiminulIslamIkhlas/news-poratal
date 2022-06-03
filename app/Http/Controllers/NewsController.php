@@ -73,6 +73,7 @@ class NewsController extends Controller
             'keyword' => 'required',
             'order' => 'required',
         ]);
+
         $time = strtotime($request->date);
         $newformat = date('Y-m-d', $time);
         $imagePath = $this->_helepr->imageUpload($request->file('image'), $newformat);
@@ -85,6 +86,8 @@ class NewsController extends Controller
         $news->type = $request->type;
         $news->image = $imagePath;
         $news->date = $request->date;
+        $news->latest = $request->latest ?? 0;
+        $news->news_marquee = $request->news_marquee ?? 0;
         $news->timeline_id = $request->timeline_id;
         $news->save();
         $newsDetails = new NewsDetails();
@@ -93,6 +96,7 @@ class NewsController extends Controller
         $newsDetails->ticker = $request->ticker;
         $newsDetails->video_link = $request->video_link;
         $newsDetails->google_drive_link = $request->google_drive_link;
+        $newsDetails->audio_link = $request->audio_link;
         $newsDetails->representative = $request->representative;
         $newsDetails->shoulder = $request->shoulder;
         $newsDetails->keyword = json_encode($request->keyword);
@@ -121,7 +125,7 @@ class NewsController extends Controller
         $seo->description = $request->description;
         $seo->keywords = $request->keywords;
         if ($request->hasFile('page_img')) {
-            $imagePath = $this->_helepr->imageUpload($request->file('page_img'));
+            $imagePath = $this->_helepr->imageUpload($request->file('page_img'), $newformat);
             $seo->page_img = $imagePath;
         }
 
@@ -146,7 +150,8 @@ class NewsController extends Controller
             'order' => 'required',
         ]);
 
-
+        $time = strtotime($request->date);
+        $newformat = date('Y-m-d', $time);
         $news = News::find($request->id);
         $news->title = $request->title;
         $news->sort_description = $request->sort_description;
@@ -154,9 +159,11 @@ class NewsController extends Controller
         $news->sub_category_id = $request->sub_category_id;
         $news->order = $request->order;
         $news->type = $request->type;
+        $news->latest = $request->latest ?? 0;
+        $news->news_marquee = $request->news_marquee ?? 0;
         $news->timeline_id = $request->timeline_id;
         if ($request->hasFile('image')) {
-            $imagePath = $this->_helepr->imageUpload($request->file('image'));
+            $imagePath = $this->_helepr->imageUpload($request->file('image'), $newformat);
             $news->image = $imagePath;
         }
         $news->date = $request->date;
@@ -166,6 +173,7 @@ class NewsController extends Controller
         $newsDetails->ticker = $request->ticker;
         $newsDetails->video_link = $request->video_link;
         $newsDetails->google_drive_link = $request->google_drive_link;
+        $newsDetails->audio_link = $request->audio_link;
         $newsDetails->representative = $request->representative;
         $newsDetails->shoulder = $request->shoulder;
         $newsDetails->keyword = json_encode($request->keyword);
@@ -197,7 +205,7 @@ class NewsController extends Controller
         $seo->description = $request->description;
         $seo->keywords = $request->keywords;
         if ($request->hasFile('page_img')) {
-            $imagePath = $this->_helepr->imageUpload($request->file('page_img'));
+            $imagePath = $this->_helepr->imageUpload($request->file('page_img'), $newformat);
             $seo->page_img = $imagePath;
         }
         $seo->save();
