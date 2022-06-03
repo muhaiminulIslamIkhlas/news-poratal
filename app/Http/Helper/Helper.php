@@ -6,6 +6,8 @@ use App\Http\Repositories\HelperRepositoryInterface;
 use App\Models\District;
 use App\Models\Division;
 use App\Models\Thana;
+// use Facade\FlareClient\Stacktrace\File;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\URL;
 use Intervention\Image\Facades\Image;
 
@@ -14,17 +16,35 @@ class Helper implements HelperRepositoryInterface
 
     /**
      * @param $image
+     * @param $date
      * @return string
      */
-    public function imageUpload($image):string
+    public function imageUpload($image, $date): string
     {
         $file = $image;
         $ogImage = Image::make($file);
-        $imageName = time().$file->getClientOriginalName();
-        $originalPath = public_path('/images/').time().$file->getClientOriginalName();
+        $imageName = time() . $file->getClientOriginalName();
+        $folder = public_path('/images/' . $date . '/');
+
+        if (!File::exists($folder)) {
+            File::makeDirectory($folder, 0775, true, true);
+        }
+
+        $originalPath = $folder . $imageName;
+        $returnPath = '/images/' . $date . '/' . $imageName;
         $ogImage =  $ogImage->save($originalPath);
-        return URL::to('/').'/images/'.$imageName;
+        return URL::to('/') . $returnPath;
     }
+
+    public function deleteImage($image): void
+    {
+        $image_path = public_path(str_replace(URL::to('/'), "", $image));
+        if (File::exists($image_path)) {
+            File::delete($image_path);
+        }
+    }
+
+
 
     public function getDivsions()
     {
@@ -34,13 +54,13 @@ class Helper implements HelperRepositoryInterface
 
     public function getDistrictByDivision($divId)
     {
-        $districs = District::where('division_id',$divId)->get();
+        $districs = District::where('division_id', $divId)->get();
         return $districs;
     }
 
     public function getUpozillaByDistrict($upoId)
     {
-        $upozillas = Thana::where('district_id',$upoId)->get();
+        $upozillas = Thana::where('district_id', $upoId)->get();
         return $upozillas;
     }
 }

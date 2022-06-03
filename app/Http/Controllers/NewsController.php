@@ -73,7 +73,9 @@ class NewsController extends Controller
             'keyword' => 'required',
             'order' => 'required',
         ]);
-        $imagePath = $this->_helepr->imageUpload($request->file('image'));
+        $time = strtotime($request->date);
+        $newformat = date('Y-m-d', $time);
+        $imagePath = $this->_helepr->imageUpload($request->file('image'), $newformat);
         $news = new News();
         $news->title = $request->title;
         $news->sort_description = $request->sort_description;
@@ -186,7 +188,7 @@ class NewsController extends Controller
         }
 
         $seo = Seo::where('news_id', $request->id)->first();
-        if(!$seo){
+        if (!$seo) {
             $seo = new Seo();
         }
         $seo->title = $request->title2;
@@ -280,6 +282,7 @@ class NewsController extends Controller
         if ($role == 'representative' && $news->published == 1) {
             abort(403);
         }
+        $this->_helepr->deleteImage($news->image);
         $news->delete();
         DB::table("news_keywords")->where('news_id', $newsId)->delete();
         return back();
