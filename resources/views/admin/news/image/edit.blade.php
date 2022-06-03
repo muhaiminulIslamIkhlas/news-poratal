@@ -51,10 +51,6 @@
                         <label for="date">Date Time</label>
                         <input type="datetime-local" name="date" class="form-control" id="date" value="<?= $image->date; ?>">
                     </div>
-                    <div class="form-group">
-                        <label for="order">Order</label>
-                        <input type="number" name="order" class="form-control" id="order" value="<?= $image->order; ?>">
-                    </div>
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">

@@ -26,23 +26,22 @@ class VideoController extends Controller
             'video_link' => 'required|max:255',
             'video_thumbnail' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'date_time' => 'required',
-            'order'     => 'required'
         ]);
-
-        $thumbnail_path = $this->_helepr->imageUpload($request->file('video_thumbnail'));
+        $time = strtotime($request->date);
+        $newformat = date('Y-m-d', $time);
+        $thumbnail_path = $this->_helepr->imageUpload($request->file('video_thumbnail'),$newformat);
 
         $video = new Video();
         $video->video_link = $request->video_link;
         $video->video_thumbnail = $thumbnail_path;
         $video->date_time = $request->date_time;
-        $video->order = $request->order;
         $video->save();
 
         return redirect('/admin/news/video/list');
     }
 
     public function list(){
-        $videoList = Video::get();
+        $videoList = Video::orderBy('id','desc')->get();
 
         return view('admin.news.video.list', compact('videoList'));
     }
@@ -61,15 +60,11 @@ class VideoController extends Controller
     public function update(Request $request){
         $request->validate([
             'video_link' => 'required|max:255',
-            // 'video_thumbnail' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
-            // 'date_time' => 'required',
             'order'     => 'required'
         ]);
 
         $video = Video::where('id', $request->id)->first();
         $video->video_link = $request->video_link;
-        // $video->video_thumbnail = $request->video_thumbnail;
-        // $video->date_time = $request->date_time;
         $video->order = $request->order;
         $video->save();
 
@@ -79,6 +74,7 @@ class VideoController extends Controller
 
     public function delete($id){
         $video = Video::where('id', $id)->first();
+        $this->_helepr->deleteImage($video->video_thumbnail);
         $video->delete();
 
         return redirect('/admin/news/video/list');

@@ -51,10 +51,6 @@
                         <label for="date_time">Date Time</label>
                         <input type="datetime-local" name="date_time" class="form-control" id="date_time" value="<?= $video->date_time; ?>">
                     </div>
-                    <div class="form-group">
-                        <label for="order">Order</label>
-                        <input type="number" name="order" class="form-control" id="order" value="<?= $video->order; ?>">
-                    </div>
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">

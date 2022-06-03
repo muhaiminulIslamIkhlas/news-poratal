@@ -36,11 +36,6 @@
                     <p><img src="<?= str_replace('/public', '', $image->image_file);?>" width="320" height="280" alt=""></p>
                 </div>
                 <div class="category-details ml-3">
-                    <h5>Sort Order</h5>
-                    <hr />
-                    <p><?= $image->order; ?></p>
-                </div>
-                <div class="category-details ml-3">
                     <h5>Date Time</h5>
                     <hr />
                     <p><?= date('d-m-Y H:i:s', strtotime($image->date));; ?></p>

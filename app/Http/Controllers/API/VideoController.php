@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 
 class VideoController extends Controller
 {
-    public function getAllVideo($limit=10,$skip): \Illuminate\Http\JsonResponse
+    public function getAllVideo($limit = 10, $skip): \Illuminate\Http\JsonResponse
     {
-        $video = Video::skip($skip)->take($limit)->orderBy('order','ASC')->get();
+        $video = Video::skip($skip)->take($limit)->orderBy('id', 'desc')->get();
         return response()->json($video);
     }
 
@@ -20,4 +20,3 @@ class VideoController extends Controller
         return response()->json($video);
     }
 }
-

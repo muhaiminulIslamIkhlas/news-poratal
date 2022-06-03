@@ -18,7 +18,6 @@ class CreateVideosTable extends Migration
             $table->string('video_link');
             $table->string('video_thumbnail');
             $table->dateTime('date_time');
-            $table->bigInteger('order');
             $table->timestamps();
         });
     }
