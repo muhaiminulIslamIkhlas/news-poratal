@@ -78,7 +78,7 @@ class NewsController extends Controller
             ->skip($skip)
             ->take($limit)
             ->get()
-            ->map->format();
+            ->map->formatDetails();
 
         $category = Category::find($categoryId);
         return response()->json([
@@ -93,7 +93,7 @@ class NewsController extends Controller
             ->skip($skip)
             ->take($limit)
             ->get()
-            ->map->format();
+            ->map->formatDetails();
 
         $subCategory = Subcategory::find($subCategoryId);
         return response()->json([

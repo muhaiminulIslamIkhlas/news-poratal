@@ -10,7 +10,7 @@ class ImageController extends Controller
 {
     public function getAllImage($limit = 10, $skip = 0): \Illuminate\Http\JsonResponse
     {
-        $image = Image::skip($skip)->take($limit)->orderBy('order', 'ASC')->get();
+        $image = Image::skip($skip)->take($limit)->orderBy('id', 'desc')->get();
         return response()->json($image);
     }
 

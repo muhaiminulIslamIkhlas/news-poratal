@@ -50,10 +50,6 @@
                         <label for="date">Date Time</label>
                         <input type="datetime-local" name="date" class="form-control" id="date" placeholder="Date Time">
                     </div>
-                    <div class="form-group">
-                        <label for="order">Order</label>
-                        <input type="number" name="order" class="form-control" id="order" placeholder="Sort Order">
-                    </div>
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
