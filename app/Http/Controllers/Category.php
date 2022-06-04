@@ -47,9 +47,9 @@ class Category extends Controller
 
     public function update(Request $request)
     {
-        if ($request->id < 20) {
-            return redirect('/admin/news/category/list');
-        }
+        // if ($request->id < 20) {
+        //     return redirect('/admin/news/category/list');
+        // }
         $category = CategoryModel::where('id', $request->id)->first();
         $category->name = $request->name;
         $category->order = $request->order;

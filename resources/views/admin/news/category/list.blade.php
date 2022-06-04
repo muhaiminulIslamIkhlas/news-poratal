@@ -11,7 +11,8 @@
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">All Categories lists</h3>
-                        <a class="btn btn-primary float-right listbutton" href="{{ Url('/admin/news/category/index') }}">Add
+                        <a class="btn btn-primary float-right listbutton"
+                            href="{{ Url('/admin/news/category/index') }}">Add
                             New Category</a>
                     </div>
                     <div class="p-3">
@@ -46,10 +47,10 @@
                                         <a class="btn btn-primary mt-3"
                                             href="{{ Url('/admin/news/category/view', $category->id) }}"><i
                                                 class="fas fa-eye fa-fw"></i></a>
-                                        <?php if ($category->id > 21) : ?>
                                         <a class="btn btn-success mt-3"
-                                        href="{{ Url('/admin/news/category/edit', $category->id) }}"><i
-                                            class="fas fa-edit fa-fw"></i></a>
+                                            href="{{ Url('/admin/news/category/edit', $category->id) }}"><i
+                                                class="fas fa-edit fa-fw"></i></a>
+                                        <?php if ($category->id > 21) : ?>
                                         <a class="btn btn-danger mt-3"
                                             href="{{ Url('/admin/news/category/delete', $category->id) }}"><i
                                                 class="fas fa-trash fa-fw"></i></a>
