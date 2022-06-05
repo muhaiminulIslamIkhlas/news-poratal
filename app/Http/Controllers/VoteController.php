@@ -43,6 +43,8 @@ class VoteController extends Controller
             $vote = new Vote();
         }
 
+        $time = strtotime($request->date);
+        $newformat = date('Y-m-d', $time);
         $vote->description = $request->description;
         $vote->order = $request->order;
         $vote->date = $request->date;
@@ -50,7 +52,7 @@ class VoteController extends Controller
         $vote->no = 0;
         $vote->no_comments = 0;
         if ($request->hasFile('image')) {
-            $imagePath = $this->_helepr->imageUpload($request->file('image'));
+            $imagePath = $this->_helepr->imageUpload($request->file('image'), $newformat);
             $vote->image = $imagePath;
         }
 

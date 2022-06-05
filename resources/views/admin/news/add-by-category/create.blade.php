@@ -24,8 +24,30 @@
                     <form id="quickForm" method="post" action="{{ URL('admin/news/store') }}"
                         enctype="multipart/form-data">
                         @csrf
+
                         <div class="card-body">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 style="display: block;">Category</h5>
+                                    <div class="row" style="padding-left: 10px;">
+                                        @foreach ($categories as $cat)
+                                            <div class="form-check" style="margin-right: 10px;">
+                                                <input class="form-check-input category_check" type="checkbox"
+                                                    value=" {{ $cat->id }}" name="category[]" id="latest">
+                                                <label class="form-check-label" for="latest">
+                                                    {{ $cat->name }}
+                                                </label>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                    <h5 style="display: block; margin-top:20px;">Sub Category</h5>
+                                    <div class="row" id="sub_category_new" style="padding-left: 10px;">
+
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row">
+
                                 <div class="col-8">
                                     <div class="form-group">
                                         <label for="title">Title</label>
@@ -99,13 +121,6 @@
                                     <input type="hidden" id="category_id" name="category_id" value="{{ $categoryId }}" />
                                     <input type="hidden" id="category_name" name="category_name"
                                         value="{{ $categoryName }}" />
-                                    @if ($categoryId != 18 && $categoryId != 19 && $categoryId != 20)
-                                        <div class="form-group">
-                                            <label for="sub_category_id">Sub Category</label>
-                                            <select name="sub_category_id" id="sub_category_id" class="form-control">
-                                            </select>
-                                        </div>
-                                    @endif
                                     <div class="form-group">
                                         <label for="order">Order</label>
                                         <input type="number" min="1" name="order" class="form-control" id="order"
@@ -314,5 +329,38 @@
         $('#ticker').summernote()
         $('#shoulder').summernote()
         $('.select2').select2()
+
+        $('.category_check').on('change', function() {
+            var arr = $('.category_check:checked').map(function() {
+                return this.value;
+            }).get();
+
+            $.ajax({
+                url: '{{ URL('admin/news/subcategory/get-sub-category-post/') }}',
+                type: "POST",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    data: JSON.stringify(arr)
+                },
+                dataType: "json",
+                success: function(data) {
+                    if (data) {
+                        $('#sub_category_new').empty();
+                        console.log(data)
+                        $.each(data, function(key, item) {
+                            console.log(item)
+                            $('#sub_category_new').append(
+                                '<div class="form-check" style="margin-right: 10px;"><input class="form-check-input category_check" type="checkbox"value="' +
+                                item.id +
+                                '" name="sub_category[]" id="latest"><label class="form-check-label">' +
+                                item.name + '</label></div>'
+                            );
+                        });
+                    } else {
+                        $('#sub_category_id').empty();
+                    }
+                }
+            });
+        })
     </script>
 @endsection

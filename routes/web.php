@@ -68,6 +68,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
             Route::post('update', [\App\Http\Controllers\Subcategory::class, 'update']);
             Route::get('delete/{id}', [\App\Http\Controllers\Subcategory::class, 'delete']);
             Route::get('get-sub-category/{categoryId}', [\App\Http\Controllers\Subcategory::class, 'getSubCategory']);
+            Route::post('get-sub-category-post/', [\App\Http\Controllers\Subcategory::class, 'getSubCategoryByJson']);
             Route::get('visible/{id}', [\App\Http\Controllers\Subcategory::class, 'visible']);
             Route::get('invisible/{id}', [\App\Http\Controllers\Subcategory::class, 'invisible']);
         });

@@ -12,7 +12,9 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Keyword;
 use App\Models\LiveNews;
+use App\Models\NewsCategory;
 use App\Models\NewsKeyword;
+use App\Models\NewsSubCategory;
 use App\Models\Published;
 use App\Models\Seo;
 use App\Models\Timeline;
@@ -80,8 +82,8 @@ class NewsController extends Controller
         $news = new News();
         $news->title = $request->title;
         $news->sort_description = $request->sort_description;
-        $news->category_id = $request->category_id;
-        $news->sub_category_id = $request->sub_category_id;
+        $news->category_id = 0;
+        $news->sub_category_id = 0;
         $news->order = $request->order;
         $news->type = $request->type;
         $news->image = $imagePath;
@@ -90,6 +92,18 @@ class NewsController extends Controller
         $news->news_marquee = $request->news_marquee ?? 0;
         $news->timeline_id = $request->timeline_id;
         $news->save();
+        foreach ($request->category as $cat) {
+            $newsCategory = new NewsCategory();
+            $newsCategory->news_id = $news->id;
+            $newsCategory->category_id = $cat;
+            $newsCategory->save();
+        }
+        foreach ($request->sub_category as $subCat) {
+            $newsSubCat = new NewsSubCategory();
+            $newsSubCat->news_id = $news->id;
+            $newsSubCat->sub_category_id = $subCat;
+            $newsSubCat->save();
+        }
         $newsDetails = new NewsDetails();
         $newsDetails->news_id = $news->id;
         $newsDetails->details = $request->details;
@@ -155,8 +169,6 @@ class NewsController extends Controller
         $news = News::find($request->id);
         $news->title = $request->title;
         $news->sort_description = $request->sort_description;
-        $news->category_id = $request->category_id;
-        $news->sub_category_id = $request->sub_category_id;
         $news->order = $request->order;
         $news->type = $request->type;
         $news->latest = $request->latest ?? 0;
@@ -248,10 +260,11 @@ class NewsController extends Controller
 
     public function createByCategory($categoryId, $categoryName)
     {
+        $categories = Category::get();
         $timelines = Timeline::orderBy('id', 'desc')->get();
         $keyWords = Keyword::get();
         $divisions = $this->_helepr->getDivsions();
-        return view('admin.news.add-by-category.create', compact('categoryId', 'keyWords', 'divisions', 'categoryName', 'timelines'));
+        return view('admin.news.add-by-category.create', compact('categories', 'categoryId', 'keyWords', 'divisions', 'categoryName', 'timelines'));
     }
 
     public function getList($categoryId, $categoryName)
@@ -277,10 +290,13 @@ class NewsController extends Controller
         $categoryId = $news->category_id;
         $role = auth()->user()->role;
         $seo = Seo::where('news_id', $newsId)->first();
+        $categories = Category::get();
+        $newsCategory = NewsCategory::where('news_id', $newsId)->pluck('category_id')->toArray();
+        $newsSubCategory = NewsSubCategory::where('news_id', $newsId)->pluck('sub_category_id')->toArray();
         if ($role == 'representative' && $news->published == 1) {
             abort(403);
         }
-        return view('admin.news.add-by-category.edit', compact('news', 'keyWords', 'divisions', 'newsKeywords', 'categoryName', 'timelines', 'categoryId', 'seo'));
+        return view('admin.news.add-by-category.edit', compact('news', 'keyWords', 'divisions', 'newsKeywords', 'categoryName', 'timelines', 'categoryId', 'seo', 'categories', 'newsCategory','newsCategory','newsSubCategory'));
     }
 
     public function delete($newsId)

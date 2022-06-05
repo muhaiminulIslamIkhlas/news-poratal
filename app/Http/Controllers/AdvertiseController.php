@@ -34,11 +34,11 @@ class AdvertiseController extends Controller
         $request->id ? $advertise = Advertise::find($request->id) : $advertise = new Advertise();
         $advertise->content = $request->content;
         if ($request->hasFile('image')) {
-            $imagePath = $this->_helepr->imageUpload($request->file('image'));
+            $imagePath = $this->_helepr->imageUpload($request->file('image'), Date('Y-m-d'));
             $advertise->image = $imagePath;
         }
-        if( $advertise->id ){
-            if($advertise->type != $request->type){
+        if ($advertise->id) {
+            if ($advertise->type != $request->type) {
                 $advertise->status = null;
             }
         }
