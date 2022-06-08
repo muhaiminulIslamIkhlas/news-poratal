@@ -125,7 +125,7 @@ $category = DB::table('categories')
                                         </a>
                                         <ul class="nav nav-treeview">
                                             <li class="nav-item">
-                                                <a href="{{ URL('admin/news/index-by-category/' . $item->id . '/' . $item->name) }}"
+                                                <a href="{{ URL('admin/news/index-by-category/' . $item->id . '/') }}"
                                                     class="nav-link">
                                                     <i class="far fa-circle nav-icon"></i>
                                                     <p>All </p>

@@ -60,8 +60,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="sort_description">Sort Description</label>
-                                        <textarea id="sort_description"
-                                            name="sort_description">Place <em>sort</em> <u>description</u> <strong>here</strong></textarea>
+                                        <textarea id="sort_description" name="sort_description">Place <em>sort</em> <u>description</u> <strong>here</strong></textarea>
                                     </div>
                                 </div>
                                 <div class="col-4">
