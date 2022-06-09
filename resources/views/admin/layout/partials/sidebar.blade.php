@@ -179,7 +179,7 @@ $category = DB::table('categories')
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{ URL('admin/news/index-by-category/19/Live') }}" class="nav-link">
+                                <a href="{{ URL('admin/news/live-news/list') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>List</p>
                                 </a>

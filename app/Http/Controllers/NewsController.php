@@ -91,6 +91,7 @@ class NewsController extends Controller
         $news->date = $request->date;
         $news->latest = $request->latest ?? 0;
         $news->news_marquee = $request->news_marquee ?? 0;
+        $news->live_news = $request->news_marquee ?? 0;
         $news->timeline_id = $request->timeline_id;
         $news->save();
         foreach ($request->category as $cat) {
@@ -177,6 +178,7 @@ class NewsController extends Controller
         $news->type = $request->type;
         $news->latest = $request->latest ?? 0;
         $news->news_marquee = $request->news_marquee ?? 0;
+        $news->live_news = $request->news_marquee ?? 0;
         $news->timeline_id = $request->timeline_id;
         if ($request->hasFile('image')) {
             $imagePath = $this->_helepr->imageUpload($request->file('image'), $newformat);
@@ -385,6 +387,12 @@ class NewsController extends Controller
         $published->save();
 
         return back();
+    }
+
+    public function getListLiveNews()
+    {
+        $news = News::where('live_news',1)->get();
+        return view('admin.news.live-news.index',compact('news'));
     }
 
     public function liveNews($newsId)

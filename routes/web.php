@@ -34,6 +34,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
         Route::get('proofreader/submit/{newsId}', [\App\Http\Controllers\NewsController::class, 'submitProofreader']);
         Route::get('get-district/{divisionID}', [\App\Http\Controllers\NewsController::class, 'getDistrictByDivId']);
         Route::get('get-upozilla/{districtID}', [\App\Http\Controllers\NewsController::class, 'getUpozillaByDisId']);
+        Route::get('live-news/list', [\App\Http\Controllers\NewsController::class, 'getListLiveNews']);
         Route::get('live-index/{newsId}', [\App\Http\Controllers\NewsController::class, 'liveNews']);
         Route::post('live-index/store', [\App\Http\Controllers\NewsController::class, 'liveNewsStore']);
         Route::get('live-news/edit/{newsId}', [\App\Http\Controllers\NewsController::class, 'liveNewsEdit']);
