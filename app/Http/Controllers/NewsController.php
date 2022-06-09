@@ -74,6 +74,7 @@ class NewsController extends Controller
             'representative' => 'required',
             'keyword' => 'required',
             'order' => 'required',
+            'category' => 'required'
         ]);
 
         $time = strtotime($request->date);
@@ -98,11 +99,13 @@ class NewsController extends Controller
             $newsCategory->category_id = $cat;
             $newsCategory->save();
         }
-        foreach ($request->sub_category as $subCat) {
-            $newsSubCat = new NewsSubCategory();
-            $newsSubCat->news_id = $news->id;
-            $newsSubCat->sub_category_id = $subCat;
-            $newsSubCat->save();
+        if ($request->sub_category) {
+            foreach ($request->sub_category as $subCat) {
+                $newsSubCat = new NewsSubCategory();
+                $newsSubCat->news_id = $news->id;
+                $newsSubCat->sub_category_id = $subCat;
+                $newsSubCat->save();
+            }
         }
         $newsDetails = new NewsDetails();
         $newsDetails->news_id = $news->id;
@@ -162,6 +165,7 @@ class NewsController extends Controller
             'representative' => 'required',
             'keyword' => 'required',
             'order' => 'required',
+            'category' => 'required',
         ]);
 
         $time = strtotime($request->date);
@@ -188,11 +192,13 @@ class NewsController extends Controller
             $newsCategory->category_id = $cat;
             $newsCategory->save();
         }
-        foreach ($request->sub_category as $subCat) {
-            $newsSubCat = new NewsSubCategory();
-            $newsSubCat->news_id = $news->id;
-            $newsSubCat->sub_category_id = $subCat;
-            $newsSubCat->save();
+        if ($request->sub_category) {
+            foreach ($request->sub_category as $subCat) {
+                $newsSubCat = new NewsSubCategory();
+                $newsSubCat->news_id = $news->id;
+                $newsSubCat->sub_category_id = $subCat;
+                $newsSubCat->save();
+            }
         }
         $newsDetails = NewsDetails::where('news_id', $request->id)->first();
         $newsDetails->details = $request->details;

@@ -370,6 +370,7 @@
         $('#shoulder').summernote()
         $('.select2').select2()
         let newsSub = {!! json_encode($newsSubCategory) !!}
+        console.log(newsSub);
         $('.category_check').on('change', function() {
             var arr = $('.category_check:checked').map(function() {
                 return this.value;
@@ -386,7 +387,7 @@
                 success: function(data) {
                     if (data) {
                         $('#sub_category_new').empty();
-                        console.log(data)
+                        // console.log(data)
                         $.each(data, function(key, item) {
                             console.log(item)
                             $('#sub_category_new').append(
@@ -398,8 +399,10 @@
                                 item.name + '</label></div>'
                             );
                         });
+                        $.each(newsSub, function(k, i) {
+                            $('#' + i).attr('checked', 'checked');
+                        })
 
-                        $('#' + newsSub[0]).attr('checked', 'checked');
                     } else {
                         $('#sub_category_id').empty();
                     }
@@ -424,7 +427,7 @@
                     $('#sub_category_new').empty();
                     console.log(data)
                     $.each(data, function(key, item) {
-                        console.log(item)
+                        // console.log(item)
                         $('#sub_category_new').append(
                             '<div class="form-check sub_category"  style="margin-right: 10px;"><input id="' +
                             item.id +
@@ -435,7 +438,10 @@
                         );
                     });
 
-                    $('#' + newsSub[0]).attr('checked', 'checked');
+                    $.each(newsSub, function(k, i) {
+                        // console.log(i);
+                        $('#' + i).attr('checked', 'checked');
+                    })
                 } else {
                     $('#sub_category_id').empty();
                 }

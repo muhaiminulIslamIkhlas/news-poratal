@@ -5,6 +5,11 @@
     <link rel="stylesheet" href="{{ asset('assets/plugins/codemirror/theme/monokai.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/simplemde/simplemde.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/select2/css/select2.min.css') }}">
+    <style>
+        .short-height .note-editor{
+            height: 150px;
+        }
+    </style>
 @endsection
 @section('body')
     <div class="container-fluid">
@@ -159,11 +164,11 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group short-height">
                                 <label for="ticker">Ticker</label>
                                 <textarea id="ticker" name="ticker">Place <em>ticker</em> <strong>here</strong></textarea>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group short-height">
                                 <label for="ticker">Shoulder</label>
                                 <textarea id="shoulder" name="shoulder">Place <em>shoulder</em> <strong>here</strong></textarea>
                             </div>
