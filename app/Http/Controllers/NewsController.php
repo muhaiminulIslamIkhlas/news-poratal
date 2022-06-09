@@ -12,7 +12,9 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Keyword;
 use App\Models\LiveNews;
+use App\Models\NewsCategory;
 use App\Models\NewsKeyword;
+use App\Models\NewsSubCategory;
 use App\Models\Published;
 use App\Models\Seo;
 use App\Models\Timeline;
@@ -72,6 +74,7 @@ class NewsController extends Controller
             'representative' => 'required',
             'keyword' => 'required',
             'order' => 'required',
+            'category' => 'required'
         ]);
 
         $time = strtotime($request->date);
@@ -80,16 +83,31 @@ class NewsController extends Controller
         $news = new News();
         $news->title = $request->title;
         $news->sort_description = $request->sort_description;
-        $news->category_id = $request->category_id;
-        $news->sub_category_id = $request->sub_category_id;
+        $news->category_id = 0;
+        $news->sub_category_id = 0;
         $news->order = $request->order;
         $news->type = $request->type;
         $news->image = $imagePath;
         $news->date = $request->date;
         $news->latest = $request->latest ?? 0;
         $news->news_marquee = $request->news_marquee ?? 0;
+        $news->live_news = $request->news_marquee ?? 0;
         $news->timeline_id = $request->timeline_id;
         $news->save();
+        foreach ($request->category as $cat) {
+            $newsCategory = new NewsCategory();
+            $newsCategory->news_id = $news->id;
+            $newsCategory->category_id = $cat;
+            $newsCategory->save();
+        }
+        if ($request->sub_category) {
+            foreach ($request->sub_category as $subCat) {
+                $newsSubCat = new NewsSubCategory();
+                $newsSubCat->news_id = $news->id;
+                $newsSubCat->sub_category_id = $subCat;
+                $newsSubCat->save();
+            }
+        }
         $newsDetails = new NewsDetails();
         $newsDetails->news_id = $news->id;
         $newsDetails->details = $request->details;
@@ -131,7 +149,7 @@ class NewsController extends Controller
 
         $seo->save();
 
-        return redirect('admin/news/index-by-category/' . $request->category_id . '/' . $request->category_name);
+        return redirect('admin/news/index-by-category/' . $cat);
     }
 
     public function update(Request $request)
@@ -148,6 +166,7 @@ class NewsController extends Controller
             'representative' => 'required',
             'keyword' => 'required',
             'order' => 'required',
+            'category' => 'required',
         ]);
 
         $time = strtotime($request->date);
@@ -155,12 +174,11 @@ class NewsController extends Controller
         $news = News::find($request->id);
         $news->title = $request->title;
         $news->sort_description = $request->sort_description;
-        $news->category_id = $request->category_id;
-        $news->sub_category_id = $request->sub_category_id;
         $news->order = $request->order;
         $news->type = $request->type;
         $news->latest = $request->latest ?? 0;
         $news->news_marquee = $request->news_marquee ?? 0;
+        $news->live_news = $request->news_marquee ?? 0;
         $news->timeline_id = $request->timeline_id;
         if ($request->hasFile('image')) {
             $imagePath = $this->_helepr->imageUpload($request->file('image'), $newformat);
@@ -168,6 +186,22 @@ class NewsController extends Controller
         }
         $news->date = $request->date;
         $news->save();
+        DB::statement('delete from news_categories where news_id = ' . $request->id . '');
+        DB::statement('delete from news_sub_categories where news_id = ' . $request->id . '');
+        foreach ($request->category as $cat) {
+            $newsCategory = new NewsCategory();
+            $newsCategory->news_id = $news->id;
+            $newsCategory->category_id = $cat;
+            $newsCategory->save();
+        }
+        if ($request->sub_category) {
+            foreach ($request->sub_category as $subCat) {
+                $newsSubCat = new NewsSubCategory();
+                $newsSubCat->news_id = $news->id;
+                $newsSubCat->sub_category_id = $subCat;
+                $newsSubCat->save();
+            }
+        }
         $newsDetails = NewsDetails::where('news_id', $request->id)->first();
         $newsDetails->details = $request->details;
         $newsDetails->ticker = $request->ticker;
@@ -210,7 +244,7 @@ class NewsController extends Controller
         }
         $seo->save();
 
-        return redirect('admin/news/index-by-category/' . $request->category_id . '/' . $request->categoryName);
+        return redirect('admin/news/index-by-category/' . $cat);
     }
 
     public function publish($newsId)
@@ -248,20 +282,23 @@ class NewsController extends Controller
 
     public function createByCategory($categoryId, $categoryName)
     {
+        $categories = Category::get();
         $timelines = Timeline::orderBy('id', 'desc')->get();
         $keyWords = Keyword::get();
         $divisions = $this->_helepr->getDivsions();
-        return view('admin.news.add-by-category.create', compact('categoryId', 'keyWords', 'divisions', 'categoryName', 'timelines'));
+        return view('admin.news.add-by-category.create', compact('categories', 'categoryId', 'keyWords', 'divisions', 'categoryName', 'timelines'));
     }
 
-    public function getList($categoryId, $categoryName)
+    public function getList($categoryId)
     {
         $role = auth()->user()->role;
         if ($role == 'representative') {
-            $news = News::select('news.*')->where('category_id', $categoryId)->orderby('date', 'DESC')->join('publisheds', 'publisheds.news_id', 'news.id')->join('users', 'users.id', 'publisheds.created_by')->where('users.id', auth()->user()->id)->get();
+            $news = News::select('news.*')->orderby('date', 'DESC')->join('news_categories', 'news.id', 'news_categories.news_id')->join('publisheds', 'publisheds.news_id', 'news.id')->join('users', 'users.id', 'publisheds.created_by')->where('news_categories.category_id', $categoryId)->where('users.id', auth()->user()->id)->get();
         } else {
-            $news = News::where('category_id', $categoryId)->orderby('date', 'DESC')->get();
+            $news = News::select('news.*')->join('news_categories', 'news.id', 'news_categories.news_id')->where('news_categories.category_id', $categoryId)->orderby('date', 'DESC')->get();
         }
+
+        $categoryName = Category::where('id', $categoryId)->pluck('name')->first();
 
         return view('admin.news.add-by-category.index', compact('news', 'categoryName', 'categoryId'));
     }
@@ -277,10 +314,13 @@ class NewsController extends Controller
         $categoryId = $news->category_id;
         $role = auth()->user()->role;
         $seo = Seo::where('news_id', $newsId)->first();
+        $categories = Category::get();
+        $newsCategory = NewsCategory::where('news_id', $newsId)->pluck('category_id')->toArray();
+        $newsSubCategory = NewsSubCategory::where('news_id', $newsId)->pluck('sub_category_id')->toArray();
         if ($role == 'representative' && $news->published == 1) {
             abort(403);
         }
-        return view('admin.news.add-by-category.edit', compact('news', 'keyWords', 'divisions', 'newsKeywords', 'categoryName', 'timelines', 'categoryId', 'seo'));
+        return view('admin.news.add-by-category.edit', compact('news', 'keyWords', 'divisions', 'newsKeywords', 'categoryName', 'timelines', 'categoryId', 'seo', 'categories', 'newsCategory', 'newsCategory', 'newsSubCategory'));
     }
 
     public function delete($newsId)
@@ -303,8 +343,11 @@ class NewsController extends Controller
             $keyWords = Keyword::whereIn('id', json_decode($news->details->keyword))->get();
         }
         $keyWords = ['null' => 0];
+        $categories = NewsCategory::where('news_id', $newsId)->get();
+        $subCategories = NewsSubCategory::where('news_id', $newsId)->get();
+        // return response()->json($subCategories);
 
-        return view('admin.news.add-by-category.view', compact('news', 'keyWords'));
+        return view('admin.news.add-by-category.view', compact('news', 'keyWords', 'categories', 'subCategories'));
     }
 
     public function getDistrictByDivId($divisionID)
@@ -344,6 +387,12 @@ class NewsController extends Controller
         $published->save();
 
         return back();
+    }
+
+    public function getListLiveNews()
+    {
+        $news = News::where('live_news',1)->get();
+        return view('admin.news.live-news.index',compact('news'));
     }
 
     public function liveNews($newsId)

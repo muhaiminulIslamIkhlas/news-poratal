@@ -5,6 +5,11 @@
     <link rel="stylesheet" href="{{ asset('assets/plugins/codemirror/theme/monokai.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/simplemde/simplemde.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/select2/css/select2.min.css') }}">
+    <style>
+        .short-height .note-editor{
+            height: 150px;
+        }
+    </style>
 @endsection
 @section('body')
     <div class="container-fluid">
@@ -24,8 +29,30 @@
                     <form id="quickForm" method="post" action="{{ URL('admin/news/store') }}"
                         enctype="multipart/form-data">
                         @csrf
+
                         <div class="card-body">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 style="display: block;">Category</h5>
+                                    <div class="row" style="padding-left: 10px;">
+                                        @foreach ($categories as $cat)
+                                            <div class="form-check" style="margin-right: 10px;">
+                                                <input class="form-check-input category_check" type="checkbox"
+                                                    value=" {{ $cat->id }}" name="category[]" id="latest">
+                                                <label class="form-check-label" for="latest">
+                                                    {{ $cat->name }}
+                                                </label>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                    <h5 style="display: block; margin-top:20px;">Sub Category</h5>
+                                    <div class="row" id="sub_category_new" style="padding-left: 10px;">
+
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row">
+
                                 <div class="col-8">
                                     <div class="form-group">
                                         <label for="title">Title</label>
@@ -38,8 +65,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="sort_description">Sort Description</label>
-                                        <textarea id="sort_description"
-                                            name="sort_description">Place <em>sort</em> <u>description</u> <strong>here</strong></textarea>
+                                        <textarea id="sort_description" name="sort_description">Place <em>sort</em> <u>description</u> <strong>here</strong></textarea>
                                     </div>
                                 </div>
                                 <div class="col-4">
@@ -99,13 +125,6 @@
                                     <input type="hidden" id="category_id" name="category_id" value="{{ $categoryId }}" />
                                     <input type="hidden" id="category_name" name="category_name"
                                         value="{{ $categoryName }}" />
-                                    @if ($categoryId != 18 && $categoryId != 19 && $categoryId != 20)
-                                        <div class="form-group">
-                                            <label for="sub_category_id">Sub Category</label>
-                                            <select name="sub_category_id" id="sub_category_id" class="form-control">
-                                            </select>
-                                        </div>
-                                    @endif
                                     <div class="form-group">
                                         <label for="order">Order</label>
                                         <input type="number" min="1" name="order" class="form-control" id="order"
@@ -141,15 +160,22 @@
                                                 News Marquee
                                             </label>
                                         </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="1" name="live_news"
+                                                id="news_marquee">
+                                            <label class="form-check-label" for="news_marquee">
+                                                Live News
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group short-height">
                                 <label for="ticker">Ticker</label>
                                 <textarea id="ticker" name="ticker">Place <em>ticker</em> <strong>here</strong></textarea>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group short-height">
                                 <label for="ticker">Shoulder</label>
                                 <textarea id="shoulder" name="shoulder">Place <em>shoulder</em> <strong>here</strong></textarea>
                             </div>
@@ -314,5 +340,38 @@
         $('#ticker').summernote()
         $('#shoulder').summernote()
         $('.select2').select2()
+
+        $('.category_check').on('change', function() {
+            var arr = $('.category_check:checked').map(function() {
+                return this.value;
+            }).get();
+
+            $.ajax({
+                url: '{{ URL('admin/news/subcategory/get-sub-category-post/') }}',
+                type: "POST",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    data: JSON.stringify(arr)
+                },
+                dataType: "json",
+                success: function(data) {
+                    if (data) {
+                        $('#sub_category_new').empty();
+                        console.log(data)
+                        $.each(data, function(key, item) {
+                            console.log(item)
+                            $('#sub_category_new').append(
+                                '<div class="form-check" style="margin-right: 10px;"><input class="form-check-input category_check" type="checkbox"value="' +
+                                item.id +
+                                '" name="sub_category[]" id="latest"><label class="form-check-label">' +
+                                item.name + '</label></div>'
+                            );
+                        });
+                    } else {
+                        $('#sub_category_id').empty();
+                    }
+                }
+            });
+        })
     </script>
 @endsection

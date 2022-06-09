@@ -14,7 +14,7 @@ class LiveNewsController extends Controller
 
     public function getAllLiveNews($limit,$skip = 0)
     {
-        $news = News::where('published',1)->where('category_id', self::LIVE_NEWS)->orderBy('order', 'asc')->skip($skip)->take($limit)->get();
+        $news = News::where('published',1)->where('live_news', 1)->orderBy('order', 'asc')->skip($skip)->take($limit)->get();
         return response($news);
     }
 

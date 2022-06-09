@@ -16,7 +16,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">{{ $categoryName }}</h3>
+                        <h3 class="card-title">Live News</h3>
                     </div>
                     <div class="p-3">
                         <table id="categorylist" class="table table-bordered table-striped">
@@ -25,9 +25,6 @@
                                     <th>Title</th>
                                     <th>Sort Description</th>
                                     <th>Order</th>
-                                    @if ($categoryId != 18 && $categoryId != 19)
-                                        <th>Type</th>
-                                    @endif
                                     <th>Date and Time</th>
                                     <th>Published</th>
                                     <th>Action</th>
@@ -39,9 +36,6 @@
                                         <td>{{ $item->id }}</td>
                                         <td>{!! $item->sort_description !!}</td>
                                         <td>{{ $item->order }}</td>
-                                        @if ($categoryId != 18 && $categoryId != 19)
-                                            <td>{{ $item->type }}</td>
-                                        @endif
                                         <td>{{ $item->date }}</td>
                                         <td>
                                             @if ($item->published)
@@ -54,9 +48,6 @@
                                             <a class="btn btn-primary mt-3"
                                                 href="{{ Url('/admin/news/view', $item->id) }}"><i
                                                     class="fas fa-folder"></i> View</a>
-                                            <a class="btn btn-success mt-3"
-                                                href="{{ Url('/admin/news/edit/' . $item->id . '/' . $categoryName) }}"><i
-                                                    class="fas fa-edit"></i> Edit</a>
                                             <a class="btn btn-danger mt-3"
                                                 href="{{ Url('/admin/news/delete', $item->id) }}"><i
                                                     class="fas fa-trash"></i> Delete</a>
@@ -76,11 +67,9 @@
                                             @if ($item->proofreader == 2)
                                                 <a class="btn btn-success mt-3">Complete Proofreader</a></a>
                                             @endif
-                                            @if ($categoryId == 19)
                                                 <a class="btn btn-success mt-3"
                                                     href="{{ Url('/admin/news/live-index', $item->id) }}"><i
                                                         class="fa fa-life-ring" aria-hidden="true"></i> Live</a></a>
-                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach

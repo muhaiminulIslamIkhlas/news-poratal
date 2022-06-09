@@ -76,6 +76,13 @@ class Subcategory extends Controller
         return response()->json($subCategory);
     }
 
+    public function getSubCategoryByJson(Request $request)
+    {
+        $subCategory = SubcategoryModel::whereIn('category_id', json_decode($request->data))->get();
+        return response()->json($subCategory);
+        // return response()->json($request->data);
+    }
+
     public function visible($id)
     {
         $subCategory = SubcategoryModel::where('id', $id)->first();

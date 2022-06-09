@@ -27,6 +27,29 @@
                         <input type="hidden" name="id" value="{{ $news->id }}" />
                         <input type="hidden" name="categoryName" value="{{ $categoryName }}" />
                         <div class="card-body">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 style="display: block;">Category</h5>
+                                    <div class="row" style="padding-left: 10px;">
+                                        @foreach ($categories as $cat)
+                                            <div class="form-check" style="margin-right: 10px;">
+                                                <input class="form-check-input category_check" type="checkbox"
+                                                    value=" {{ $cat->id }}" name="category[]" id="latest"
+                                                    <?php if (in_array($cat->id, $newsCategory)) {
+                                                        echo 'checked';
+                                                    } ?>>
+                                                <label class="form-check-label" for="latest">
+                                                    {{ $cat->name }}
+                                                </label>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                    <h5 style="display: block; margin-top:20px;">Sub Category</h5>
+                                    <div class="row" id="sub_category_new" style="padding-left: 10px;">
+
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-8">
                                     <div class="form-group">
@@ -108,6 +131,15 @@
                                                 News Marquee
                                             </label>
                                         </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="1" name="live_news" <?php if ($news->live_news) {
+                                                echo 'checked';
+                                            } ?>
+                                                id="news_marquee">
+                                            <label class="form-check-label" for="news_marquee">
+                                                Live News
+                                            </label>
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="image">Image</label>
@@ -116,7 +148,7 @@
                                     <input type="hidden" id="category_id" name="category_id"
                                         value="{{ $news->category_id }}" />
                                     {{-- <input type="hidden" id="category_name" name="category_name" value="{{ $categoryName }}" /> --}}
-                                    @if ($categoryId != 18 && $categoryId != 19 && $categoryId != 20)
+                                    {{-- @if ($categoryId != 18 && $categoryId != 19 && $categoryId != 20)
                                         <div class="form-group">
                                             <label for="sub_category_id">Sub Category</label>
                                             <select name="sub_category_id" id="sub_category_id" class="form-control">
@@ -127,7 +159,7 @@
                                                 @endif
                                             </select>
                                         </div>
-                                    @endif
+                                    @endif --}}
                                     @if ($categoryId == 18 || $categoryId == 19)
                                         <input type="hidden" name="type" value="general" />
                                     @endif
@@ -259,41 +291,6 @@
     <script src="{{ asset('assets/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
 
     <script>
-        var jk = 0;
-        $('#sub_category_id').on('click', function() {
-            if (jk < 1) {
-                let categoryID = $('#category_id').val();
-                if (categoryID) {
-                    $.ajax({
-                        url: '{{ URL('admin/news/subcategory/get-sub-category/') }}' + '/' + categoryID,
-                        type: "GET",
-                        data: {
-                            "_token": "{{ csrf_token() }}"
-                        },
-                        dataType: "json",
-                        success: function(data) {
-                            if (data) {
-                                $('#sub_category_id').empty();
-                                $('#sub_category_id').append(
-                                    '<option value="">Choose Sub-Category</option>');
-                                $.each(data, function(key, item) {
-                                    $('select[name="sub_category_id"]').append(
-                                        '<option value="' +
-                                        item.id + '">' +
-                                        item.name + '</option>');
-                                });
-                            } else {
-                                $('#sub_category_id').empty();
-                            }
-                        }
-                    });
-                    jk += 1;
-                } else {
-                    $('#sub_category_id').empty();
-                }
-            }
-        });
-
         var division = $('#division').val();
         var district = $('#disVal').val();
         var upozilla = $('#upoVal').val();
@@ -381,5 +378,83 @@
         $('#ticker').summernote()
         $('#shoulder').summernote()
         $('.select2').select2()
+        let newsSub = {!! json_encode($newsSubCategory) !!}
+        console.log(newsSub);
+        $('.category_check').on('change', function() {
+            var arr = $('.category_check:checked').map(function() {
+                return this.value;
+            }).get();
+
+            $.ajax({
+                url: '{{ URL('admin/news/subcategory/get-sub-category-post/') }}',
+                type: "POST",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    data: JSON.stringify(arr)
+                },
+                dataType: "json",
+                success: function(data) {
+                    if (data) {
+                        $('#sub_category_new').empty();
+                        // console.log(data)
+                        $.each(data, function(key, item) {
+                            console.log(item)
+                            $('#sub_category_new').append(
+                                '<div class="form-check sub_category"  style="margin-right: 10px;"><input id="' +
+                                item.id +
+                                '" class="form-check-input category_check" type="checkbox" value="' +
+                                item.id +
+                                '" name="sub_category[]"><label class="form-check-label">' +
+                                item.name + '</label></div>'
+                            );
+                        });
+                        $.each(newsSub, function(k, i) {
+                            $('#' + i).attr('checked', 'checked');
+                        })
+
+                    } else {
+                        $('#sub_category_id').empty();
+                    }
+                }
+            });
+        })
+
+        var arr = $('.category_check:checked').map(function() {
+            return this.value;
+        }).get();
+
+        $.ajax({
+            url: '{{ URL('admin/news/subcategory/get-sub-category-post/') }}',
+            type: "POST",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                data: JSON.stringify(arr)
+            },
+            dataType: "json",
+            success: function(data) {
+                if (data) {
+                    $('#sub_category_new').empty();
+                    console.log(data)
+                    $.each(data, function(key, item) {
+                        // console.log(item)
+                        $('#sub_category_new').append(
+                            '<div class="form-check sub_category"  style="margin-right: 10px;"><input id="' +
+                            item.id +
+                            '" class="form-check-input category_check" type="checkbox" value="' +
+                            item.id +
+                            '" name="sub_category[]"><label class="form-check-label">' +
+                            item.name + '</label></div>'
+                        );
+                    });
+
+                    $.each(newsSub, function(k, i) {
+                        // console.log(i);
+                        $('#' + i).attr('checked', 'checked');
+                    })
+                } else {
+                    $('#sub_category_id').empty();
+                }
+            }
+        });
     </script>
 @endsection

@@ -34,6 +34,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
         Route::get('proofreader/submit/{newsId}', [\App\Http\Controllers\NewsController::class, 'submitProofreader']);
         Route::get('get-district/{divisionID}', [\App\Http\Controllers\NewsController::class, 'getDistrictByDivId']);
         Route::get('get-upozilla/{districtID}', [\App\Http\Controllers\NewsController::class, 'getUpozillaByDisId']);
+        Route::get('live-news/list', [\App\Http\Controllers\NewsController::class, 'getListLiveNews']);
         Route::get('live-index/{newsId}', [\App\Http\Controllers\NewsController::class, 'liveNews']);
         Route::post('live-index/store', [\App\Http\Controllers\NewsController::class, 'liveNewsStore']);
         Route::get('live-news/edit/{newsId}', [\App\Http\Controllers\NewsController::class, 'liveNewsEdit']);
@@ -41,7 +42,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
         Route::post('live-news/update', [\App\Http\Controllers\NewsController::class, 'liveNewsUpdate']);
 
         Route::get('create-by-category/{categoryId}/{categoryName}', [\App\Http\Controllers\NewsController::class, 'createByCategory']);
-        Route::get('index-by-category/{categoryId}/{categoryName}', [\App\Http\Controllers\NewsController::class, 'getList']);
+        Route::get('index-by-category/{categoryId}', [\App\Http\Controllers\NewsController::class, 'getList']);
         Route::get('delete/{newsId}/', [\App\Http\Controllers\NewsController::class, 'delete']);
         Route::get('edit/{newsId}/{categoryName}', [\App\Http\Controllers\NewsController::class, 'edit']);
         Route::get('view/{newsId}/', [\App\Http\Controllers\NewsController::class, 'view']);
@@ -68,6 +69,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
             Route::post('update', [\App\Http\Controllers\Subcategory::class, 'update']);
             Route::get('delete/{id}', [\App\Http\Controllers\Subcategory::class, 'delete']);
             Route::get('get-sub-category/{categoryId}', [\App\Http\Controllers\Subcategory::class, 'getSubCategory']);
+            Route::post('get-sub-category-post/', [\App\Http\Controllers\Subcategory::class, 'getSubCategoryByJson']);
             Route::get('visible/{id}', [\App\Http\Controllers\Subcategory::class, 'visible']);
             Route::get('invisible/{id}', [\App\Http\Controllers\Subcategory::class, 'invisible']);
         });

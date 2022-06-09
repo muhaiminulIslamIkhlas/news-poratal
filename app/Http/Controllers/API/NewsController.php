@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Latest;
 use App\Models\News;
+use App\Models\NewsCategory;
+use App\Models\NewsSubCategory;
 use App\Models\Subcategory;
 use Illuminate\Http\Request;
 
@@ -65,20 +67,63 @@ class NewsController extends Controller
         }
     }
 
+    public function newsById($id)
+    {
+        $news = News::find($id);
+        $categories = NewsCategory::join('categories', 'categories.id', 'news_categories.category_id')->where('news_categories.news_id', $id)->select('categories.id', 'categories.name')->get();
+        $subCategories = NewsSubCategory::join('subcategories', 'news_sub_categories.sub_category_id', 'subcategories.id')->where('news_sub_categories.news_id', $id)->select('subcategories.id', 'subcategories.name')->get();
+        $this->increaseCount($id);
+        $keyWords = [];
+        foreach ($news->keywordList as $item) {
+            $keyWords[] = [
+                'id' => $item->keywordItem->id,
+                'name' => $item->keywordItem->name,
+            ];
+        }
+        return [
+            'news' => [
+                'id' => $news->id,
+                'title' => $news->title,
+                'sort_description' => $news->sort_description,
+                'order' => $news->order,
+                'category' => $categories,
+                'sub_category' => $subCategories,
+                'date' => $news->date,
+                'image' => $news->image,
+                'type' => $news->type,
+                'details' => $news->details->details,
+                'ticker' => $news->details->ticker,
+                'shoulder' => $news->details->shoulder,
+                'representative' => $news->details->representative,
+                'video_link' => $news->details->video_link,
+                'google_drive_link' => $news->details->google_drive_link,
+                'audio_link' => $news->details->audio_link,
+                'keyword' => $keyWords,
+                'timeline_id' => $news->timeline_id,
+            ]
+        ];
+    }
+
     public function getNews($id): \Illuminate\Http\JsonResponse
     {
-        $news = News::find($id)->formatDetails();
+
         $this->increaseCount($id);
+        $news = $this->newsById($id);
         return response()->json($news);
     }
 
     public function getAllNewsByCategory($categoryId, $limit, $skip)
     {
-        $news = News::where('published', 1)->where('category_id', $categoryId)
+        $newsIds = News::where('published', 1)->join('news_categories', 'news_categories.news_id', 'news.id')
+            ->where('news_categories.category_id', $categoryId)
+            ->select('news.id')
             ->skip($skip)
             ->take($limit)
-            ->get()
-            ->map->formatDetails();
+            ->get();
+        $news = [];
+        foreach ($newsIds as $id) {
+            $news[] = $this->newsById($id->id);
+        }
 
         $category = Category::find($categoryId);
         return response()->json([
@@ -87,13 +132,20 @@ class NewsController extends Controller
         ]);
     }
 
-    public function getAllNewsBySubCategory($subCategoryId, $limit,$skip)
+    public function getAllNewsBySubCategory($subCategoryId, $limit, $skip)
     {
-        $news = News::where('published', 1)->where('sub_category_id', $subCategoryId)
+        $newsIds = News::where('published', 1)
+            ->join('news_sub_categories', 'news_sub_categories.news_id', 'news.id')
+            ->where('news_sub_categories.sub_category_id', $subCategoryId)
+            ->select('news.id')
             ->skip($skip)
             ->take($limit)
-            ->get()
-            ->map->formatDetails();
+            ->get();
+
+        $news = [];
+        foreach ($newsIds as $id) {
+            $news[] = $this->newsById($id->id);
+        }
 
         $subCategory = Subcategory::find($subCategoryId);
         return response()->json([
