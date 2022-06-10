@@ -114,7 +114,6 @@ $category = DB::table('categories')
                         </a>
                         <ul class="nav nav-treeview">
                             @foreach ($category as $item)
-                                @if ($item->id != 18 && $item->id != 20)
                                     <li class="nav-item">
                                         <a href="#" class="nav-link">
                                             <i class="far fa-file-alt"></i>
@@ -140,7 +139,6 @@ $category = DB::table('categories')
                                             </li>
                                         </ul>
                                     </li>
-                                @endif
                             @endforeach
                         </ul>
                     </li>
@@ -184,12 +182,12 @@ $category = DB::table('categories')
                                     <p>List</p>
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a href="{{ URL('admin/news/create-by-category/19/Live') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Create New</p>
                                 </a>
-                            </li>
+                            </li> --}}
                         </ul>
                     </li>
                     <li class="nav-header">Keyword</li>

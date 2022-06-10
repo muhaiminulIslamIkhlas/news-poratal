@@ -76,18 +76,16 @@
                                     </div>
 
                                     <div class="form-group">
-                                        @if ($categoryId != 20)
-                                            <label for="date">Timeline</label>
-                                            <select class="form-control" name="timeline_id">
-                                                <option value="">--Select one--</option>
-                                                @foreach ($timelines as $timeline)
-                                                    <option value="{{ $timeline->id }}" <?php if ($news->timeline_id == $timeline->id) {
-                                                        echo 'selected';
-                                                    } ?>>
-                                                        {{ $timeline->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        @endif
+                                        <label for="date">Timeline</label>
+                                        <select class="form-control" name="timeline_id">
+                                            <option value="">--Select one--</option>
+                                            @foreach ($timelines as $timeline)
+                                                <option value="{{ $timeline->id }}" <?php if ($news->timeline_id == $timeline->id) {
+                                                    echo 'selected';
+                                                } ?>>
+                                                    {{ $timeline->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="order">Order</label>
@@ -132,10 +130,10 @@
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="1" name="live_news" <?php if ($news->live_news) {
-                                                echo 'checked';
-                                            } ?>
-                                                id="news_marquee">
+                                            <input class="form-check-input" type="checkbox" value="1" name="live_news"
+                                                <?php if ($news->live_news) {
+                                                    echo 'checked';
+                                                } ?> id="news_marquee">
                                             <label class="form-check-label" for="news_marquee">
                                                 Live News
                                             </label>
@@ -160,31 +158,26 @@
                                             </select>
                                         </div>
                                     @endif --}}
-                                    @if ($categoryId == 18 || $categoryId == 19)
-                                        <input type="hidden" name="type" value="general" />
-                                    @endif
-                                    @if ($categoryId != 18 && $categoryId != 19)
-                                        <div class="form-group">
-                                            <label for="type">Type</label>
-                                            <select name="type" id="type" class="form-control">
-                                                <option value="general" <?php if ($news->type == 'general') {
-                                                    echo 'selected';
-                                                } ?>>General news</option>
-                                                <option value="lead_news" <?php if ($news->type == 'lead_news') {
-                                                    echo 'selected';
-                                                } ?>>Lead news</option>
-                                                <option value="sub_lead_news" <?php if ($news->type == 'sub_lead_news') {
-                                                    echo 'selected';
-                                                } ?>>Sub lead news</option>
-                                                <option value="second_lead" <?php if ($news->type == 'second_lead') {
-                                                    echo 'selected';
-                                                } ?>>Second lead</option>
-                                                <option value="side_bar_news" <?php if ($news->type == 'side_bar_news') {
-                                                    echo 'selected';
-                                                } ?>>Side bar news</option>
-                                            </select>
-                                        </div>
-                                    @endif
+                                    <div class="form-group">
+                                        <label for="type">Type</label>
+                                        <select name="type" id="type" class="form-control">
+                                            <option value="general" <?php if ($news->type == 'general') {
+                                                echo 'selected';
+                                            } ?>>General news</option>
+                                            <option value="lead_news" <?php if ($news->type == 'lead_news') {
+                                                echo 'selected';
+                                            } ?>>Lead news</option>
+                                            <option value="sub_lead_news" <?php if ($news->type == 'sub_lead_news') {
+                                                echo 'selected';
+                                            } ?>>Sub lead news</option>
+                                            <option value="second_lead" <?php if ($news->type == 'second_lead') {
+                                                echo 'selected';
+                                            } ?>>Second lead</option>
+                                            <option value="side_bar_news" <?php if ($news->type == 'side_bar_news') {
+                                                echo 'selected';
+                                            } ?>>Side bar news</option>
+                                        </select>
+                                    </div>
                                     <div class="form-group">
                                         <label for="representative">Representative</label>
                                         <input type="text" value="{{ $news->details->representative }}"

@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{{ asset('assets/plugins/simplemde/simplemde.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/select2/css/select2.min.css') }}">
     <style>
-        .short-height .note-editor{
+        .short-height .note-editor {
             height: 150px;
         }
     </style>
@@ -74,36 +74,29 @@
                                         <input type="datetime-local" name="date" class="form-control" id="date"
                                             placeholder="Date Time" required>
                                     </div>
-                                    @if ($categoryId == 18 || $categoryId == 19)
-                                        <input type="hidden" name="type" value="general" />
-                                    @endif
-                                    @if ($categoryId != 18 && $categoryId != 19)
-                                        <div class="form-group">
-                                            <label for="type">Type</label>
-                                            <select name="type" id="type" class="form-control">
-                                                <option value="general" selected>General news</option>
-                                                <option value="lead_news">Lead news</option>
-                                                <option value="sub_lead_news">Sub lead news</option>
-                                                <option value="second_lead">Second lead</option>
-                                                <option value="side_bar_news">Side bar news</option>
-                                            </select>
-                                        </div>
-                                    @endif
+                                    <div class="form-group">
+                                        <label for="type">Type</label>
+                                        <select name="type" id="type" class="form-control">
+                                            <option value="general" selected>General news</option>
+                                            <option value="lead_news">Lead news</option>
+                                            <option value="sub_lead_news">Sub lead news</option>
+                                            <option value="second_lead">Second lead</option>
+                                            <option value="side_bar_news">Side bar news</option>
+                                        </select>
+                                    </div>
                                     <div class="form-group">
                                         <label for="image">Image</label>
                                         <input type="file" class="d-block" name="image" id="image" required />
                                     </div>
                                     <div class="form-group">
-                                        @if ($categoryId != 20)
-                                            <label for="date">Timeline</label>
-                                            <select class="form-control" name="timeline_id">
-                                                <option value="">--Select one--</option>
-                                                @foreach ($timelines as $timeline)
-                                                    <option value="{{ $timeline->id }}">{{ $timeline->name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        @endif
+                                        <label for="date">Timeline</label>
+                                        <select class="form-control" name="timeline_id">
+                                            <option value="">--Select one--</option>
+                                            @foreach ($timelines as $timeline)
+                                                <option value="{{ $timeline->id }}">{{ $timeline->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="representative">Representative</label>
