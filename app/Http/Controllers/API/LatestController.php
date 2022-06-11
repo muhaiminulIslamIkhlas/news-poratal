@@ -12,19 +12,18 @@ use Illuminate\Support\Facades\DB;
 
 class LatestController extends Controller
 {
-    protected const LATEST_ID = 18;
     public function getAllSorbadhik($limit, $date = '')
     {
         if ($date) {
             $latest = Latest::select('news_id')->where('date', $date)->orderBy('count', 'DESC')->take($limit)->get();
-            $latestId = $this->mapArray($latest);
+            $latestIds = $this->mapArray($latest);
         } else {
             $date = Date('Y-m-d');
             $latest = Latest::select('news_id')->where('date', $date)->orderBy('count', 'DESC')->take($limit)->get();
-            $latestId = $this->mapArray($latest);
+            $latestIds = $this->mapArray($latest);
         }
 
-        $news = News::where('published', 1)->where('id', $latestId)->get()->map->format();
+        $news = News::where('published', 1)->whereIn('id', $latestIds)->get()->map->format();
 
         return response()->json($news);
     }
