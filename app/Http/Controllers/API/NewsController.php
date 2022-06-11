@@ -29,26 +29,35 @@ class NewsController extends Controller
     {
         $key = 'category_id';
         if ($sub) {
-            $key = 'sub_category_id';
-            $news = News::where('published', 1)
-                ->where($key, $categoryId)
+            $newsIds = News::where('published', 1)
+                ->join('news_sub_categories', 'news_sub_categories.news_id', 'news.id')
+                ->where('news_sub_categories.sub_category_id', $sub)
                 ->where('type', $type)
-                ->orderBy('order', 'ASC')
+                ->select('news.id')
                 ->skip($skip)
                 ->take($limit)
-                ->get()
-                ->map->format();
+                ->get();
+
+            $news = [];
+            foreach ($newsIds as $id) {
+                $news[] = $this->newsById($id->id);
+            }
+
             return response()->json($news);
         }
-        $news = News::where('published', 1)
-            ->where($key, $categoryId)
-            ->where('sub_category_id', null)
+
+        $newsIds = News::where('published', 1)->join('news_categories', 'news_categories.news_id', 'news.id')
+            ->where('news_categories.category_id', $categoryId)
             ->where('type', $type)
-            ->orderBy('order', 'ASC')
+            ->select('news.id')
             ->skip($skip)
             ->take($limit)
-            ->get()
-            ->map->format();
+            ->get();
+        $news = [];
+        foreach ($newsIds as $id) {
+            $news[] = $this->newsById($id->id);
+        }
+
         return response()->json($news);
     }
 
@@ -80,27 +89,26 @@ class NewsController extends Controller
                 'name' => $item->keywordItem->name,
             ];
         }
+
         return [
-            'news' => [
-                'id' => $news->id,
-                'title' => $news->title,
-                'sort_description' => $news->sort_description,
-                'order' => $news->order,
-                'category' => $categories,
-                'sub_category' => $subCategories,
-                'date' => $news->date,
-                'image' => $news->image,
-                'type' => $news->type,
-                'details' => $news->details->details,
-                'ticker' => $news->details->ticker,
-                'shoulder' => $news->details->shoulder,
-                'representative' => $news->details->representative,
-                'video_link' => $news->details->video_link,
-                'google_drive_link' => $news->details->google_drive_link,
-                'audio_link' => $news->details->audio_link,
-                'keyword' => $keyWords,
-                'timeline_id' => $news->timeline_id,
-            ]
+            'id' => $news->id,
+            'title' => $news->title,
+            'sort_description' => $news->sort_description,
+            'order' => $news->order,
+            'category' => $categories,
+            'sub_category' => $subCategories,
+            'date' => $news->date,
+            'image' => $news->image,
+            'type' => $news->type,
+            'details' => $news->details->details,
+            'ticker' => $news->details->ticker,
+            'shoulder' => $news->details->shoulder,
+            'representative' => $news->details->representative,
+            'video_link' => $news->details->video_link,
+            'google_drive_link' => $news->details->google_drive_link,
+            'audio_link' => $news->details->audio_link,
+            'keyword' => $keyWords,
+            'timeline_id' => $news->timeline_id,
         ];
     }
 
