@@ -41,12 +41,14 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
         Route::get('live-news/delete/{newsId}', [\App\Http\Controllers\NewsController::class, 'liveNewsDelete']);
         Route::post('live-news/update', [\App\Http\Controllers\NewsController::class, 'liveNewsUpdate']);
 
+
         Route::get('create-by-category/{categoryId}/{categoryName}', [\App\Http\Controllers\NewsController::class, 'createByCategory']);
         Route::get('index-by-category/{categoryId}', [\App\Http\Controllers\NewsController::class, 'getList']);
         Route::get('delete/{newsId}/', [\App\Http\Controllers\NewsController::class, 'delete']);
         Route::get('edit/{newsId}/{categoryName}', [\App\Http\Controllers\NewsController::class, 'edit']);
         Route::get('view/{newsId}/', [\App\Http\Controllers\NewsController::class, 'view']);
         Route::get('keyword-by-id/{newsId}/', [\App\Http\Controllers\NewsController::class, 'getKeyWord']);
+        Route::get('get-keyword', [\App\Http\Controllers\Keyword::class, 'getKeyword']);
 
         Route::group(['prefix' => 'category', 'middleware' => 'developer'], function () {
             Route::get('index', [\App\Http\Controllers\Category::class, 'index']);
@@ -177,6 +179,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
         Route::get('delete/{id}', [\App\Http\Controllers\TimelineController::class, 'delete']);
         Route::get('news/{id}', [\App\Http\Controllers\TimelineController::class, 'timelineNews']);
         Route::get('news/remove/{id}', [\App\Http\Controllers\TimelineController::class, 'removeNews']);
+        Route::get('getTimeline/{id?}', [\App\Http\Controllers\TimelineController::class, 'getTimeline']);
     });
 
     Route::group(['prefix' => 'division', 'middleware' => 'developer'], function () {

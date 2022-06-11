@@ -58,4 +58,14 @@ class TimelineController extends Controller
 
         return back();
     }
+
+    public function getTimeline($id='')
+    {
+        $keywordlist = Timeline::orderBy('id', 'desc')
+            ->when($id, function ($q, $id) {
+                return $q->where('id', '!=', $id);
+            })
+            ->take(50)->get();
+        return response()->json($keywordlist);
+    }
 }

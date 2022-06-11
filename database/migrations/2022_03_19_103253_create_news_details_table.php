@@ -17,13 +17,13 @@ class CreateNewsDetailsTable extends Migration
             $table->id();
             $table->foreignId('news_id')->constrained()->onDelete('cascade');
             $table->text('details');
-            $table->text('ticker');
+            $table->text('ticker')->nullable();
             $table->string('representative');
             $table->string('keyword');
             $table->text('video_link')->nullable();
             $table->text('google_drive_link')->nullable();
             $table->text('audio_link')->nullable();
-            $table->text('shoulder');
+            $table->text('shoulder')->nullable();
             $table->timestamps();
         });
 

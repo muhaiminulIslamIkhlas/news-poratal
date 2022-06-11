@@ -77,14 +77,13 @@
 
                                     <div class="form-group">
                                         <label for="date">Timeline</label>
-                                        <select class="form-control" name="timeline_id">
+                                        <select class="form-control" name="timeline_id" id="timeline_id">
                                             <option value="">--Select one--</option>
-                                            @foreach ($timelines as $timeline)
-                                                <option value="{{ $timeline->id }}" <?php if ($news->timeline_id == $timeline->id) {
-                                                    echo 'selected';
-                                                } ?>>
-                                                    {{ $timeline->name }}</option>
-                                            @endforeach
+                                            @if ($timelines)
+                                                <option value="{{ $timelines->id }}" selected>
+                                                    {{ $timelines->name }}
+                                                </option>
+                                            @endif
                                         </select>
                                     </div>
                                     <div class="form-group">
@@ -191,8 +190,7 @@
                                                 multiple="multiple" data-placeholder="Select keyword"
                                                 data-dropdown-css-class="select2-purple" style="width: 100%;">
                                                 @foreach ($keyWords as $keyWord)
-                                                    <option value="{{ $keyWord->id }}"
-                                                        @if (in_array($keyWord->id, $newsKeywords)) selected @endif>
+                                                    <option value="{{ $keyWord->id }}" selected>
                                                         {{ $keyWord->name }}</option>
                                                 @endforeach
                                             </select>
@@ -370,9 +368,38 @@
         $('#details').summernote()
         $('#ticker').summernote()
         $('#shoulder').summernote()
-        $('.select2').select2()
+        $('.select2').select2({
+            ajax: {
+                url: '{{ URL('admin/news/get-keyword/') }}',
+                data: function(params) {
+                    var query = {
+                        search: params.term,
+                        page: params.page || 1
+                    }
+
+                    // Query parameters will be ?search=[term]&page=[page]
+                    return query;
+                },
+                processResults: function(data, params) {
+                    console.log(data)
+                    params.page = params.page || 1;
+                    let resultArray = [];
+
+                    for (let i = 0; i < data.data.length; i++) {
+                        resultArray.push({
+                            'id': data.data[i].id,
+                            'text': data.data[i].name,
+                        })
+                    }
+
+
+                    return {
+                        results: resultArray,
+                    };
+                }
+            }
+        })
         let newsSub = {!! json_encode($newsSubCategory) !!}
-        console.log(newsSub);
         $('.category_check').on('change', function() {
             var arr = $('.category_check:checked').map(function() {
                 return this.value;
@@ -446,6 +473,31 @@
                     })
                 } else {
                     $('#sub_category_id').empty();
+                }
+            }
+        });
+
+        <?php
+        if ($timelines) {
+            $timeLineId = $timelines->id;
+        } else {
+            $timeLineId = '';
+        }
+        ?>
+
+        $.ajax({
+            url: '{{ URL('admin/timeline/getTimeline/' . $timeLineId) }}',
+            type: "GET",
+            dataType: "json",
+            success: function(data) {
+                if (data) {
+                    // $('#timeline_id').empty();
+                    $.each(data, function(key, item) {
+                        $('select[name="timeline_id"]').append('<option value="' + item
+                            .id + '">' + item.name + '</option>');
+                    });
+                } else {
+                    $('#timeline_id').empty();
                 }
             }
         });

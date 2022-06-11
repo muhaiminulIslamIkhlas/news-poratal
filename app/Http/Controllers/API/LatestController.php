@@ -38,9 +38,17 @@ class LatestController extends Controller
         return $mappedArray;
     }
 
-    public function getAllLatest($date, $limit, $skip = 0): \Illuminate\Http\JsonResponse
+    public function getAllLatest($limit, $skip = 0): \Illuminate\Http\JsonResponse
     {
-        $latest = News::where('published', 1)->where(DB::raw('DATE(date)'), $date)->where('latest', 1)->skip($skip)->take($limit)->get()->map->format();
+        $latest = News::where('published', 1)
+            ->where('latest', 1)
+            ->orderBy('date', 'DESC')
+            ->orderBy('order', 'asc')
+            ->where('date', '<', date('Y-m-d H:i:s', strtotime(Date('Y-m-d') . ' +1 day')))
+            ->skip($skip)
+            ->take($limit)
+            ->get()
+            ->map->format();
         return response()->json($latest);
     }
 

@@ -55,9 +55,8 @@ class NewsController extends Controller
     {
         $timelines = Timeline::orderBy('id', 'desc')->get();
         $categories = Category::get();
-        $keyWords = Keyword::get();
         $divisions = $this->_helepr->getDivsions();
-        return view('admin.news.create', compact('categories', 'keyWords', 'divisions', 'timelines'));
+        return view('admin.news.create', compact('categories', 'divisions', 'timelines'));
     }
 
     public function store(Request $request)
@@ -69,7 +68,7 @@ class NewsController extends Controller
             'category_id' => 'required',
             'type' => 'required',
             'details' => 'required',
-            'ticker' => 'required',
+            // 'ticker' => 'required',
             'date' => 'required',
             'representative' => 'required',
             'keyword' => 'required',
@@ -161,7 +160,7 @@ class NewsController extends Controller
             'category_id' => 'required',
             'type' => 'required',
             'details' => 'required',
-            'ticker' => 'required',
+            // 'ticker' => 'required',
             'date' => 'required',
             'representative' => 'required',
             'keyword' => 'required',
@@ -284,9 +283,8 @@ class NewsController extends Controller
     {
         $categories = Category::get();
         $timelines = Timeline::orderBy('id', 'desc')->get();
-        $keyWords = Keyword::get();
         $divisions = $this->_helepr->getDivsions();
-        return view('admin.news.add-by-category.create', compact('categories', 'categoryId', 'keyWords', 'divisions', 'categoryName', 'timelines'));
+        return view('admin.news.add-by-category.create', compact('categories', 'categoryId', 'divisions', 'categoryName', 'timelines'));
     }
 
     public function getList($categoryId)
@@ -305,10 +303,9 @@ class NewsController extends Controller
 
     public function edit($newsId, $categoryName)
     {
-        $timelines = Timeline::orderBy('id', 'desc')->get();
         $newskeyWordJson = NewsDetails::select('keyword')->where('news_id', $newsId)->first();
         $newsKeywords = json_decode($newskeyWordJson->keyword);
-        $keyWords = Keyword::get();
+        $keyWords = Keyword::whereIn('id',$newsKeywords)->get();
         $news = News::find($newsId);
         $divisions = $this->_helepr->getDivsions();
         $categoryId = $news->category_id;
@@ -317,6 +314,7 @@ class NewsController extends Controller
         $categories = Category::get();
         $newsCategory = NewsCategory::where('news_id', $newsId)->pluck('category_id')->toArray();
         $newsSubCategory = NewsSubCategory::where('news_id', $newsId)->pluck('sub_category_id')->toArray();
+        $timelines = Timeline::where('id',$news->timeline_id)->first();
         if ($role == 'representative' && $news->published == 1) {
             abort(403);
         }

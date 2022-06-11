@@ -36,7 +36,7 @@
                             <tbody>
                                 @foreach ($news as $item)
                                     <tr>
-                                        <td>{{ $item->id }}</td>
+                                        <td>{{ $item->title }}</td>
                                         <td>{!! $item->sort_description !!}</td>
                                         <td>{{ $item->order }}</td>
                                         @if ($categoryId != 18 && $categoryId != 19)

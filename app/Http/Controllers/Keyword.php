@@ -15,7 +15,7 @@ class Keyword extends Controller
     {
         $this->_helepr = $helper;
     }
-    
+
     public function index()
     {
         return view('admin.news.keyword.index');
@@ -23,7 +23,7 @@ class Keyword extends Controller
 
     public function indexTrending()
     {
-        $keywordlist = KeywordModel::where('trending',1)->orderBy('id','desc')->get();
+        $keywordlist = KeywordModel::where('trending', 1)->orderBy('id', 'desc')->get();
         return view('admin.trending.index', compact('keywordlist'));
     }
 
@@ -41,7 +41,7 @@ class Keyword extends Controller
 
     public function list()
     {
-        $keywordlist = KeywordModel::orderBy('id','desc')->get();
+        $keywordlist = KeywordModel::orderBy('id', 'desc')->get();
         return view('admin.news.keyword.list', compact('keywordlist'));
     }
 
@@ -95,16 +95,15 @@ class Keyword extends Controller
 
     public function detailsTrending($id)
     {
-        $trndingDetails = TrendingDetails::where('trending_id',$id)->first();
-        return view('admin.trending.details',compact('trndingDetails','id'));
+        $trndingDetails = TrendingDetails::where('trending_id', $id)->first();
+        return view('admin.trending.details', compact('trndingDetails', 'id'));
     }
 
     public function detailsStoreTrending(Request $request)
     {
-        if($request->id)
-        {
+        if ($request->id) {
             $trending = TrendingDetails::find($request->id);
-        }else{
+        } else {
             $trending = new TrendingDetails();
         }
 
@@ -116,5 +115,12 @@ class Keyword extends Controller
         }
         $trending->save();
         return redirect('admin/news/keyword/index-trending');
+    }
+
+    public function getKeyword()
+    {
+        $term = request()->search;
+        $keywordlist = KeywordModel::orderBy('id', 'desc')->where('name', 'like', '%' . $term . '%')->paginate(10);
+        return response()->json($keywordlist);
     }
 }

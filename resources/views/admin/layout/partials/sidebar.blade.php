@@ -9,7 +9,6 @@
         max-height: 50px;
         width: auto;
     }
-
 </style>
 <?php
 $category = DB::table('categories')
@@ -65,7 +64,7 @@ $category = DB::table('categories')
                         </p>
                     </a>
                 </li>
-                
+
                 @if (in_array(auth()->user()->role, ['admin', 'publisher', 'editor', 'desk_reporter']))
                     <li class="nav-item">
                         <a href="#" class="nav-link">
@@ -113,60 +112,41 @@ $category = DB::table('categories')
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ URL('admin/news/create-by-category/1/All') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Create News</p>
+                                </a>
+                            </li>
                             @foreach ($category as $item)
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
-                                            <i class="far fa-file-alt"></i>
-                                            <p>
-                                                {{ $item->name }}
-                                                <i class="right fas fa-angle-left"></i>
-                                            </p>
-                                        </a>
-                                        <ul class="nav nav-treeview">
-                                            <li class="nav-item">
-                                                <a href="{{ URL('admin/news/index-by-category/' . $item->id . '/') }}"
-                                                    class="nav-link">
-                                                    <i class="far fa-circle nav-icon"></i>
-                                                    <p>All </p>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a href="{{ URL('admin/news/create-by-category/' . $item->id . '/' . $item->name) }}"
-                                                    class="nav-link">
-                                                    <i class="far fa-circle nav-icon"></i>
-                                                    <p>Create New</p>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="far fa-file-alt"></i>
+                                        <p>
+                                            {{ $item->name }}
+                                            <i class="right fas fa-angle-left"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        <li class="nav-item">
+                                            <a href="{{ URL('admin/news/index-by-category/' . $item->id . '/') }}"
+                                                class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>All </p>
+                                            </a>
+                                        </li>
+                                        {{-- <li class="nav-item">
+                                            <a href="{{ URL('admin/news/create-by-category/' . $item->id . '/' . $item->name) }}"
+                                                class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Create New</p>
+                                            </a>
+                                        </li> --}}
+                                    </ul>
+                                </li>
                             @endforeach
                         </ul>
                     </li>
-                    {{-- <li class="nav-item ">
-                        <a href="#" class="nav-link">
-                            <i class="far fa-newspaper"></i>
-                            <p>
-                                সর্বশেষ
-                                <i class="right fas fa-angle-left"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{{ URL('admin/news/index-by-category/18/সর্বশেষ') }}"
-                                    class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>List</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ URL('admin/news/create-by-category/18/সর্বশেষ') }}"
-                                    class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Create New</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li> --}}
                     <li class="nav-item ">
                         <a href="#" class="nav-link">
                             <i class="far fa-newspaper"></i>
@@ -182,12 +162,6 @@ $category = DB::table('categories')
                                     <p>List</p>
                                 </a>
                             </li>
-                            {{-- <li class="nav-item">
-                                <a href="{{ URL('admin/news/create-by-category/19/Live') }}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Create New</p>
-                                </a>
-                            </li> --}}
                         </ul>
                     </li>
                     <li class="nav-header">Keyword</li>
@@ -295,7 +269,8 @@ $category = DB::table('categories')
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{ Url('admin/news/create-by-category/20/মতামত') }}" class="nav-link">
+                                <a href="{{ Url('admin/news/create-by-category/20/মতামত') }}"
+                                    class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Add New মতামত</p>
                                 </a>
@@ -390,7 +365,7 @@ $category = DB::table('categories')
                             </p>
                         </a>
                     </li>
-                    
+
                     <li class="nav-item">
                         <a href="{{ url('/admin/news/keyword/index-trending') }}" class="nav-link">
                             <i class="nav-icon fas fa-calendar"></i>

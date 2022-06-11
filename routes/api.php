@@ -72,7 +72,7 @@ Route::get('/get-all-sorbadhik/{limit}/{date?}', [App\Http\Controllers\API\Lates
 /**
  * latest
  */
-Route::get('/get-all-latest/{date}/{limit}/{skip}', [App\Http\Controllers\API\LatestController::class, 'getAllLatest']);
+Route::get('/get-all-latest/{limit}/{skip}', [App\Http\Controllers\API\LatestController::class, 'getAllLatest']);
 
 /**
  * contact

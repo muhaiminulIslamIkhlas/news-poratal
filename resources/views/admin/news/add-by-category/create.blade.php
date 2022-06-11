@@ -90,12 +90,8 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="date">Timeline</label>
-                                        <select class="form-control" name="timeline_id">
+                                        <select class="form-control" id="timeline_id" name="timeline_id">
                                             <option value="">--Select one--</option>
-                                            @foreach ($timelines as $timeline)
-                                                <option value="{{ $timeline->id }}">{{ $timeline->name }}
-                                                </option>
-                                            @endforeach
                                         </select>
                                     </div>
                                     <div class="form-group">
@@ -109,9 +105,6 @@
                                             <select class="select2" name="keyword[]" multiple="multiple"
                                                 data-placeholder="Select keyword" data-dropdown-css-class="select2-purple"
                                                 style="width: 100%;" required>
-                                                @foreach ($keyWords as $keyWord)
-                                                    <option value="{{ $keyWord->id }}">{{ $keyWord->name }}</option>
-                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -166,11 +159,11 @@
 
                             <div class="form-group short-height">
                                 <label for="ticker">Ticker</label>
-                                <textarea id="ticker" name="ticker">Place <em>ticker</em> <strong>here</strong></textarea>
+                                <textarea id="ticker" name="ticker"></textarea>
                             </div>
                             <div class="form-group short-height">
                                 <label for="ticker">Shoulder</label>
-                                <textarea id="shoulder" name="shoulder">Place <em>shoulder</em> <strong>here</strong></textarea>
+                                <textarea id="shoulder" name="shoulder"></textarea>
                             </div>
                             <div class="row">
 
@@ -298,7 +291,23 @@
             }
         })
 
-        upozilla
+        $.ajax({
+            url: '{{ URL('admin/timeline/getTimeline') }}',
+            type: "GET",
+            dataType: "json",
+            success: function(data) {
+                if (data) {
+                    $('#timeline_id').empty();
+                    $('#timeline_id').append('<option value="">Choose timeline</option>');
+                    $.each(data, function(key, item) {
+                        $('select[name="timeline_id"]').append('<option value="' + item
+                            .id + '">' + item.name + '</option>');
+                    });
+                } else {
+                    $('#timeline_id').empty();
+                }
+            }
+        });
 
         $('#district').on('change', function() {
             let districtID = $(this).val();
@@ -332,7 +341,37 @@
         $('#details').summernote()
         $('#ticker').summernote()
         $('#shoulder').summernote()
-        $('.select2').select2()
+        $('.select2').select2({
+            ajax: {
+                url: '{{ URL('admin/news/get-keyword/') }}',
+                data: function(params) {
+                    var query = {
+                        search: params.term,
+                        page: params.page || 1
+                    }
+
+                    // Query parameters will be ?search=[term]&page=[page]
+                    return query;
+                },
+                processResults: function(data, params) {
+                    console.log(data)
+                    params.page = params.page || 1;
+                    let resultArray = [];
+
+                    for (let i = 0; i < data.data.length; i++) {
+                        resultArray.push({
+                            'id': data.data[i].id,
+                            'text': data.data[i].name,
+                        })
+                    }
+
+
+                    return {
+                        results: resultArray,
+                    };
+                }
+            }
+        })
 
         $('.category_check').on('change', function() {
             var arr = $('.category_check:checked').map(function() {
