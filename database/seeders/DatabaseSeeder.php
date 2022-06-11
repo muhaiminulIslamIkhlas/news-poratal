@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             DesignationSeeder::class,
             KeywordSeeder::class,
             DvisionWeSeeder::class,
+            CMSSeeder::class,
         ]);
     }
 }
