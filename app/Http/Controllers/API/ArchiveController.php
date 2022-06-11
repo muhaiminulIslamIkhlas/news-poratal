@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\News;
+use App\Models\NewsCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -19,7 +20,8 @@ class ArchiveController extends Controller
     {
         $news = News::where('published',1)->select('*');
         if($request->category_id){
-            $news->where('category_id', $request->category_id);
+            $newsIds = NewsCategory::where('category_id',$request->category_id)->pluck('news_id')->toArray();
+            $news->whereIn('id', $newsIds);
         }
 
         if($request->startDate && $request->endDate){
