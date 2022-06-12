@@ -305,7 +305,7 @@ class NewsController extends Controller
     {
         $newskeyWordJson = NewsDetails::select('keyword')->where('news_id', $newsId)->first();
         $newsKeywords = json_decode($newskeyWordJson->keyword);
-        $keyWords = Keyword::whereIn('id',$newsKeywords)->get();
+        $keyWords = Keyword::whereIn('id', $newsKeywords)->get();
         $news = News::find($newsId);
         $divisions = $this->_helepr->getDivsions();
         $categoryId = $news->category_id;
@@ -314,7 +314,7 @@ class NewsController extends Controller
         $categories = Category::get();
         $newsCategory = NewsCategory::where('news_id', $newsId)->pluck('category_id')->toArray();
         $newsSubCategory = NewsSubCategory::where('news_id', $newsId)->pluck('sub_category_id')->toArray();
-        $timelines = Timeline::where('id',$news->timeline_id)->first();
+        $timelines = Timeline::where('id', $news->timeline_id)->first();
         if ($role == 'representative' && $news->published == 1) {
             abort(403);
         }
@@ -389,8 +389,8 @@ class NewsController extends Controller
 
     public function getListLiveNews()
     {
-        $news = News::where('live_news',1)->get();
-        return view('admin.news.live-news.index',compact('news'));
+        $news = News::where('live_news', 1)->get();
+        return view('admin.news.live-news.index', compact('news'));
     }
 
     public function liveNews($newsId)
@@ -441,5 +441,32 @@ class NewsController extends Controller
         $liveNews->save();
 
         return redirect('admin/news/live-index/' . $request->news_id);
+    }
+
+    public function orderNews()
+    {
+        $categories = Category::all();
+        return view('admin.news.order-news.order', compact('categories'));
+    }
+
+    public function orderNewsStore(Request $request)
+    {
+        $categories = Category::all();
+        $list = News::where('type', $request->type)
+            ->whereBetween(DB::raw('DATE(date)'), [$request->date, $request->date])
+            ->select('news.id', 'news.date', 'news.type', 'news.title', 'news.order')
+            ->join('news_categories', 'news_categories.news_id', 'news.id')
+            ->where('news_categories.category_id', $request->category_id)->get();
+        return response()->json($list);
+    }
+
+    public function orderUpdate(Request $request)
+    {
+        $news = News::find($request->id);
+        $news->order = $request->order;
+        $news->save();
+        return response()->json([
+            'message' => 'Order updated successfully'
+        ]);
     }
 }

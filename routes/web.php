@@ -42,6 +42,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
         Route::post('live-news/update', [\App\Http\Controllers\NewsController::class, 'liveNewsUpdate']);
 
 
+        /**
+         * order news
+         */
+        Route::get('order-news', [\App\Http\Controllers\NewsController::class, 'orderNews']);
+        Route::post('order-news-store', [\App\Http\Controllers\NewsController::class, 'orderNewsStore']);
+        Route::post('orderUpdate', [\App\Http\Controllers\NewsController::class, 'orderUpdate']);
+
         Route::get('create-by-category/{categoryId}/{categoryName}', [\App\Http\Controllers\NewsController::class, 'createByCategory']);
         Route::get('index-by-category/{categoryId}', [\App\Http\Controllers\NewsController::class, 'getList']);
         Route::get('delete/{newsId}/', [\App\Http\Controllers\NewsController::class, 'delete']);

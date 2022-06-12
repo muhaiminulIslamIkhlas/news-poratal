@@ -14,9 +14,9 @@ class News extends Model
         return $this->hasOne(NewsDetails::class);
     }
 
-    public function category(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function category(): \Illuminate\Database\Eloquent\Relations\hasMany
     {
-        return $this->belongsTo('App\Models\Category', 'category_id');
+        return $this->hasMany('App\Models\NewsCategory', 'news_id');
     }
 
     public function subCategory(): \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -46,7 +46,7 @@ class News extends Model
             'title' => $this->title,
             'sort_description' => $this->sort_description,
             'order' => $this->order,
-            // 'category' => $this->category->name,
+            'category' => $this->category,
             'timeline_id' => $this->timeline_id,
             'image' => $this->image,
             'type' => $this->type,
@@ -68,7 +68,7 @@ class News extends Model
             'title' => $this->title,
             'sort_description' => $this->sort_description,
             'order' => $this->order,
-            // 'category' => $this->category->name,
+            'category' => $this->category,
             // 'sub_category' => $this->subCategory->name ?? '',
             'date' => $this->date,
             'image' => $this->image,
@@ -92,7 +92,7 @@ class News extends Model
             'title' => $this->title,
             'sort_description' => $this->sort_description,
             'order' => $this->order,
-            // 'category' => $this->category->name,
+            'category' => $this->category,
             'timeline_id' => $this->timeline_id,
             'image' => $this->image,
             'type' => $this->type,

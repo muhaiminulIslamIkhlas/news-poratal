@@ -8,11 +8,17 @@ use Illuminate\Http\Request;
 
 class OpinionController extends Controller
 {
-    protected const OPINION_ID = 20;
+    protected const OPINION_ID = 17;
 
     public function getAllOpinion($limit = 10,$skip = 0): \Illuminate\Http\JsonResponse
     {
-        $opinion = News::where('published', 1)->where('category_id', self::OPINION_ID)->skip($skip)->take($limit)->orderBy('order', 'ASC')->get()->map->format();
+        $opinion = News::where('published', 1)
+        ->select('news.*')
+        ->join('news_categories','news.id','news_categories.news_id')
+        ->where('news_categories.category_id', self::OPINION_ID)
+        ->skip($skip)->take($limit)
+        ->orderBy('order', 'ASC')
+        ->get()->map->format();
         return response()->json($opinion);
     }
 

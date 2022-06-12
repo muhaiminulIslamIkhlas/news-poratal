@@ -118,6 +118,12 @@ $category = DB::table('categories')
                                     <p>Create News</p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{ URL('admin/news/order-news') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Ordering News</p>
+                                </a>
+                            </li>
                             @foreach ($category as $item)
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">

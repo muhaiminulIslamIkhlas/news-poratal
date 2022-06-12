@@ -43,7 +43,7 @@
                         <span class="notificationIcon"><i class="fa fa-id-card" aria-hidden="true"></i></span>
                     </div>
                     <div class="notificationValue">
-                        {{$publishedNews}}
+                        {{$totalUser}}
                         <i class="fa fa-line-chart"></i>
                     </div>
                 </div>
