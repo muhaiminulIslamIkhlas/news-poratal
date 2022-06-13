@@ -459,7 +459,7 @@ class NewsController extends Controller
             })
             ->select('news.id', 'news.date', 'news.type', 'news.title', 'news.order')
             ->join('news_categories', 'news_categories.news_id', 'news.id')
-            ->where('news_categories.category_id', $request->category_id)->get();
+            ->where('news_categories.category_id', $request->category_id)->take(150)->get();
         return response()->json($list);
     }
 
