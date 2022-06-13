@@ -48,7 +48,7 @@
                                                 href="{{ Url('/admin/news/view', $item->id) }}"><i
                                                     class="fas fa-folder"></i> View</a>
                                             <a class="btn btn-info mt-3"
-                                                href="{{ Url('/admin/news/edit/' . $item->id . '/' .$item->category->name ) }}"><i
+                                                href="{{ Url('/admin/news/edit/' . $item->id . '/' ) }}"><i
                                                     class="fas fa-edit"></i> Edit</a>
                                                     <a class="btn btn-success mt-3"
                                                 href="{{ Url('/admin/news/proofreader/submit',$item->id ) }}"><i

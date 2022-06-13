@@ -5,6 +5,11 @@
     <link rel="stylesheet" href="{{ asset('assets/plugins/codemirror/theme/monokai.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/simplemde/simplemde.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/select2/css/select2.min.css') }}">
+    <style>
+        .short-height .note-editor {
+            height: 150px;
+        }
+    </style>
 @endsection
 @section('body')
     <div class="container-fluid">
@@ -34,11 +39,11 @@
                                         @foreach ($categories as $cat)
                                             <div class="form-check" style="margin-right: 10px;">
                                                 <input class="form-check-input category_check" type="checkbox"
-                                                    value=" {{ $cat->id }}" name="category[]" id="latest"
-                                                    <?php if (in_array($cat->id, $newsCategory)) {
+                                                    value=" {{ $cat->id }}" name="category[]"
+                                                    id="cate_{{ $cat->id }}" <?php if (in_array($cat->id, $newsCategory)) {
                                                         echo 'checked';
                                                     } ?>>
-                                                <label class="form-check-label" for="latest">
+                                                <label class="form-check-label" for="cate_{{ $cat->id }}">
                                                     {{ $cat->name }}
                                                 </label>
                                             </div>
@@ -114,12 +119,12 @@
                                             <input class="form-check-input" type="checkbox" <?php if ($news->latest) {
                                                 echo 'checked';
                                             } ?> value="1"
-                                                name="latest" id="latest">
-                                            <label class="form-check-label" for="latest">
+                                                name="latest" id="latest_check">
+                                            <label class="form-check-label" for="latest_check">
                                                 Latest news
                                             </label>
                                         </div>
-                                        <div class="form-check">
+                                        <div class="form-check" style="margin-right: 10px;">
                                             <input class="form-check-input" type="checkbox" value="1" <?php if ($news->news_marquee) {
                                                 echo 'checked';
                                             } ?>
@@ -132,8 +137,8 @@
                                             <input class="form-check-input" type="checkbox" value="1" name="live_news"
                                                 <?php if ($news->live_news) {
                                                     echo 'checked';
-                                                } ?> id="news_marquee">
-                                            <label class="form-check-label" for="news_marquee">
+                                                } ?> id="live_news">
+                                            <label class="form-check-label" for="live_news">
                                                 Live News
                                             </label>
                                         </div>
@@ -144,19 +149,6 @@
                                     </div>
                                     <input type="hidden" id="category_id" name="category_id"
                                         value="{{ $news->category_id }}" />
-                                    {{-- <input type="hidden" id="category_name" name="category_name" value="{{ $categoryName }}" /> --}}
-                                    {{-- @if ($categoryId != 18 && $categoryId != 19 && $categoryId != 20)
-                                        <div class="form-group">
-                                            <label for="sub_category_id">Sub Category</label>
-                                            <select name="sub_category_id" id="sub_category_id" class="form-control">
-                                                @if ($news->sub_category_id)
-                                                    <option value="{{ $news->sub_category_id }}">
-                                                        {{ $news->subCategory->name }}
-                                                    </option>
-                                                @endif
-                                            </select>
-                                        </div>
-                                    @endif --}}
                                     <div class="form-group">
                                         <label for="type">Type</label>
                                         <select name="type" id="type" class="form-control">
@@ -198,11 +190,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group short-height">
                                 <label for="ticker">Ticker</label>
                                 <textarea id="ticker" name="ticker">{!! $news->details->ticker !!}</textarea>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group short-height">
                                 <label for="ticker">Shoulder</label>
                                 <textarea id="shoulder" name="shoulder">{!! $news->details->shoulder !!}</textarea>
                             </div>
@@ -236,7 +228,8 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="card">
+                            <p class="btn btn-info" id="seo_conf">Show SEO SETTINGS</p>
+                            <div class="card seo_card" style="display: none">
                                 <div class="card-body">
                                     <p>SEO</p>
                                     <div class="form-group">
@@ -282,6 +275,9 @@
     <script src="{{ asset('assets/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
 
     <script>
+        $('#seo_conf').on('click', function() {
+            $('.seo_card').toggle();
+        })
         var division = $('#division').val();
         var district = $('#disVal').val();
         var upozilla = $('#upoVal').val();

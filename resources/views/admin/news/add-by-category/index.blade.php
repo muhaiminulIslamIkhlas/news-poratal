@@ -9,7 +9,6 @@
         td {
             padding-top: 0 !important;
         }
-
     </style>
     <div class="container-fluid">
         <div class="row">
@@ -23,7 +22,6 @@
                             <thead>
                                 <tr>
                                     <th>Title</th>
-                                    <th>Sort Description</th>
                                     <th>Order</th>
                                     @if ($categoryId != 18 && $categoryId != 19)
                                         <th>Type</th>
@@ -37,7 +35,6 @@
                                 @foreach ($news as $item)
                                     <tr>
                                         <td>{{ $item->title }}</td>
-                                        <td>{!! $item->sort_description !!}</td>
                                         <td>{{ $item->order }}</td>
                                         @if ($categoryId != 18 && $categoryId != 19)
                                             <td>{{ $item->type }}</td>

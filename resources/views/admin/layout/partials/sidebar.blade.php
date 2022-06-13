@@ -119,6 +119,12 @@ $category = DB::table('categories')
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a href="{{ URL('admin/news/index') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>All News</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="{{ URL('admin/news/order-news') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Ordering News</p>

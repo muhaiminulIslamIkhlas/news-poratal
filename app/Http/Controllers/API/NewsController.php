@@ -100,7 +100,7 @@ class NewsController extends Controller
         return [
             'id' => $news->id,
             'title' => $news->title,
-            // 'sort_description' => $news->sort_description,
+            'sort_description' => $news->sort_description,
             'order' => $news->order,
             'category' => $categories,
             'sub_category' => $subCategories,

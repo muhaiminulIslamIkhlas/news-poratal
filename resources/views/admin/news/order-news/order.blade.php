@@ -15,7 +15,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="form" style="padding: 20px;">
-                        <form method="POST" id="order-form">
+                        <form id="order-form">
                             @csrf
                             <div class="row">
                                 <div class="col-4">
@@ -37,7 +37,7 @@
                                     </select>
                                 </div>
                                 <div class="col-2">
-                                    <input class="form-control" type="date" name="date" id="date" required />
+                                    <input class="form-control" type="date" name="date" id="date" />
                                 </div>
                                 <div class="col-2">
                                     <input type="submit" class="btn" value="Submit" />
@@ -82,7 +82,6 @@
     <!-- Page specific script -->
     <script>
         function btn_click(newsId) {
-            console.log(newsId);
             let id = newsId;
             let order = $('#input_' + id).val();
 
@@ -118,14 +117,13 @@
                     date: date,
                 },
                 success: function(response) {
-                    console.log(response);
                     if (response) {
                         $('#list').empty();
                         $.each(response, function(key, item) {
                             $('#list').append('<div class="news-item row">' +
                                 '<div class="col-4">' + item.title + '</div>' +
                                 '<div class="col-2">' + item.type + '</div>' +
-                                '<div class="col-2">' + item.date + '</div>' +
+                                '<div class="col-2">' + item.date + '(Y-m-d)</div>' +
                                 '<div class="col-2">' +
                                 '<input type="text" id="input_' + item.id + '" value="' +
                                 item

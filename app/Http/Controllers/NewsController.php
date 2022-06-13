@@ -47,7 +47,7 @@ class NewsController extends Controller
      */
     public function index()
     {
-        $news = News::orderby('date', 'DESC')->get();
+        $news = News::orderby('date', 'DESC')->take(1000)->get();
         return view('admin.news.index', compact('news'));
     }
 
@@ -291,9 +291,9 @@ class NewsController extends Controller
     {
         $role = auth()->user()->role;
         if ($role == 'representative') {
-            $news = News::select('news.*')->orderby('date', 'DESC')->join('news_categories', 'news.id', 'news_categories.news_id')->join('publisheds', 'publisheds.news_id', 'news.id')->join('users', 'users.id', 'publisheds.created_by')->where('news_categories.category_id', $categoryId)->where('users.id', auth()->user()->id)->get();
+            $news = News::select('news.*')->orderby('date', 'DESC')->join('news_categories', 'news.id', 'news_categories.news_id')->join('publisheds', 'publisheds.news_id', 'news.id')->join('users', 'users.id', 'publisheds.created_by')->where('news_categories.category_id', $categoryId)->where('users.id', auth()->user()->id)->take(1000)->get();
         } else {
-            $news = News::select('news.*')->join('news_categories', 'news.id', 'news_categories.news_id')->where('news_categories.category_id', $categoryId)->orderby('date', 'DESC')->get();
+            $news = News::select('news.*')->join('news_categories', 'news.id', 'news_categories.news_id')->where('news_categories.category_id', $categoryId)->orderby('date', 'DESC')->take(1000)->get();
         }
 
         $categoryName = Category::where('id', $categoryId)->pluck('name')->first();
@@ -301,7 +301,7 @@ class NewsController extends Controller
         return view('admin.news.add-by-category.index', compact('news', 'categoryName', 'categoryId'));
     }
 
-    public function edit($newsId, $categoryName)
+    public function edit($newsId, $categoryName = '')
     {
         $newskeyWordJson = NewsDetails::select('keyword')->where('news_id', $newsId)->first();
         $newsKeywords = json_decode($newskeyWordJson->keyword);
@@ -451,9 +451,12 @@ class NewsController extends Controller
 
     public function orderNewsStore(Request $request)
     {
+        $date = $request->date;
         $categories = Category::all();
         $list = News::where('type', $request->type)
-            ->whereBetween(DB::raw('DATE(date)'), [$request->date, $request->date])
+            ->when($request->date, function ($query, $date) {
+                $query->whereBetween(DB::raw('DATE(date)'), [$date, $date]);
+            })
             ->select('news.id', 'news.date', 'news.type', 'news.title', 'news.order')
             ->join('news_categories', 'news_categories.news_id', 'news.id')
             ->where('news_categories.category_id', $request->category_id)->get();
