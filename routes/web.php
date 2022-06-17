@@ -23,6 +23,9 @@ Route::get('access-denied', [\App\Http\Controllers\HomeController::class, 'acces
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::get('/', [\App\Http\Controllers\HomeController::class, 'index']);
+    Route::get('/news-position',function(){
+        return view('admin.news-system.index');
+    });
     Route::group(['prefix' => 'news'], function () {
         Route::get('index', [\App\Http\Controllers\NewsController::class, 'index']);
         Route::get('create', [\App\Http\Controllers\NewsController::class, 'create']);

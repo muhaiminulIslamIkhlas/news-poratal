@@ -68,8 +68,6 @@ class NewsController extends Controller
             'category_id' => 'required',
             'type' => 'required',
             'details' => 'required',
-            // 'ticker' => 'required',
-            // 'date' => 'required',
             'representative' => 'required',
             'keyword' => 'required',
             'order' => 'required',
@@ -160,7 +158,6 @@ class NewsController extends Controller
             'category_id' => 'required',
             'type' => 'required',
             'details' => 'required',
-            // 'ticker' => 'required',
             'date' => 'required',
             'representative' => 'required',
             'keyword' => 'required',
@@ -457,6 +454,7 @@ class NewsController extends Controller
             ->when($request->date, function ($query, $date) {
                 $query->whereBetween(DB::raw('DATE(date)'), [$date, $date]);
             })
+            ->orderBy('news.order','desc')
             ->select('news.id', 'news.date', 'news.type', 'news.title', 'news.order')
             ->join('news_categories', 'news_categories.news_id', 'news.id')
             ->where('news_categories.category_id', $request->category_id)->take(150)->get();
