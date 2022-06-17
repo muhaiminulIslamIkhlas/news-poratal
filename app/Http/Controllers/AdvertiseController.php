@@ -43,6 +43,7 @@ class AdvertiseController extends Controller
             }
         }
         $advertise->type = $request->type;
+        $advertise->image_link = $request->image_link;
         $advertise->save();
         $id = $advertise->id;
         if ($request->active) {

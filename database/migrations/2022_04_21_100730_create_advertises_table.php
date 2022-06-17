@@ -16,6 +16,7 @@ class CreateAdvertisesTable extends Migration
         Schema::create('advertises', function (Blueprint $table) {
             $table->id();
             $table->string('type');
+            $table->string('image_link')->nullable();
             $table->text('content')->nullable();
             $table->string('image')->nullable();
             $table->boolean('status');

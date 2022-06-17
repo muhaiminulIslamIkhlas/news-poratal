@@ -69,7 +69,7 @@ class NewsController extends Controller
             'type' => 'required',
             'details' => 'required',
             // 'ticker' => 'required',
-            'date' => 'required',
+            // 'date' => 'required',
             'representative' => 'required',
             'keyword' => 'required',
             'order' => 'required',
@@ -87,7 +87,7 @@ class NewsController extends Controller
         $news->order = $request->order;
         $news->type = $request->type;
         $news->image = $imagePath;
-        $news->date = $request->date;
+        $news->date = $request->date ? $request->date : date('Y-m-d h:i:s');
         $news->latest = $request->latest ?? 0;
         $news->news_marquee = $request->news_marquee ?? 0;
         $news->live_news = $request->news_marquee ?? 0;

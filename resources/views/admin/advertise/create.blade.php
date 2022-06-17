@@ -157,6 +157,10 @@
                                 <input type="file" class="d-block" name="image" id="image" />
                             </div>
                             <div class="form-group">
+                                <label for="image_link">Image Link</label>
+                                <input type="text" class="form-control" name="image_link" id="image_link" />
+                            </div>
+                            <div class="form-group">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" name="active" value="checked"
                                         id="flexCheckDefault">

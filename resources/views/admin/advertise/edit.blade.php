@@ -56,8 +56,8 @@
                                         </div>
                                         <div class="form-check">
                                             <input class="form-check-input"
-                                                <?= $advertise->type == 'layout_modal_add' ? 'checked' : '' ?> type="radio"
-                                                name="type" id="type_2" value="layout_modal_add">
+                                                <?= $advertise->type == 'layout_modal_add' ? 'checked' : '' ?>
+                                                type="radio" name="type" id="type_2" value="layout_modal_add">
                                             <label class="form-check-label" for="type_2">
                                                 layout modal add
                                             </label>
@@ -65,7 +65,8 @@
                                         <div class="form-check">
                                             <input class="form-check-input"
                                                 <?= $advertise->type == 'layout_fixed_bottom_add' ? 'checked' : '' ?>
-                                                type="radio" name="type" id="type_3" value="layout_fixed_bottom_add">
+                                                type="radio" name="type" id="type_3"
+                                                value="layout_fixed_bottom_add">
                                             <label class="form-check-label" for="type_3">
                                                 layout fixed bottom add
                                             </label>
@@ -89,7 +90,8 @@
                                         <div class="form-check">
                                             <input class="form-check-input"
                                                 <?= $advertise->type == 'home_second_lead_left_add' ? 'checked' : '' ?>
-                                                type="radio" name="type" id="type_6" value="home_second_lead_left_add">
+                                                type="radio" name="type" id="type_6"
+                                                value="home_second_lead_left_add">
                                             <label class="form-check-label" for="type_6">
                                                 home second lead left add
                                             </label>
@@ -115,7 +117,8 @@
                                         <div class="form-check">
                                             <input class="form-check-input"
                                                 <?= $advertise->type == 'single_news_page_right_add' ? 'checked' : '' ?>
-                                                type="radio" name="type" id="type_9" value="single_news_page_right_add">
+                                                type="radio" name="type" id="type_9"
+                                                value="single_news_page_right_add">
                                             <label class="form-check-label" for="type_9">
                                                 single news page right add
                                             </label>
@@ -123,7 +126,8 @@
                                         <div class="form-check">
                                             <input class="form-check-input"
                                                 <?= $advertise->type == 'category_page_right_add' ? 'checked' : '' ?>
-                                                type="radio" name="type" id="type_10" value="category_page_right_add">
+                                                type="radio" name="type" id="type_10"
+                                                value="category_page_right_add">
                                             <label class="form-check-label" for="type_10">
                                                 category page right add
                                             </label>
@@ -131,7 +135,8 @@
                                         <div class="form-check">
                                             <input class="form-check-input"
                                                 <?= $advertise->type == 'loacal_news_right_add' ? 'checked' : '' ?>
-                                                type="radio" name="type" id="type_11" value="loacal_news_right_add">
+                                                type="radio" name="type" id="type_11"
+                                                value="loacal_news_right_add">
                                             <label class="form-check-label" for="type_11">
                                                 loacal news right add
                                             </label>
@@ -170,6 +175,11 @@
                             <div class="form-group">
                                 <label for="image">Image</label>
                                 <input type="file" class="d-block" name="image" id="image" />
+                            </div>
+                            <div class="form-group">
+                                <label for="image_link">Image Link</label>
+                                <input type="text" class="form-control" name="image_link"
+                                    value="{{ $advertise->image_link }}" id="image_link" />
                             </div>
                         </div>
                         <!-- /.card-body -->

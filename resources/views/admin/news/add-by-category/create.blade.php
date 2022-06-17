@@ -73,7 +73,7 @@
                                     <div class="form-group">
                                         <label for="date">Date Time</label>
                                         <input type="datetime-local" name="date" class="form-control" id="date"
-                                            placeholder="Date Time" required>
+                                            placeholder="Date Time">
                                     </div>
                                     <div class="form-group">
                                         <label for="type">Type</label>
