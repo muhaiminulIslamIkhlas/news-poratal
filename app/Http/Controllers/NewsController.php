@@ -47,7 +47,7 @@ class NewsController extends Controller
      */
     public function index()
     {
-        $news = News::orderby('date', 'DESC')->take(1000)->get();
+        $news = News::orderby('date', 'DESC')->take(400)->get();
         return view('admin.news.index', compact('news'));
     }
 
@@ -134,14 +134,16 @@ class NewsController extends Controller
         $publisher->save();
 
         $seo = new Seo();
-        $seo->title = $request->title2;
+        $seo->title = $request->title2 ? $request->title2 : $request->title;
         $seo->news_id = $news->id;
-        $seo->share_title = $request->share_title;
-        $seo->description = $request->description;
+        $seo->share_title = $request->share_title ? $request->share_title : $request->sort_description;
+        $seo->description = $request->description ? $request->description : $request->sort_description;
         $seo->keywords = $request->keywords;
         if ($request->hasFile('page_img')) {
-            $imagePath = $this->_helepr->imageUpload($request->file('page_img'), $newformat);
+            $imagePath = $this->_helepr->imageUpload($request->file('page_img'), $newformat, true);
             $seo->page_img = $imagePath;
+        } else {
+            $seo->page_img = $this->_helepr->imageUpload($request->file('image'), $newformat, true);
         }
 
         $seo->save();
@@ -454,7 +456,7 @@ class NewsController extends Controller
             ->when($request->date, function ($query, $date) {
                 $query->whereBetween(DB::raw('DATE(date)'), [$date, $date]);
             })
-            ->orderBy('news.order','desc')
+            ->orderBy('news.id', 'desc')
             ->select('news.id', 'news.date', 'news.type', 'news.title', 'news.order')
             ->join('news_categories', 'news_categories.news_id', 'news.id')
             ->where('news_categories.category_id', $request->category_id)->take(150)->get();

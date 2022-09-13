@@ -19,11 +19,18 @@ class Helper implements HelperRepositoryInterface
      * @param $date
      * @return string
      */
-    public function imageUpload($image, $date): string
+    public function imageUpload($image, $date, $waterMark = false): string
     {
         $file = $image;
         $ogImage = Image::make($file);
-        $imageName = time() . $file->getClientOriginalName();
+
+        if ($waterMark) {
+            $imageName = time() . "-watermark-" . $file->getClientOriginalName();
+            $ogImage->resize(467, null)->insert('watermark.jpg', 'bottom-right');
+        } else {
+            $imageName = time() . $file->getClientOriginalName();
+        }
+
         $folder = public_path('/images/' . $date . '/');
 
         if (!File::exists($folder)) {

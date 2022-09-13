@@ -152,21 +152,12 @@
                                     <div class="form-group">
                                         <label for="type">Type</label>
                                         <select name="type" id="type" class="form-control">
-                                            <option value="general" <?php if ($news->type == 'general') {
-                                                echo 'selected';
-                                            } ?>>General news</option>
                                             <option value="lead_news" <?php if ($news->type == 'lead_news') {
                                                 echo 'selected';
                                             } ?>>Lead news</option>
-                                            <option value="sub_lead_news" <?php if ($news->type == 'sub_lead_news') {
-                                                echo 'selected';
-                                            } ?>>Sub lead news</option>
                                             <option value="second_lead" <?php if ($news->type == 'second_lead') {
                                                 echo 'selected';
                                             } ?>>Second lead</option>
-                                            <option value="side_bar_news" <?php if ($news->type == 'side_bar_news') {
-                                                echo 'selected';
-                                            } ?>>Side bar news</option>
                                         </select>
                                     </div>
                                     <div class="form-group">

@@ -35,10 +35,12 @@
                                 @foreach ($news as $item)
                                     <tr>
                                         <td>{{ $item->title }}</td>
-                                        <td>{{ $item->details->representative??'' }}</td>
+                                        <td>{{ $item->details->representative ?? '' }}</td>
                                         <td><?php foreach ($item->category as $cat) {?>
-                                            <span class="badge badge-primary" style="margin-right: 20px;"><?= $cat->category->name ?></span>
-                                       <?php } ?></td>
+                                            <span class="badge badge-primary"
+                                                style="margin-right: 20px;"><?= $cat->category->name ?></span>
+                                            <?php } ?>
+                                        </td>
                                         <td>{{ $item->order }}</td>
                                         <td>{{ $item->type }}</td>
                                         <td>{{ $item->date }}</td>
@@ -57,14 +59,24 @@
                                                 href="{{ Url('/admin/news/edit/' . $item->id) }}"><i
                                                     class="fas fa-edit"></i> Edit</a>
                                             <a class="btn btn-danger mt-3"
-                                                href="{{ Url('/admin/news/delete', $item->id) }}"><i
+                                                onclick="event.preventDefault();deleteConfirmation('{{ $item->id }}');"><i
                                                     class="fas fa-trash"></i> Delete</a>
-                                            @if (in_array(auth()->user()->role, ['admin', 'publisher', 'editor', 'desk_reporter']) && $item->published == 0 && $item->proofreader != 1)
+                                            <form id="delete-form-{{ $item->id }}"
+                                                action="{{ Url('/admin/news/delete', $item->id) }}" method="POST"
+                                                class="d-none">
+                                                @method('DELETE')
+                                                @csrf
+                                            </form>
+                                            @if (in_array(auth()->user()->role, ['admin', 'publisher', 'editor', 'desk_reporter']) &&
+                                                $item->published == 0 &&
+                                                $item->proofreader != 1)
                                                 <a class="btn btn-success mt-3"
                                                     href="{{ Url('/admin/news/publish', $item->id) }}"><i
                                                         class="fas fa-eye"></i> Publish</a></a>
                                             @endif
-                                            @if (in_array(auth()->user()->role, ['admin', 'publisher', 'editor', 'desk_reporter']) && $item->published == 0 && $item->proofreader == 0)
+                                            @if (in_array(auth()->user()->role, ['admin', 'publisher', 'editor', 'desk_reporter']) &&
+                                                $item->published == 0 &&
+                                                $item->proofreader == 0)
                                                 <a class="btn btn-info mt-3"
                                                     href="{{ Url('/admin/news/proofreader', $item->id) }}"><i
                                                         class="fas fa-eye"></i> Proofreader</a></a>
@@ -112,6 +124,23 @@
     <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
     <!-- Page specific script -->
     <script>
+        function deleteConfirmation(id) {
+            event.preventDefault();
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('delete-form-' + id).submit();
+                }
+            })
+        }
+        
         $(function() {
             $('#newsList').DataTable({
                 "pageLength": 10,

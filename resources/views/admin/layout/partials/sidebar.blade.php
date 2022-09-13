@@ -510,6 +510,29 @@ $category = DB::table('categories')
                             </li>
                         </ul>
                     </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-at"></i>
+                            <p>
+                                Gallery
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ Url('/admin/gallery/create') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Add New Image</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ Url('/admin/gallery/index') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>View All Images</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                 @endif
                 <li class="nav-item">
                     <a class="nav-link">

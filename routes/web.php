@@ -54,7 +54,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 
         Route::get('create-by-category/{categoryId}/{categoryName}', [\App\Http\Controllers\NewsController::class, 'createByCategory']);
         Route::get('index-by-category/{categoryId}', [\App\Http\Controllers\NewsController::class, 'getList']);
-        Route::get('delete/{newsId}/', [\App\Http\Controllers\NewsController::class, 'delete']);
+        Route::delete('delete/{newsId}/', [\App\Http\Controllers\NewsController::class, 'delete']);
         Route::get('edit/{newsId}/{categoryName?}', [\App\Http\Controllers\NewsController::class, 'edit']);
         Route::get('view/{newsId}/', [\App\Http\Controllers\NewsController::class, 'view']);
         Route::get('keyword-by-id/{newsId}/', [\App\Http\Controllers\NewsController::class, 'getKeyWord']);
@@ -226,6 +226,14 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
         Route::get('active/{id}', [\App\Http\Controllers\AdvertiseController::class, 'makeActive']);
         Route::post('active/{id}', [\App\Http\Controllers\AdvertiseController::class, 'delete']);
     });
+
+    Route::group(['prefix' => 'gallery', 'middleware' => 'developer'], function () {
+        Route::get('index', [\App\Http\Controllers\GalleryController::class, 'index']);
+        Route::get('create', [\App\Http\Controllers\GalleryController::class, 'create']);
+        Route::post('save', [\App\Http\Controllers\GalleryController::class, 'save']);
+    });
 });
+
+URL::forceScheme('https');
 
 require __DIR__ . '/auth.php';

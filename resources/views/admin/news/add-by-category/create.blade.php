@@ -78,11 +78,8 @@
                                     <div class="form-group">
                                         <label for="type">Type</label>
                                         <select name="type" id="type" class="form-control">
-                                            <option value="general" selected>General news</option>
                                             <option value="lead_news">Lead news</option>
-                                            <option value="sub_lead_news">Sub lead news</option>
                                             <option value="second_lead">Second lead</option>
-                                            <option value="side_bar_news">Side bar news</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
@@ -109,18 +106,19 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <input type="hidden" id="category_id" name="category_id" value="{{ $categoryId }}" />
+                                    <input type="hidden" id="category_id" name="category_id"
+                                        value="{{ $categoryId }}" />
                                     <input type="hidden" id="category_name" name="category_name"
                                         value="{{ $categoryName }}" />
                                     <div class="form-group">
                                         <label for="order">Order</label>
-                                        <input type="number" min="1" name="order" class="form-control" id="order"
-                                            placeholder="Enter order" required>
+                                        <input type="number" min="1" name="order" class="form-control"
+                                            id="order" placeholder="Enter order" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="video_link">Video link</label>
-                                        <input type="text" min="1" name="video_link" class="form-control" id="video_link"
-                                            placeholder="Enter link">
+                                        <input type="text" min="1" name="video_link" class="form-control"
+                                            id="video_link" placeholder="Enter link">
                                     </div>
                                     <div class="form-group">
                                         <label for="google_drive_link">Google drive link</label>
@@ -134,22 +132,22 @@
                                     </div>
                                     <div class="row" style="padding-left: 10px;">
                                         <div class="form-check" style="margin-right: 10px;">
-                                            <input class="form-check-input" type="checkbox" value="1" name="latest"
-                                                id="latest_check">
+                                            <input class="form-check-input" type="checkbox" value="1"
+                                                name="latest" id="latest_check">
                                             <label class="form-check-label" for="latest_check">
                                                 Latest news
                                             </label>
                                         </div>
                                         <div class="form-check" style="margin-right: 10px;">
-                                            <input class="form-check-input" type="checkbox" value="1" name="news_marquee"
-                                                id="news_marquee">
+                                            <input class="form-check-input" type="checkbox" value="1"
+                                                name="news_marquee" id="news_marquee">
                                             <label class="form-check-label" for="news_marquee">
                                                 News Marquee
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="1" name="live_news"
-                                                id="live_news">
+                                            <input class="form-check-input" type="checkbox" value="1"
+                                                name="live_news" id="live_news">
                                             <label class="form-check-label" for="live_news">
                                                 Live News
                                             </label>

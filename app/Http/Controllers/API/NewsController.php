@@ -16,7 +16,7 @@ class NewsController extends Controller
 {
     public function getCategory(): \Illuminate\Http\JsonResponse
     {
-        $categories = Category::where('visible',1)->with('subCategories')->orderBy('order', 'ASC')->get();
+        $categories = Category::where('visible', 1)->with('subCategories')->orderBy('order', 'ASC')->get();
         return response()->json([$categories]);
     }
 
@@ -30,17 +30,29 @@ class NewsController extends Controller
     {
         $key = 'category_id';
         if ($sub) {
-            $newsIds = News::where('published', 1)
-                ->join('news_sub_categories', 'news_sub_categories.news_id', 'news.id')
-                ->where('news_sub_categories.sub_category_id', $sub)
-                // ->orderBy('news.date','DESC')
-                ->orderBy('news.order','asc')
-                ->where('news.date', '<', date('Y-m-d H:i:s', strtotime(Date('Y-m-d') . ' +1 day')))
-                ->where('type', $type)
-                ->select('news.id')
-                ->skip($skip)
-                ->take($limit)
-                ->get();
+            if ($categoryId == 1) {
+                $newsIds = News::where('published', 1)
+                    ->join('news_sub_categories', 'news_sub_categories.news_id', 'news.id')
+                    ->where('news_sub_categories.sub_category_id', $sub)
+                    ->orderBy('news.order', 'asc')
+                    ->where('news.date', '<', date('Y-m-d H:i:s', strtotime(Date('Y-m-d') . ' +1 day')))
+                    ->where('type', $type)
+                    ->select('news.id')
+                    ->skip($skip)
+                    ->take($limit)
+                    ->get();
+            } else {
+                $newsIds = News::where('published', 1)
+                    ->join('news_sub_categories', 'news_sub_categories.news_id', 'news.id')
+                    ->where('news_sub_categories.sub_category_id', $sub)
+                    // ->orderBy('news.date','DESC')
+                    ->orderBy('news.id', 'desc')
+                    ->where('news.date', '<', date('Y-m-d H:i:s', strtotime(Date('Y-m-d') . ' +1 day')))
+                    ->select('news.id')
+                    ->skip($skip)
+                    ->take($limit)
+                    ->get();
+            }
 
             $news = [];
             foreach ($newsIds as $id) {
@@ -50,17 +62,30 @@ class NewsController extends Controller
             return response()->json($news);
         }
 
-        $newsIds = News::where('published', 1)->join('news_categories', 'news_categories.news_id', 'news.id')
+        if ($categoryId == 1) {
+            $newsIds = News::where('published', 1)->join('news_categories', 'news_categories.news_id', 'news.id')
             ->where('news_categories.category_id', $categoryId)
             // ->orderByRaw("DATE_FORMAT('Y-m-d',news.date), DESC")
             // ->orderBy('news.date','DESC')
-            ->orderBy('news.order','asc')
+            ->orderBy('news.order', 'asc')
             ->where('news.date', '<', date('Y-m-d H:i:s', strtotime(Date('Y-m-d') . ' +1 day')))
             ->where('type', $type)
             ->select('news.id')
             ->skip($skip)
             ->take($limit)
             ->get();
+        }else{
+            $newsIds = News::where('published', 1)->join('news_categories', 'news_categories.news_id', 'news.id')
+            ->where('news_categories.category_id', $categoryId)
+            ->orderBy('news.id', 'desc')
+            ->where('news.date', '<', date('Y-m-d H:i:s', strtotime(Date('Y-m-d') . ' +1 day')))
+            ->select('news.id')
+            ->skip($skip)
+            ->take($limit)
+            ->get();
+        }
+
+        
         $news = [];
         foreach ($newsIds as $id) {
             $news[] = $this->newsById($id->id);
@@ -133,8 +158,8 @@ class NewsController extends Controller
         $newsIds = News::where('published', 1)->join('news_categories', 'news_categories.news_id', 'news.id')
             ->where('news_categories.category_id', $categoryId)
             ->select('news.id')
-            ->orderBy('news.date','DESC')
-            ->orderBy('news.order','asc')
+            ->orderBy('news.date', 'DESC')
+            ->orderBy('news.order', 'asc')
             ->where('news.date', '<', date('Y-m-d H:i:s', strtotime(Date('Y-m-d') . ' +1 day')))
             ->skip($skip)
             ->take($limit)
@@ -156,8 +181,8 @@ class NewsController extends Controller
         $newsIds = News::where('published', 1)
             ->join('news_sub_categories', 'news_sub_categories.news_id', 'news.id')
             ->where('news_sub_categories.sub_category_id', $subCategoryId)
-            ->orderBy('news.date','DESC')
-            ->orderBy('news.order','asc')
+            ->orderBy('news.date', 'DESC')
+            ->orderBy('news.order', 'asc')
             ->where('news.date', '<', date('Y-m-d H:i:s', strtotime(Date('Y-m-d') . ' +1 day')))
             ->select('news.id')
             ->skip($skip)
